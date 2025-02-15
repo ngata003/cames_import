@@ -18,4 +18,13 @@ class Entreprise extends Model
         'nom_gestionnaire',
         'is_connected',
     ];
+
+
+    public function user(){
+        return $this->belongsTo(User::class,'nom_gestionnaire','name');
+    }
+
+    public function employes(){
+        return $this->hasMany(User::class,'nom_entreprise','nom_entreprise');
+    }
 }

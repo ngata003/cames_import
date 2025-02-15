@@ -14,5 +14,24 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('authentification.inscription');
+});
+
+Route::get('/connexion', function () {
+    return view('authentification.connexion');
+});
+
+Route::get('/accueil', function () {
+    return view('accueil');
+});
+
+Route::get('/', function () {
+    return view('authentification.inscription');
+});
+Route::get('/reset_password',function(){
+    return view('authentification.reset_password');
+});
+
+Route::get('/forget_password',function(){
+    return view('authentification.forget_password');
 });

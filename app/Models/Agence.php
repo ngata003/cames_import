@@ -19,5 +19,15 @@ class Agence extends Model
     ];
 
 
-    
+     public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'nom_gestionnaire', 'name');
+    }
+
+    public function entreprise(){
+        return $this->belongsTo(Entreprise::class,'nom_entreprise','nom_entreprise');
+    }
+
+
+
 }

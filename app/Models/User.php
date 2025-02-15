@@ -48,4 +48,37 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function agence(){
+        return $this->hasMany(Agence::class,'nom_gestionnaire','name');
+    }
+
+    public function commande(){
+        return $this->hasMany(Commande::class,'nom_gestionnaire','name');
+    }
+
+    public function Entreprise()
+    {
+        return $this->hasOne(Entreprise::class,'nom_gestionnaire','name');
+    }
+
+    public function facture(){
+        return $this->hasMany(Facture::class,'nom_gestionnaire','name');
+    }
+
+    public function retrait(){
+        return $this->hasMany(Retrait::class,'nom_gestionnaire','name');
+    }
+
+    public function employes(){
+        return $this->hasMany(User::class,'nom_createur','name');
+    }
+
+    public function createur(){
+        return $this->belongsTo(User::class,'nom_createur', 'name');
+    }
+
+    public function entreprise_employes(){
+        return $this->belongsTo(Entreprise::class,'nom_entreprise','nom_entreprise');
+    }
 }

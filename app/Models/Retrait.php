@@ -15,4 +15,13 @@ class Retrait extends Model
         'nom_gestionnaire',
         'nom_entreprise',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('nom_gestionnaire','name');
+    }
+
+    public function entreprise(){
+        return $this->belongsTo('nom_entreprise','nom_entreprise');
+    }
 }

@@ -20,4 +20,13 @@ class Facture extends Model
         'nom_entreprise',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class,'nom_gestionnaire','name');
+    }
+
+    public function entreprise(){
+        return $this->belongsTo('nom_entreprise','nom_entreprise');
+    }
+
 }

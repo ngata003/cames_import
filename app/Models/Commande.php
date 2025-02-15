@@ -16,4 +16,17 @@ class Commande extends Model
         'nom_entreprise',
         'id_facture',
     ];
+
+    public function user(){
+        return $this->belongsTo('nom_gestionnaire','name');
+    }
+
+    public function entreprise (){
+        return $this->belongsTo( Entreprise::class,'nom_entreprise','nom_entreprise');
+    }
+
+    public function facture(){
+        return $this->belongsTo(Facture::class,'id_facture');
+    }
 }
+
