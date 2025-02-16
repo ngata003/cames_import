@@ -23,7 +23,7 @@
             <div class="col-lg-4 mx-auto">
               <div class="auth-form-light text-left py-5 px-4 px-sm-5">
                 <div class="brand-logo">
-                  <img src="../../assets/images/logo.svg" alt="logo">
+                  <img src="../../assets/images/svg.svg" alt="logo">
                 </div>
                 <h4> Nouveau ici? </h4>
                 <h6 class="fw-light"> Inscrivez-vous en remplissant progressivement les champs  </h6>

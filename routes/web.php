@@ -35,3 +35,11 @@ Route::get('/reset_password',function(){
 Route::get('/forget_password',function(){
     return view('authentification.forget_password');
 });
+
+Route::get('/commandes', function(){
+    return view('commandes.add_commandes');
+});
+
+Route::get('/gestionnaires',function(){
+    return view('gestionnaires.gestionnaires');
+});

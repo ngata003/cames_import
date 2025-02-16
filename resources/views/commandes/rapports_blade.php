@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -12,10 +13,8 @@
     <link rel="stylesheet" href="assets/vendors/simple-line-icons/css/simple-line-icons.css">
     <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
-
     <link rel="stylesheet" href="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
     <link rel="stylesheet" type="text/css" href="assets/js/select.dataTables.min.css">
-
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="shortcut icon" href="assets/images/favicon.png" />
   </head>
@@ -29,20 +28,15 @@
             </button>
           </div>
           <div>
-            <a class="navbar-brand brand-logo" href="accueil">
+            <a class="navbar-brand brand-logo" href="index.html">
               <img src="assets/images/logo.svg" alt="logo" />
             </a>
-            <a class="navbar-brand brand-logo-mini" href="accueil">
+            <a class="navbar-brand brand-logo-mini" href="index.html">
               <img src="assets/images/logo-mini.svg" alt="logo" />
             </a>
           </div>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-top">
-          <ul class="navbar-nav">
-            <li class="nav-item fw-semibold d-none d-lg-block ms-0">
-              <h1 class="welcome-text">Hey , <span class="text-black fw-bold">John Doe</span></h1>
-            </li>
-          </ul>
           <ul class="navbar-nav ms-auto">
             <li class="nav-item d-none d-lg-block">
               <div id="datepicker-popup" class="input-group date datepicker navbar-date-picker">
@@ -50,6 +44,51 @@
                   <span class="icon-calendar input-group-text calendar-icon"></span>
                 </span>
                 <input type="text" class="form-control">
+              </div>
+            </li>
+            <li class="nav-item">
+              <form class="search-form" action="#">
+                <i class="icon-search"></i>
+                <input type="search" class="form-control" placeholder="Search Here" title="Search here">
+              </form>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link count-indicator" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
+                <i class="icon-bell"></i>
+                <span class="count"></span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="notificationDropdown">
+                <a class="dropdown-item py-3 border-bottom">
+                  <p class="mb-0 fw-medium float-start">You have 4 new notifications </p>
+                  <span class="badge badge-pill badge-primary float-end">View all</span>
+                </a>
+                <a class="dropdown-item preview-item py-3">
+                  <div class="preview-thumbnail">
+                    <i class="mdi mdi-alert m-auto text-primary"></i>
+                  </div>
+                  <div class="preview-item-content">
+                    <h6 class="preview-subject fw-normal text-dark mb-1">Application Error</h6>
+                    <p class="fw-light small-text mb-0"> Just now </p>
+                  </div>
+                </a>
+                <a class="dropdown-item preview-item py-3">
+                  <div class="preview-thumbnail">
+                    <i class="mdi mdi-lock-outline m-auto text-primary"></i>
+                  </div>
+                  <div class="preview-item-content">
+                    <h6 class="preview-subject fw-normal text-dark mb-1">Settings</h6>
+                    <p class="fw-light small-text mb-0"> Private message </p>
+                  </div>
+                </a>
+                <a class="dropdown-item preview-item py-3">
+                  <div class="preview-thumbnail">
+                    <i class="mdi mdi-airballoon m-auto text-primary"></i>
+                  </div>
+                  <div class="preview-item-content">
+                    <h6 class="preview-subject fw-normal text-dark mb-1">New user registration</h6>
+                    <p class="fw-light small-text mb-0"> 2 days ago </p>
+                  </div>
+                </a>
               </div>
             </li>
             <li class="nav-item dropdown">
@@ -113,7 +152,6 @@
           </button>
         </div>
       </nav>
-
       <div class="container-fluid page-body-wrapper">
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
@@ -187,9 +225,25 @@
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="documentation">
+              <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+                <i class="menu-icon mdi mdi-account-circle-outline"></i>
+                <span class="menu-title">User Pages</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="auth">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="docs/documentation.html">
                 <i class="menu-icon mdi mdi-file-document"></i>
-                <span class="menu-title"> Documentation </span>
+                <span class="menu-title">Documentation</span>
               </a>
             </li>
           </ul>
@@ -202,175 +256,83 @@
                   <div class="d-sm-flex align-items-center justify-content-between border-bottom">
                     <div>
                       <div class="btn-wrapper">
-                        <a href="#" class="btn btn-otline-dark"><i class="icon-printer"></i> telecharger le rapport en pdf </a>
-                        <a href="#" class="btn btn-primary text-white me-0"><i class="icon-download"></i> exporter les données sous Excel </a>
+                        <a href="#" class="btn btn-otline-dark align-items-center"><i class="icon-share"></i> Importer sur Excel</a>
+                        <a href="#" class="btn btn-otline-dark"><i class="icon-printer"></i> imprimer le rapport sur pdf </a>
+                        <a href="#" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Exporter sur excel </a>
                       </div>
                     </div>
                   </div>
                   <div class="tab-content tab-content-basic">
                     <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
                       <div class="row">
-                        <div class="col-sm-12">
-                          <div class="statistics-details d-flex align-items-center justify-content-between">
-                            <div>
-                              <p class="statistics-title"> Chiffre d'affaires (CA) </p>
-                              <h3 class="rate-percentage">33000000</h3>
-                            </div>
-                            <div>
-                              <p class="statistics-title"> nbre total de commandes de l'année  </p>
-                              <h3 class="rate-percentage">7682</h3>
-                            </div>
-                            <div class="d-none d-md-block">
-                              <p class="statistics-title"> Nbre commandes mensuel  </p>
-                              <h3 class="rate-percentage"> 1234</h3>
-                            </div>
-                            <div class="d-none d-md-block">
-                              <p class="statistics-title"> Chiffre d'affaire mensuel </p>
-                              <h3 class="rate-percentage">2m:35s</h3>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
                         <div class="col-lg-8 d-flex flex-column">
-                          <div class="row flex-grow">
-                            <div class="col-12 col-lg-4 col-lg-12 grid-margin stretch-card">
-                              <div class="card card-rounded">
-                                <div class="card-body">
-                                  <div class="d-sm-flex justify-content-between align-items-start">
-                                    <div>
-                                      <h4 class="card-title card-title-dash">Performance Line Chart</h4>
-                                      <h5 class="card-subtitle card-subtitle-dash">Lorem Ipsum is simply dummy text of the printing</h5>
-                                    </div>
-                                    <div id="performanceLine-legend"></div>
-                                  </div>
-                                  <div class="chartjs-wrapper mt-4">
-                                    <canvas id="performanceLine" width=""></canvas>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-lg-4 d-flex flex-column">
-                          <div class="row flex-grow">
-                            <div class="col-md-6 col-lg-12 grid-margin stretch-card">
-                              <div class="card bg-primary card-rounded">
-                                <div class="card-body pb-0">
-                                  <h4 class="card-title card-title-dash text-white mb-4">Status Summary</h4>
-                                  <div class="row">
-                                    <div class="col-sm-4">
-                                      <p class="status-summary-ight-white mb-1">Closed Value</p>
-                                      <h2 class="text-info">357</h2>
-                                    </div>
-                                    <div class="col-sm-8">
-                                      <div class="status-summary-chart-wrapper pb-4">
-                                        <canvas id="status-summary"></canvas>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-md-6 col-lg-12 grid-margin stretch-card">
-                              <div class="card card-rounded">
-                                <div class="card-body">
-                                  <div class="row">
-                                    <div class="col-lg-6">
-                                      <div class="d-flex justify-content-between align-items-center mb-2 mb-sm-0">
-                                        <div class="circle-progress-width">
-                                          <div id="totalVisitors" class="progressbar-js-circle pr-2"></div>
-                                        </div>
-                                        <div>
-                                          <p class="text-small mb-2">Total Visitors</p>
-                                          <h4 class="mb-0 fw-bold">26.80%</h4>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                      <div class="d-flex justify-content-between align-items-center">
-                                        <div class="circle-progress-width">
-                                          <div id="visitperday" class="progressbar-js-circle pr-2"></div>
-                                        </div>
-                                        <div>
-                                          <p class="text-small mb-2">Visits per day</p>
-                                          <h4 class="mb-0 fw-bold">9065</h4>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-lg-4 d-flex flex-column">
                           <div class="row flex-grow">
                             <div class="col-12 grid-margin stretch-card">
                               <div class="card card-rounded">
                                 <div class="card-body">
-                                  <div class="row">
-                                    <div class="col-lg-12">
-                                      <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <div>
-                                          <h4 class="card-title card-title-dash"> Presence Gestonnaires</h4>
-                                        </div>
-                                      </div>
-                                      <div class="mt-3">
-                                        <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                          <div class="d-flex">
-                                            <img class="img-sm rounded-10" src="assets/images/faces/face1.jpg" alt="profile">
-                                            <div class="wrapper ms-3">
-                                              <p class="ms-1 mb-1 fw-bold">Brandon Washington</p>
-                                              <small class="text-muted mb-0">162543</small>
-                                            </div>
-                                          </div>
-                                          <div class="text-muted text-small"> 1h ago </div>
-                                        </div>
-                                        <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                          <div class="d-flex">
-                                            <img class="img-sm rounded-10" src="assets/images/faces/face2.jpg" alt="profile">
-                                            <div class="wrapper ms-3">
-                                              <p class="ms-1 mb-1 fw-bold">Wayne Murphy</p>
-                                              <small class="text-muted mb-0">162543</small>
-                                            </div>
-                                          </div>
-                                          <div class="text-muted text-small"> 1h ago </div>
-                                        </div>
-                                        <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                          <div class="d-flex">
-                                            <img class="img-sm rounded-10" src="assets/images/faces/face3.jpg" alt="profile">
-                                            <div class="wrapper ms-3">
-                                              <p class="ms-1 mb-1 fw-bold">Katherine Butler</p>
-                                              <small class="text-muted mb-0">162543</small>
-                                            </div>
-                                          </div>
-                                          <div class="text-muted text-small"> 1h ago </div>
-                                        </div>
-                                        <div class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
-                                          <div class="d-flex">
-                                            <img class="img-sm rounded-10" src="assets/images/faces/face4.jpg" alt="profile">
-                                            <div class="wrapper ms-3">
-                                              <p class="ms-1 mb-1 fw-bold">Matthew Bailey</p>
-                                              <small class="text-muted mb-0">162543</small>
-                                            </div>
-                                          </div>
-                                          <div class="text-muted text-small"> 1h ago </div>
-                                        </div>
-                                        <div class="wrapper d-flex align-items-center justify-content-between pt-2">
-                                          <div class="d-flex">
-                                            <img class="img-sm rounded-10" src="assets/images/faces/face5.jpg" alt="profile">
-                                            <div class="wrapper ms-3">
-                                              <p class="ms-1 mb-1 fw-bold">Rafell John</p>
-                                              <small class="text-muted mb-0">Alaska, USA</small>
-                                            </div>
-                                          </div>
-                                          <div class="text-muted text-small"> 1h ago </div>
-                                        </div>
-                                      </div>
+                                  <div class="d-sm-flex justify-content-between align-items-start">
+                                    <div>
+                                      <h4 class="card-title card-title-dash">Pending Requests</h4>
+                                      <p class="card-subtitle card-subtitle-dash">You have 50+ new requests</p>
                                     </div>
+                                    <div>
+                                      <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button"><i class="mdi mdi-account-plus"></i>Add new member</button>
+                                    </div>
+                                  </div>
+                                  <div class="table-responsive  mt-1">
+                                    <table class="table select-table">
+                                      <thead>
+                                        <tr>
+                                          <th>
+                                            <div class="form-check form-check-flat mt-0">
+                                              <label class="form-check-label">
+                                                <input type="checkbox" class="form-check-input" aria-checked="false" id="check-all"><i class="input-helper"></i></label>
+                                            </div>
+                                          </th>
+                                          <th>Customer</th>
+                                          <th>Company</th>
+                                          <th>Progress</th>
+                                          <th>Status</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <td>
+                                            <div class="form-check form-check-flat mt-0">
+                                              <label class="form-check-label">
+                                                <input type="checkbox" class="form-check-input" aria-checked="false"><i class="input-helper"></i></label>
+                                            </div>
+                                          </td>
+                                          <td>
+                                            <div class="d-flex">
+                                              <img src="assets/images/faces/face2.jpg" alt="">
+                                              <div>
+                                                <h6>Laura Brooks</h6>
+                                                <p>Head admin</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td>
+                                            <h6>Company name 1</h6>
+                                            <p>company type</p>
+                                          </td>
+                                          <td>
+                                            <div>
+                                              <div class="d-flex justify-content-between align-items-center mb-1 max-width-progress-wrap">
+                                                <p class="text-success">65%</p>
+                                                <p>85/162</p>
+                                              </div>
+                                              <div class="progress progress-md">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td>
+                                            <div class="badge badge-opacity-warning">In progress</div>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
                                   </div>
                                 </div>
                               </div>
@@ -384,7 +346,7 @@
               </div>
             </div>
           </div>
-          @include('footer');
+
         </div>
       </div>
     </div>
