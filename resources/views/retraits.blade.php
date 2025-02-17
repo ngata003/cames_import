@@ -78,9 +78,9 @@
                   <div class="d-sm-flex align-items-center justify-content-between border-bottom">
                     <div>
                       <div class="btn-wrapper">
-                        <a href="#" class="btn btn-otline-dark align-items-center"><i class="icon-share"></i> importer des agences  sur excel</a>
-                        <a href="#" class="btn btn-otline-dark"><i class="icon-printer"></i> imprimer des agences sous PDF </a>
-                        <a href="#" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Exporter des agences sur Excel </a>
+                        <a href="#" class="btn btn-otline-dark align-items-center"><i class="icon-share"></i> importer des retraits sur excel</a>
+                        <a href="#" class="btn btn-otline-dark"><i class="icon-printer"></i> pdf des retraits  </a>
+                        <a href="#" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Exporter des retraits sur excel  </a>
                       </div>
                     </div>
                   </div>
@@ -94,57 +94,39 @@
                                 <div class="card-body">
                                   <div class="d-sm-flex justify-content-between align-items-start">
                                     <div>
-                                      <h4 class="card-title card-title-dash"> Espace Agences </h4>
-                                      <p class="card-subtitle card-subtitle-dash"> management des agences de transport  </p>
+                                      <h4 class="card-title card-title-dash"> Espace Retraits </h4>
+                                      <p class="card-subtitle card-subtitle-dash"> management des retraits colis </p>
                                     </div>
                                     <div>
-                                      <button class="btn btn-primary btn-lg text-white mb-0 me-0"  data-bs-toggle="modal" data-bs-target="#importModal" type="button"><i class="mdi mdi-airplane"></i>Ajouter une nouvelle agence </button>
+                                        
                                     </div>
                                   </div>
                                   <div class="table-responsive  mt-1">
                                     <table class="table select-table">
                                       <thead>
                                         <tr>
-                                          <th> Nom Agence </th>
-                                          <th> Email Agence  </th>
-                                          <th> Contact Agence </th>
-                                          <th> site web Agence</th>
-                                          <th>localisation</th>
+                                          <th> Nom client </th>
+                                          <th> Nom agence  </th>
+                                          <th> status </th>
                                           <th> actions </th>
                                         </tr>
                                       </thead>
                                       <tbody>
                                         <tr>
                                           <td>
-                                            <div>
-                                            <h6> cames </h6>
+                                            <div class="d-flex ">
+                                                <h6>Brandon washington</h6>
                                             </div>
                                           </td>
                                           <td>
-                                            <div>
-                                            <h6> camesmall62@gmail.com</h6>
-                                            </div>
+                                            <h6> CAMES IMPORT </h6>
                                           </td>
                                           <td>
-                                            <div>
-                                                <h6> 65788997766</h6>
-                                            </div>
+                                            <div class="badge badge-opacity-success">Completed</div>
                                           </td>
                                           <td>
-                                            <h6> Douala pk15 </h6>
-                                          </td>
-                                          <td>
-                                            <div>
-                                                <h6> Douala pk14 </h6>
-                                            </div>
-                                          </td>
-                                          <td>
-                                            <button class="btn btn-success text-white ">
-                                                modifier
-                                            </button>
-                                            <button class="btn btn-danger text-white ">
-                                                supprimer
-                                            </button>
+                                            <button class="btn btn-success"> activer le retrait </button>
+                                            <button class="btn btn-danger"> supprimer le retrait </button>
                                           </td>
                                         </tr>
                                       </tbody>
@@ -165,47 +147,6 @@
           @include('footer')
         </div>
       </div>
-    </div>
-    <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ajouter une agence   </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form method="POST" action="/add_agences" enctype="multipart/form-data">
-                        @csrf
-                       <div class="mb-3">
-                            <label for="centreName" class="form-label">Nom Agence </label>
-                            <input type="text" name="nom_agence" class="form-control" id="" placeholder="entrer un nom d'agence valide ">
-                        </div>
-                        <div class="mb-3">
-                            <label for="centreName" class="form-label"> Email Agence </label>
-                            <input type="email" name="email_agence" class="form-control" id="" placeholder="entrer un email valide ">
-                        </div>
-                        <div class="mb-3">
-                            <label for="centreName" class="form-label"> site web Agence </label>
-                            <input type="url" name="site_web" class="form-control" id="" placeholder="entrer un site web valide ">
-                        </div>
-                        <div class="mb-3">
-                            <label for="centreName" class="form-label"> Contact Agence </label>
-                            <input type="tel" name="contact_agence" class="form-control" id="" placeholder="entrer un contact valide">
-                        </div>
-                        <input type="hidden" name="nom_gestionnaire" value="" class="form-control" id="" placeholder="">
-                        <input type="hidden" name="nom_entreprise" value="" class="form-control" id="" placeholder="">
-                        <div class="mb-3">
-                            <label for="centreName" class="form-label"> localisation </label>
-                            <input type="text" name="localisation" class="form-control" id="" placeholder="entrer une residence">
-                        </div>
-                        <div class="button-container">
-                          <input type="submit" class="button btn btn-success" name="save" value="Enregistrer">
-                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
     </div>
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <script src="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>

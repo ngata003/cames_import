@@ -36,10 +36,24 @@ Route::get('/forget_password',function(){
     return view('authentification.forget_password');
 });
 
-Route::get('/commandes', function(){
+Route::get('/ajout_commandes', function(){
     return view('commandes.add_commandes');
 });
 
 Route::get('/gestionnaires',function(){
     return view('gestionnaires.gestionnaires');
+});
+
+Route::get('/agences',function(){
+    return view('agences.agence');
+});
+
+Route::get('/retraits',function(){
+    return view('retraits');
+});
+Route::get('/depot_colis',function(){
+    return view('agences.depot_colis');
+});
+Route::get('/command_enregistrees',function(){
+    return view('commandes.rap_commandes');
 });
