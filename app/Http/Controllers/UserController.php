@@ -9,9 +9,7 @@ class UserController extends Controller
     //
 
     public function add_inscription(Request $request){
-        $request->validate([
-            'name'=>'required',
-            'email'=>'required|email|unique:users',
-        ]);
+        
     }
+
 }

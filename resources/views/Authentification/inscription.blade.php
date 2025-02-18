@@ -52,7 +52,7 @@
                   <div class="form-group">
                     <input type="password" class="form-control form-control-lg" id="" placeholder="Password">
                   </div>
-                  <input type="submit" class="btn btn-block btn-primary btn-lg fw-medium auth-form-btn">
+                  <input type="submit" value="s'inscrirer" class="btn btn-block btn-primary btn-lg fw-medium auth-form-btn">
                   <div class="text-center mt-4 fw-light"> Déjà connecté(e) à la plateforme ? <a href="connexion" class="text-primary"> connectez-vous </a>
                   </div>
                 </form>

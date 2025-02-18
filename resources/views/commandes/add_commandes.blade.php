@@ -81,62 +81,53 @@
                     <form class="form-sample">
                       <p class="card-description"> Rentrer une commande  </p>
                       <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                           <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">First Name</label>
-                            <div class="col-sm-9">
-                              <input type="text" class="form-control" />
+                            <label class="col-sm-4 col-form-label"> Nom Client </label>
+                            <div class="col-sm-8">
+                              <input type="text" name="nom_client" class="form-control" />
                             </div>
                           </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                           <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Last Name</label>
-                            <div class="col-sm-9">
-                              <input type="text" class="form-control" />
+                            <label class="col-sm-4 col-form-label"> Email client </label>
+                            <div class="col-sm-8">
+                              <input type="email" name="email_client" class="form-control" />
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                           <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Gender</label>
-                            <div class="col-sm-9">
-                              <select class="form-select">
-                                <option>Male</option>
-                                <option>Female</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Date of Birth</label>
-                            <div class="col-sm-9">
-                              <input class="form-control" placeholder="dd/mm/yyyy" />
+                            <label class="col-sm-4 col-form-label"> Contact client </label>
+                            <div class="col-sm-8">
+                              <input type="tel" name="contact_client" class="form-control" />
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Category</label>
-                            <div class="col-sm-9">
-                              <select class="form-select">
-                                <option>Category1</option>
-                                <option>Category2</option>
-                                <option>Category3</option>
-                                <option>Category4</option>
-                              </select>
+
+                      <div id="commandesContainer">
+                        <div class="row align-items-center g-3 mb-3">
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" placeholder="Contact client" />
                             </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" placeholder="Date of Birth (dd/mm/yyyy)" />
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" placeholder="Autre champ" />
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" placeholder="Autre champ" />
+                            </div>
+
                           </div>
-                        </div>
                       </div>
-                      <button type="submit" class="btn btn-primary me-2"> Enregistrer </button>
-                      <button class="btn btn-light"> annuler </button>
-                      <button type="" class="btn btn-secondary me-2 "> ajouter une nouelle commande </button>
+
+                      <button type="submit" class="btn btn-success me-2"> Enregistrer </button>
+                      <button class="btn btn-light me-2"> annuler </button>
+                      <button type="button" id="ajouterCommande" class="btn btn-primary me-2"> Ajouter une nouvelle commande </button>
                     </form>
                   </div>
                 </div>
@@ -160,5 +151,38 @@
     <script src="../../assets/js/file-upload.js"></script>
     <script src="../../assets/js/typeahead.js"></script>
     <script src="../../assets/js/select2.js"></script>
+    <script>
+        document.getElementById('ajouterCommande').addEventListener('click', function() {
+            // Sélectionner le conteneur principal
+            const commandesContainer = document.getElementById('commandesContainer');
+
+            // Créer un nouveau div avec la même structure que l'original
+            const newRow = document.createElement('div');
+            newRow.setAttribute('class', 'row align-items-center g-3 mb-3');
+
+            // Remplir le div avec les champs de formulaire
+            newRow.innerHTML = `
+                <div class="col-md-3">
+                    <input type="text" class="form-control" placeholder="Contact client">
+                </div>
+                <div class="col-md-3">
+                    <input type="text"  class="form-control" placeholder="Date of Birth (dd/mm/yyyy)">
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" placeholder="Autre champ">
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" placeholder="Autre champ">
+                </div>
+                <div class="col-md-1 d-flex justify-content-end">
+                    <button type="button" class="btn btn-danger btn-sm remove-row">
+                        <i class="bi bi-x-lg"></i> Supprimer
+                    </button>
+                </div>
+            `;
+
+            commandesContainer.appendChild(newRow);
+        });
+    </script>
   </body>
 </html>
