@@ -110,23 +110,45 @@
                       <div id="commandesContainer">
                         <div class="row align-items-center g-3 mb-3">
                             <div class="col-md-3">
-                                <input type="text" class="form-control" placeholder="Contact client" />
+                                <input type="text" name="nom_produit0" class="form-control" placeholder="entrer un nom de produit" />
                             </div>
                             <div class="col-md-3">
-                                <input type="text" class="form-control" placeholder="Date of Birth (dd/mm/yyyy)" />
+                                <input type="number" name="quantite0" class="form-control" placeholder="entrer une quantite" />
                             </div>
                             <div class="col-md-3">
-                                <input type="text" class="form-control" placeholder="Autre champ" />
+                                <input type="number" name="prix_unitaire0" class="form-control" placeholder="entrer un prix de produit " />
                             </div>
                             <div class="col-md-3">
-                                <input type="text" class="form-control" placeholder="Autre champ" />
+                                <input type="number" name="total0" class="form-control" placeholder="ici est le total" />
                             </div>
 
-                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row align-items-center g-3 mb-3">
+                        <div class="col-md-3">
+                            <select class="form-select form-select-sm" name="moyen_paiement" id="exampleFormControlSelect3">
+                                <option selected> moyen paiement </option>
+                                <option value="orange_money"> orange money</option>
+                                <option value="mobilemoney_"> mobile money </option>
+                                <option value="cash"> cash </option>
+                                <option value="paiement_bancaire"> paiement bancaire</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="number" name="total_commande" class="form-control" placeholder=" total commande" />
+                        </div>
+                        <div class="col-md-3">
+                            <input type="number" name="montant_paye" class="form-control" placeholder="montant verse " />
+                        </div>
+                        <div class="col-md-3">
+                            <input type="number" name="reste" class="form-control" placeholder="reste" />
+                        </div>
+
                       </div>
 
                       <button type="submit" class="btn btn-success me-2"> Enregistrer </button>
-                      <button class="btn btn-light me-2"> annuler </button>
+                      <button class="btn btn-danger me-2"> annuler </button>
                       <button type="button" id="ajouterCommande" class="btn btn-primary me-2"> Ajouter une nouvelle commande </button>
                     </form>
                   </div>
@@ -152,37 +174,93 @@
     <script src="../../assets/js/typeahead.js"></script>
     <script src="../../assets/js/select2.js"></script>
     <script>
-        document.getElementById('ajouterCommande').addEventListener('click', function() {
-            // Sélectionner le conteneur principal
+        let index = 0; // Index initial
+
+        function calculerTotal(row) {
+            const rowIndex = row.dataset.index;
+            const quantiteInput = document.querySelector(`[name="quantite${rowIndex}"]`);
+            const prixInput = document.querySelector(`[name="prix_unitaire${rowIndex}"]`);
+            const totalInput = document.querySelector(`[name="total${rowIndex}"]`);
+
+            if (quantiteInput && prixInput && totalInput) {
+                let quantite = parseFloat(quantiteInput.value) || 0;
+                let prix = parseFloat(prixInput.value) || 0;
+                totalInput.value = (quantite * prix).toFixed(2); // Calcul du total pour chaque ligne
+            }
+
+            // Recalculer le total de la commande après chaque modification
+            calculerTotalCommande();
+        }
+
+        function calculerTotalCommande() {
+            let totalCommande = 0;
+
+            // Parcours de toutes les lignes de commande
+            const totals = document.querySelectorAll('[name^="total"]');
+            totals.forEach((totalInput) => {
+                totalCommande += parseFloat(totalInput.value) || 0;
+            });
+
+            // Mise à jour du total de la commande
+            document.querySelector('[name="total_commande"]').value = totalCommande.toFixed(2);
+        }
+
+        function ajouterCommande() {
+            index++; // Incrémenter l'index pour la nouvelle ligne
             const commandesContainer = document.getElementById('commandesContainer');
 
-            // Créer un nouveau div avec la même structure que l'original
             const newRow = document.createElement('div');
             newRow.setAttribute('class', 'row align-items-center g-3 mb-3');
+            newRow.setAttribute('data-index', index);
 
-            // Remplir le div avec les champs de formulaire
             newRow.innerHTML = `
                 <div class="col-md-3">
-                    <input type="text" class="form-control" placeholder="Contact client">
-                </div>
-                <div class="col-md-3">
-                    <input type="text"  class="form-control" placeholder="Date of Birth (dd/mm/yyyy)">
-                </div>
-                <div class="col-md-3">
-                    <input type="text" class="form-control" placeholder="Autre champ">
+                    <input type="text" name="nom_produit${index}" class="form-control" placeholder="Nom du produit">
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="Autre champ">
+                    <input type="number" name="quantite${index}" class="form-control" placeholder="Quantité" min="1">
+                </div>
+                <div class="col-md-3">
+                    <input type="number" name="prix_unitaire${index}" class="form-control" placeholder="Prix unitaire" step="0.01">
+                </div>
+                <div class="col-md-3">
+                    <input type="number" name="total${index}" class="form-control" placeholder="Total" readonly>
                 </div>
                 <div class="col-md-1 d-flex justify-content-end">
-                    <button type="button" class="btn btn-danger btn-sm remove-row">
-                        <i class="bi bi-x-lg"></i> Supprimer
-                    </button>
+                    <button type="button" class="btn btn-danger btn-sm remove-row">supprimer</button>
                 </div>
             `;
 
             commandesContainer.appendChild(newRow);
+
+            // Ajouter les événements pour recalculer le total lors de l'ajout d'une nouvelle ligne
+            document.querySelector(`[name="quantite${index}"]`).addEventListener('input', () => calculerTotal(newRow));
+            document.querySelector(`[name="prix_unitaire${index}"]`).addEventListener('input', () => calculerTotal(newRow));
+        }
+
+        document.getElementById('ajouterCommande').addEventListener('click', ajouterCommande);
+
+        document.getElementById('commandesContainer').addEventListener('click', function(event) {
+            if (event.target.classList.contains('remove-row') || event.target.closest('.remove-row')) {
+                event.target.closest('.row').remove();
+                calculerTotalCommande(); // Recalculer le total de la commande après suppression
+            }
+        });
+
+        // Initialisation des événements sur la première ligne au chargement
+        document.addEventListener('DOMContentLoaded', () => {
+            // Associer les événements 'input' à la première ligne existante
+            document.querySelectorAll('[name^="quantite"], [name^="prix_unitaire"]').forEach(input => {
+                input.addEventListener('input', function () {
+                    calculerTotal(this.closest('.row'));
+                });
+            });
+
+            // Calcul initial du total de la commande
+            calculerTotalCommande();
         });
     </script>
+
+
   </body>
 </html>
