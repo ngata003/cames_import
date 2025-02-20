@@ -11,13 +11,13 @@ class UserController extends Controller
 
     public function inscription_code(Request $request){
 
-       // dd($request->all());
+        //dd($request->all());
 
         $request->validate([
             'name'=>'required|string|max:255|unique:users,name|regex:/^[a-zA-ZÀ-ÿ\s-]+$/',
             'email'=>'required|email|unique:users,email|regex:/^(?!\d+$)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/',
             'contact'=>'required|unique:users,contact|regex:/^\+?[1-9]\d{6,14}$/',
-            'password'=>'required|max:8',
+            'password'=>'required|max:12',
             'type'=>'required',
             'role'=>'required',
             'residence'=>'required',

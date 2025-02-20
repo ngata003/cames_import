@@ -51,9 +51,9 @@
                     <input type="file" class="form-control form-control-lg" name="profil" id="">
                   </div>
                   <div class="form-group">
-                    <input type="password" class="form-control form-control-lg" id="" placeholder="Password">
+                    <input type="password" name="password" class="form-control form-control-lg" id="" placeholder="Password">
                   </div>
-                  <input type="submit" value="s'inscrire" class="btn btn-block btn-primary btn-lg fw-medium auth-form-btn">
+                  <input type="submit" name="save" value="s'inscrire" class="btn btn-block btn-primary btn-lg fw-medium auth-form-btn">
                   <div class="text-center mt-4 fw-light"> Déjà connecté(e) à la plateforme ? <a href="connexion" class="text-primary"> connectez-vous </a>
                   </div>
                 </form>

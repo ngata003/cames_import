@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('residence')->nullable();
             $table->string('password');
             $table->string('profil')->nullable();
-            $table->string('is_connected');
+            $table->boolean('is_connected')->default(false);
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
