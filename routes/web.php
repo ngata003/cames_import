@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -57,3 +58,5 @@ Route::get('/depot_colis',function(){
 Route::get('/command_enregistrees',function(){
     return view('commandes.rap_commandes');
 });
+
+Route::post('/add_inscriptions',[UserController::class,'inscription_code']);

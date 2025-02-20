@@ -78,9 +78,9 @@
                   <div class="d-sm-flex align-items-center justify-content-between border-bottom">
                     <div>
                       <div class="btn-wrapper">
-                        <a href="#" class="btn btn-otline-dark align-items-center"><i class="icon-share"></i> importer des retraits sur excel</a>
-                        <a href="#" class="btn btn-otline-dark"><i class="icon-printer"></i> pdf des retraits  </a>
-                        <a href="#" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Exporter des retraits sur excel  </a>
+                        <a href="#" class="btn btn-otline-dark align-items-center"><i class="icon-share"></i> importer des commandes sur excel</a>
+                        <a href="#" class="btn btn-otline-dark"><i class="icon-printer"></i> pdf des commandes  </a>
+                        <a href="#" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Exporter des commandes sur excel  </a>
                       </div>
                     </div>
                   </div>
@@ -105,9 +105,12 @@
                                     <table class="table select-table">
                                       <thead>
                                         <tr>
+                                          <th> id </th>
                                           <th> Nom client </th>
-                                          <th> Nom agence  </th>
-                                          <th> status </th>
+                                          <th>   montant paye </th>
+                                          <th> total commande  </th>
+                                          <th>  moyen paiement </th>
+                                          <th> reste </th>
                                           <th> actions </th>
                                         </tr>
                                       </thead>
@@ -115,11 +118,16 @@
                                         <tr>
                                           <td>
                                             <div class="d-flex ">
-                                                <h6>Brandon washington</h6>
+                                                <h6>1</h6>
                                             </div>
                                           </td>
                                           <td>
-                                            <h6> CAMES IMPORT </h6>
+                                            <div class="d-flex ">
+                                                <h6>Brandon </h6>
+                                            </div>
+                                          </td>
+                                          <td>
+                                            <h6> 345677777</h6>
                                           </td>
                                           <td>
                                             <div class="badge badge-opacity-success">Completed</div>

@@ -27,7 +27,8 @@
                 </div>
                 <h4> Nouveau ici? </h4>
                 <h6 class="fw-light"> Inscrivez-vous en remplissant progressivement les champs  </h6>
-                <form class="pt-3" method="POST" action="" enctype="multipart/form-data">
+                <form class="pt-3" method="POST" action="/add_inscriptions" enctype="multipart/form-data">
+                    @csrf
                   <div class="form-group">
                     <input type="text" class="form-control form-control-lg" name="name" id="" placeholder="veuillez saisir votre nom ">
                   </div>
@@ -52,7 +53,7 @@
                   <div class="form-group">
                     <input type="password" class="form-control form-control-lg" id="" placeholder="Password">
                   </div>
-                  <input type="submit" value="s'inscrirer" class="btn btn-block btn-primary btn-lg fw-medium auth-form-btn">
+                  <input type="submit" value="s'inscrire" class="btn btn-block btn-primary btn-lg fw-medium auth-form-btn">
                   <div class="text-center mt-4 fw-light"> Déjà connecté(e) à la plateforme ? <a href="connexion" class="text-primary"> connectez-vous </a>
                   </div>
                 </form>
