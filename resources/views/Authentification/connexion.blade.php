@@ -23,6 +23,11 @@
           <div class="row w-100 mx-0">
             <div class="col-lg-4 mx-auto">
               <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+                @if (session('connexion_echec'))
+                    <p style="color:red">
+                    {{session('connexion_echec')}}
+                    </p>
+                @endif
                 <div class="brand-logo">
                   <img src="../../assets/images/logo.svg" alt="logo">
                 </div>

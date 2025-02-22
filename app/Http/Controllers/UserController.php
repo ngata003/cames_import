@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Auth;
+use Hash;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -98,6 +99,20 @@ class UserController extends Controller
             'password' => 'required|max:12',
         ], $messages);
 
+        // cheche si un utilisateur ayant l'email entré existe
+        $utilisateur = User::where('email',$request->input('email'))->first();
+
+        //renvoi vers la page de connexion avec une erreur
+        if (!$utilisateur) {
+            return back()->with('connexion_echec','votre email est incorrect , veuillez mettre le bon');
+        }
+
+        //
+
+        //verifie si le password entré est semblable à celui entré dans le champ password.
+        if (! Hash::check($request->input('password'), $utilisateur->password )) {
+            return back()->with('connexion_echec','votre password est incorrect , veuillez entrer un correct');
+        }
 
         // tente de se connecter en utilisant les identifiants (email et password)
         $credentials = $request->only('email','password');
@@ -107,7 +122,7 @@ class UserController extends Controller
         }
 
         else{
-            return back()->with('connexion_echec', 'veuillez utiliser vos bons identifiants de connexion');
+            return back()->with('connexion_echec', 'il y a certainement une erreur');
         }
     }
 
