@@ -118,6 +118,8 @@ class UserController extends Controller
         $credentials = $request->only('email','password');
 
         if(Auth::attempt($credentials, $request->has('remember'))){
+            $utilisateur->is_connected = true;
+            $utilisateur->save();
             return redirect('/entreprise')->with('connexion_succeed','votre connexion a reussi');
         }
 
