@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -70,12 +71,44 @@ class UserController extends Controller
         $user->role = $request->input('role');
         $user->nom_createur = $request->input('nom_createur');
         $user->nom_entreprise = $request->input('nom_entreprise');
-        $user->password = bcrypt($request->input('nom_entreprise'));
+        $user->password = bcrypt($request->input('password'));
         $user->profil = $imageName;
 
         $user->save();
 
         return redirect('/connexion')->with('status','inscription bravée avec succès');
+    }
+
+    public function add_connexion (Request $request){
+
+        //definit les differentes erreurs à afficher en cas de non respect des regles de validation.
+        $messages = [
+
+            'password.required' => 'veuillez saisir un mot de passe',
+            'password.max' => 'veuillez saisir des mots de passe ayant maximun 12 caractères',
+
+            'email.required' => 'veuillez entrer une adresse email',
+            'email.regex' => 'entrer une adresse email valide',
+
+        ];
+
+
+        $request->validate([
+            'email' => 'required|regex:/^[a-zA-Z]+[a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/',
+            'password' => 'required|max:12',
+        ], $messages);
+
+
+        // tente de se connecter en utilisant les identifiants (email et password)
+        $credentials = $request->only('email','password');
+
+        if(Auth::attempt($credentials, $request->has('remember'))){
+            return redirect('/entreprise')->with('connexion_succeed','votre connexion a reussi');
+        }
+
+        else{
+            return back()->with('connexion_echec', 'veuillez utiliser vos bons identifiants de connexion');
+        }
     }
 
 }

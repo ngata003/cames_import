@@ -60,3 +60,4 @@ Route::get('/command_enregistrees',function(){
 });
 
 Route::post('/add_inscriptions',[UserController::class,'inscription_code']);
+Route::post('/add_connexion',[UserController::class,'add_connexion']);

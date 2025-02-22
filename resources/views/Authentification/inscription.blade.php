@@ -24,7 +24,7 @@
             <div class="col-lg-4 mx-auto">
               <div class="auth-form-light text-left py-5 px-4 px-sm-5">
                 <div class="brand-logo">
-                  <img src="../../assets/images/svg.svg" alt="logo">
+                  <img src="../../assets/images/camesimport.svg" alt="logo">
                 </div>
                 <h4> Nouveau ici? </h4>
                 <h6 class="fw-light"> Inscrivez-vous en remplissant progressivement les champs  </h6>
@@ -54,7 +54,9 @@
                   <div class="form-group">
                     <input type="password" name="password" class="form-control form-control-lg" id="" placeholder="Password">
                   </div>
-                  <input type="submit" name="save" value="s'inscrire" class="btn btn-block btn-primary btn-lg fw-medium auth-form-btn">
+                  <div class="mt-3 d-grid gap-2">
+                    <input type="submit" value="s'inscrire" class="btn btn-block btn-primary btn-lg fw-medium auth-form-btn" name="save">
+                  </div>
                   <div class="text-center mt-4 fw-light"> Déjà connecté(e) à la plateforme ? <a href="connexion" class="text-primary"> connectez-vous </a>
                   </div>
                 </form>

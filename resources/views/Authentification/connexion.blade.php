@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="../../assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="../../assets/images/favicon.png" />
   </head>
   <body>
@@ -27,7 +28,8 @@
                 </div>
                 <h4> Hello! De retour sur la plateforme ? </h4>
                 <h6 class="fw-light"> Connectez-vous pour continuer </h6>
-                <form class="pt-3" method="" action=""  >
+                <form class="pt-3" method="POST" action="/add_connexion"  >
+                    @csrf
                   <div class="form-group">
                     <input type="email" class="form-control form-control-lg" placeholder="saisissez votre email d'inscription" name="email">
                   </div>
@@ -40,7 +42,7 @@
                   <div class="my-2 d-flex justify-content-between align-items-center">
                     <div class="form-check">
                       <label class="form-check-label text-muted">
-                        <input type="checkbox" class="form-check-input"> se rappeler de moi  </label>
+                        <input type="checkbox" name="remember" class="form-check-input"> se rappeler de moi  </label>
                     </div>
                     <a href="/forget-password" class="auth-link text-primary"> mot de passe oublié?</a>
                   </div>
@@ -57,6 +59,27 @@
         </div>
       </div>
     </div>
+     <!-- Modal Bootstrap pour les erreurs -->
+     <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="errorModalLabel">Erreur d'inscription</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul id="errorList">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
     <script src="../../assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
     <script src="../../assets/js/off-canvas.js"></script>
@@ -64,5 +87,14 @@
     <script src="../../assets/js/settings.js"></script>
     <script src="../../assets/js/hoverable-collapse.js"></script>
     <script src="../../assets/js/todolist.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            @if ($errors->any())
+                $("#errorModal").modal("show");
+            @endif
+        });
+    </script>
   </body>
 </html>
