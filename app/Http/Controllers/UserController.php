@@ -128,4 +128,10 @@ class UserController extends Controller
         }
     }
 
+    public function add_gestionnaires (Request $request){
+        $request->validate([
+            ''
+        ]);
+    }
+
 }
