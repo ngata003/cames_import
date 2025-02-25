@@ -107,8 +107,6 @@ class UserController extends Controller
             return back()->with('connexion_echec','votre email est incorrect , veuillez mettre le bon');
         }
 
-        //
-
         //verifie si le password entré est semblable à celui entré dans le champ password.
         if (! Hash::check($request->input('password'), $utilisateur->password )) {
             return back()->with('connexion_echec','votre password est incorrect , veuillez entrer un correct');
@@ -120,7 +118,13 @@ class UserController extends Controller
         if(Auth::attempt($credentials, $request->has('remember'))){
             $utilisateur->is_connected = true;
             $utilisateur->save();
-            return redirect('/entreprise')->with('connexion_succeed','votre connexion a reussi');
+
+            if ($utilisateur -> entreprise_created) {
+                return redirect('/accueil')->with('status','connexion reussie');
+            }
+            else{
+                return redirect('/entreprise')->with('connexion_succeed','votre connexion a reussi');
+            }
         }
 
         else{

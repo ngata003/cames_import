@@ -30,4 +30,4 @@ Route::get('/command_enregistrees',function(){return view('commandes.rap_command
 Route::post('/add_inscriptions',[UserController::class,'inscription_code']);
 Route::post('/add_connexion',[UserController::class,'add_connexion']);
 Route::post('/add_entreprise',[EntrepriseController::class,'add_entreprise']);
-Route::get('/entreprise', function (){return view('');});
+Route::get('/entreprise', function (){return view('entreprise');});

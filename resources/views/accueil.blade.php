@@ -29,18 +29,24 @@
             </button>
           </div>
           <div>
+            @if (Session()->has('entreprise_active'))
             <a class="navbar-brand brand-logo" href="accueil">
-              <img src="assets/images/logo.svg" alt="logo" />
+                <img src="assets/images/{{Session('entreprise_active')->logo_entreprise}}" alt="logo" />
+              </a>
+              <a class="navbar-brand brand-logo-mini" href="accueil">
+                <img src="assets/images/{{Session('entreprise_active')->logo_entreprise}}" alt="logo" />
             </a>
-            <a class="navbar-brand brand-logo-mini" href="accueil">
-              <img src="assets/images/logo-mini.svg" alt="logo" />
-            </a>
+            @endif
+
           </div>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-top">
           <ul class="navbar-nav">
             <li class="nav-item fw-semibold d-none d-lg-block ms-0">
-              <h1 class="welcome-text">Hey , <span class="text-black fw-bold">John Doe</span></h1>
+                @if (Auth::check())
+                <?php $user =Auth::user() ;?>
+                <h1 class="welcome-text">Hey , <span class="text-black fw-bold">{{$user->name}}</span></h1>
+                @endif
             </li>
           </ul>
           <ul class="navbar-nav ms-auto">
@@ -61,50 +67,25 @@
                   <p class="mb-0 fw-medium float-start">You have 7 unread mails </p>
                   <span class="badge badge-pill badge-primary float-end">View all</span>
                 </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <img src="assets/images/faces/face10.jpg" alt="image" class="img-sm profile-pic">
-                  </div>
-                  <div class="preview-item-content flex-grow py-2">
-                    <p class="preview-subject ellipsis fw-medium text-dark">Marian Garner </p>
-                    <p class="fw-light small-text mb-0"> The meeting is cancelled </p>
-                  </div>
-                </a>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <img src="assets/images/faces/face12.jpg" alt="image" class="img-sm profile-pic">
-                  </div>
-                  <div class="preview-item-content flex-grow py-2">
-                    <p class="preview-subject ellipsis fw-medium text-dark">David Grey </p>
-                    <p class="fw-light small-text mb-0"> The meeting is cancelled </p>
-                  </div>
-                </a>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <img src="assets/images/faces/face1.jpg" alt="image" class="img-sm profile-pic">
-                  </div>
-                  <div class="preview-item-content flex-grow py-2">
-                    <p class="preview-subject ellipsis fw-medium text-dark">Travis Jenkins </p>
-                    <p class="fw-light small-text mb-0"> The meeting is cancelled </p>
-                  </div>
-                </a>
               </div>
             </li>
             <li class="nav-item dropdown d-none d-lg-block user-dropdown">
+                @if (Auth::check())
+                <?php $user = Auth::user(); ?>
               <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                <img class="img-xs rounded-circle" src="assets/images/faces/face8.jpg" alt="Profile image"> </a>
+                <img class="img-xs rounded-circle"  src="assets/images/{{$user->profil}}" height="45px" width="45px" alt="Profile image"> </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                 <div class="dropdown-header text-center">
-                  <img class="img-md rounded-circle" src="assets/images/faces/face8.jpg" alt="Profile image">
-                  <p class="mb-1 mt-3 fw-semibold">Allen Moreno</p>
-                  <p class="fw-light text-muted mb-0">allenmoreno@gmail.com</p>
+                  <img class="img-md rounded-circle" src="assets/images/{{$user->profil}}" height="45px" width="45px"  alt="Profile image">
+                  <p class="mb-1 mt-3 fw-semibold">{{$user->name}}</p>
+                  <p class="fw-light text-muted mb-0">{{$user->email}}</p>
                 </div>
-                <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile <span class="badge badge-pill badge-danger">1</span></a>
-                <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-message-text-outline text-primary me-2"></i> Messages</a>
-                <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-calendar-check-outline text-primary me-2"></i> Activity</a>
-                <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-help-circle-outline text-primary me-2"></i> FAQ</a>
-                <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
+                @endif
+                <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> Mon profil </a>
+                @if (Session()->has('entreprise_active'))
+                <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-home-outline text-primary me-2"></i> {{Session('entreprise_active')->nom_entreprise }}</a>
+                @endif
+                <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i> deconnectez-vous </a>
               </div>
             </li>
           </ul>
