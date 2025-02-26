@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AgenceController;
 use App\Http\Controllers\EntrepriseController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -23,7 +24,9 @@ Route::get('/reset_password',function(){return view('authentification.reset_pass
 Route::get('/forget_password',function(){return view('authentification.forget_password');});
 Route::get('/ajout_commandes', function(){return view('commandes.add_commandes');});
 Route::get('/gestionnaires',function(){return view('gestionnaires.gestionnaires');});
-Route::get('/agences',function(){return view('agences.agence');});
+
+Route::get('/agences',[AgenceController::class,'affichage_vue']);
+
 Route::get('/retraits',function(){return view('retraits');});
 Route::get('/depot_colis',function(){return view('agences.depot_colis');});
 Route::get('/command_enregistrees',function(){return view('commandes.rap_commandes');});
@@ -31,3 +34,5 @@ Route::post('/add_inscriptions',[UserController::class,'inscription_code']);
 Route::post('/add_connexion',[UserController::class,'add_connexion']);
 Route::post('/add_entreprise',[EntrepriseController::class,'add_entreprise']);
 Route::get('/entreprise', function (){return view('entreprise');});
+Route::get('/entreprise_management',[EntrepriseController::class,'affichage_vue']);
+Route::post('/add_agences', [AgenceController::class,'add_agencies']);

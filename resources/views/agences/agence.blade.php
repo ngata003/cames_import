@@ -114,39 +114,37 @@
                                         </tr>
                                       </thead>
                                       <tbody>
+                                        @foreach ($agences as $agen )
                                         <tr>
-                                          <td>
-                                            <div>
-                                            <h6> cames </h6>
-                                            </div>
-                                          </td>
-                                          <td>
-                                            <div>
-                                            <h6> camesmall62@gmail.com</h6>
-                                            </div>
-                                          </td>
-                                          <td>
-                                            <div>
-                                                <h6> 65788997766</h6>
-                                            </div>
-                                          </td>
-                                          <td>
-                                            <h6> Douala pk15 </h6>
-                                          </td>
-                                          <td>
-                                            <div>
-                                                <h6> Douala pk14 </h6>
-                                            </div>
-                                          </td>
-                                          <td>
-                                            <button class="btn btn-success text-white ">
-                                                modifier
-                                            </button>
-                                            <button class="btn btn-danger text-white ">
-                                                supprimer
-                                            </button>
-                                          </td>
-                                        </tr>
+                                            <td>
+                                              <div>
+                                              <h6> {{$agen->nom_agence}} </h6>
+                                              </div>
+                                            </td>
+                                            <td>
+                                              <div>
+                                              <h6>{{$agen->email_agence}} </h6>
+                                              </div>
+                                            </td>
+                                            <td>
+                                              <div>
+                                                  <h6> {{$agen->contact_agence}}</h6>
+                                              </div>
+                                            </td>
+                                            <td>
+                                              <h6> {{$agen->site_web}} </h6>
+                                            </td>
+                                            <td>
+                                              <div>
+                                                  <h6> {{$agen->localisation}} </h6>
+                                              </div>
+                                            </td>
+                                            <td>
+                                              <button class="btn btn-success text-white" data-id="{{$agen->id}}" data-nom="{{$agen->nom_agence}}" data-email="{{$agen->email_agence}}" data-contact="{{$agen->contact_agence}}" data-site_web="{{$agen->site_web}}" data-localisation="{{$agen->localisation}}" onclick="openEditModal(this)" > modifier </button>
+                                              <button class="btn btn-danger text-white "> supprimer </button>
+                                            </td>
+                                          </tr>
+                                        @endforeach
                                       </tbody>
                                     </table>
                                   </div>
@@ -174,7 +172,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="/add_agences" enctype="multipart/form-data">
+                    <form method="POST" action="/add_agences" >
                         @csrf
                        <div class="mb-3">
                             <label for="centreName" class="form-label">Nom Agence </label>
@@ -192,11 +190,48 @@
                             <label for="centreName" class="form-label"> Contact Agence </label>
                             <input type="tel" name="contact_agence" class="form-control" id="" placeholder="entrer un contact valide">
                         </div>
-                        <input type="hidden" name="nom_gestionnaire" value="" class="form-control" id="" placeholder="">
-                        <input type="hidden" name="nom_entreprise" value="" class="form-control" id="" placeholder="">
                         <div class="mb-3">
                             <label for="centreName" class="form-label"> localisation </label>
                             <input type="text" name="localisation" class="form-control" id="" placeholder="entrer une residence">
+                        </div>
+                        <div class="button-container">
+                          <input type="submit" class="button btn btn-success" name="save" value="Enregistrer">
+                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Ajouter une agence   </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST"  action="" id="editForm" >
+                        @csrf
+                       <div class="mb-3">
+                            <label for="centreName" class="form-label">Nom Agence </label>
+                            <input type="text" name="nom_agence" class="form-control" id="nom_agence" placeholder="entrer un nom d'agence valide ">
+                        </div>
+                        <div class="mb-3">
+                            <label for="centreName" class="form-label"> Email Agence </label>
+                            <input type="email" name="email_agence" class="form-control" id="email_agence" placeholder="entrer un email valide ">
+                        </div>
+                        <div class="mb-3">
+                            <label for="centreName" class="form-label"> site web Agence </label>
+                            <input type="url" name="site_web" class="form-control" id="site_web" placeholder="entrer un site web valide ">
+                        </div>
+                        <div class="mb-3">
+                            <label for="centreName" class="form-label"> Contact Agence </label>
+                            <input type="tel" name="contact_agence" class="form-control" id="contact_agence" placeholder="entrer un contact valide">
+                        </div>
+                        <div class="mb-3">
+                            <label for="centreName" class="form-label"> localisation </label>
+                            <input type="text" name="localisation" class="form-control" id="localisation" placeholder="entrer une residence">
                         </div>
                         <div class="button-container">
                           <input type="submit" class="button btn btn-success" name="save" value="Enregistrer">
@@ -218,5 +253,28 @@
     <script src="assets/js/todolist.js"></script>
     <script src="assets/js/jquery.cookie.js" type="text/javascript"></script>
     <script src="assets/js/dashboard.js"></script>
+    <script>
+        function openEditModal(button) {
+            var id = button.getAttribute('data-id');
+            var nom = button.getAttribute('data-nom');
+            var localisation = button.getAttribute('data-localisation');
+            var contact = button.getAttribute('data-contact');
+            var email = button.getAttribute('data-email');
+            var site_web = button.getAttribute('data-site_web');
+
+            document.getElementById('editModalLabel').textContent = 'Editer une agence ';
+            document.getElementById('editForm').action = '/agences_edit/' + id;
+            document.getElementById('nom_agence').value = nom;
+            document.getElementById('localisation').value = localisation;
+            document.getElementById('email_agence').value = email;
+            document.getElementById('contact_agence').value = contact;
+            document.getElementById('site_web').value = site_web;
+
+            var editModal = new bootstrap.Modal(document.getElementById('editModal'));
+            editModal.show();
+        }
+    </script>
+
+    
   </body>
 </html>

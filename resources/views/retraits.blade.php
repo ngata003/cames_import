@@ -24,7 +24,7 @@
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
               <li class="nav-item">
-                  <a class="nav-link" href="entreprise">
+                  <a class="nav-link" href="entreprise_management">
                     <i class="menu-icon mdi mdi-home"></i>
                     <span class="menu-title"> Entreprise   </span>
                   </a>
@@ -98,7 +98,7 @@
                                       <p class="card-subtitle card-subtitle-dash"> management des retraits colis </p>
                                     </div>
                                     <div>
-                                        
+
                                     </div>
                                   </div>
                                   <div class="table-responsive  mt-1">

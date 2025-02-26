@@ -75,15 +75,6 @@
             <div class="row">
               <div class="col-sm-12">
                 <div class="home-tab">
-                  <div class="d-sm-flex align-items-center justify-content-between border-bottom">
-                    <div>
-                      <div class="btn-wrapper">
-                        <a href="#" class="btn btn-otline-dark align-items-center"><i class="icon-share"></i> importer des commandes sur excel</a>
-                        <a href="#" class="btn btn-otline-dark"><i class="icon-printer"></i> pdf des commandes  </a>
-                        <a href="#" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Exporter des commandes sur excel  </a>
-                      </div>
-                    </div>
-                  </div>
                   <div class="tab-content tab-content-basic">
                     <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
                       <div class="row">
@@ -94,8 +85,8 @@
                                 <div class="card-body">
                                   <div class="d-sm-flex justify-content-between align-items-start">
                                     <div>
-                                      <h4 class="card-title card-title-dash"> Espace Retraits </h4>
-                                      <p class="card-subtitle card-subtitle-dash"> management des retraits colis </p>
+                                      <h4 class="card-title card-title-dash"> Espace Entreprise </h4>
+                                      <p class="card-subtitle card-subtitle-dash"> modifier les informations de votre entreprise en toute sécurité. </p>
                                     </div>
                                     <div>
 
@@ -105,38 +96,43 @@
                                     <table class="table select-table">
                                       <thead>
                                         <tr>
-                                          <th> id </th>
-                                          <th> Nom client </th>
-                                          <th>   montant paye </th>
-                                          <th> total commande  </th>
-                                          <th>  moyen paiement </th>
-                                          <th> reste </th>
-                                          <th> actions </th>
+                                            <th> Nom Entreprise  </th>
+                                            <th> Email Entreprise  </th>
+                                            <th> Fax Entreprise  </th>
+                                            <th> Site Web   </th>
+                                            <th> Logo  </th>
+                                            <th> Localisation  </th>
+                                            <th> actions </th>
                                         </tr>
                                       </thead>
                                       <tbody>
+                                        @foreach ($infos as $inf  )
                                         <tr>
-                                          <td>
-                                            <div class="d-flex ">
-                                                <h6>1</h6>
-                                            </div>
-                                          </td>
-                                          <td>
-                                            <div class="d-flex ">
-                                                <h6>Brandon </h6>
-                                            </div>
-                                          </td>
-                                          <td>
-                                            <h6> 345677777</h6>
-                                          </td>
-                                          <td>
-                                            <div class="badge badge-opacity-success">Completed</div>
-                                          </td>
-                                          <td>
-                                            <button class="btn btn-success"> activer le retrait </button>
-                                            <button class="btn btn-danger"> supprimer le retrait </button>
-                                          </td>
-                                        </tr>
+                                            <td>
+                                              <div class="d-flex ">
+                                                  <h6>{{$inf->nom_entreprise}}</h6>
+                                              </div>
+                                            </td>
+                                            <td>
+                                              <h6>{{$inf->email_entreprise}}</h6>
+                                            </td>
+                                            <td>
+                                              <h6>{{$inf->fax_entreprise}}</h6>
+                                            </td>
+                                            <td>
+                                              <h6>{{$inf->site_web}}</h6>
+                                            </td>
+                                            <td>
+                                              <img src="assets/images/{{$inf->logo_entreprise}}" alt="">
+                                            </td>
+                                            <td>
+                                              <h6>{{$inf->localisation}}</h6>
+                                            </td>
+                                            <td>
+                                              <button class="btn btn-success"> modifier infos  </button>
+                                            </td>
+                                          </tr>
+                                        @endforeach
                                       </tbody>
                                     </table>
                                   </div>

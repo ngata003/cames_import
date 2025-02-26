@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agence;
+use Auth;
 use Illuminate\Http\Request;
+use Session;
 
 class AgenceController extends Controller
 {
@@ -31,23 +33,46 @@ class AgenceController extends Controller
             'localisation' => 'nullable|regex:/^[a-zA-ZÀ-ÿ\s-]+$/',
             'email_agence' => 'nullable|email|regex:/^[a-zA-Z]+[a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/',
             'site_web' => 'nullable|regex:/^(https?:\/\/)?([\w\-]+\.)+[\w]{2,}(\/\S*)?$/',
-            'nom_gestionnaire' => 'required',
-            'nom_entreprise' => 'required',
-
         ], $messages);
+
+        $user = Auth::user();
+
+        $entreprise = Session::get('entreprise_active');
+
+        $entreprise_nom = $entreprise->nom_entreprise;
+
+        $nom_gestionnaire = $user-> name;
 
         $agence = new Agence();
 
         $agence->nom_agence = $request->input('nom_agence');
         $agence->contact_agence = $request->input('contact_agence');
-        $agence->localisation = $request->input('localisaton');
+        $agence->localisation = $request->input('localisation');
         $agence->email_agence = $request->input('email_agence');
-        $agence->nom_gestionnaire = $request->input('nom_gestionnaire');
-        $agence->nom_entreprise = $request->input('nom_entreprise');
+        $agence->nom_gestionnaire = $nom_gestionnaire;
+        $agence->nom_entreprise = $entreprise_nom;
         $agence->site_web = $request->input('site_web');
 
         $agence->save();
 
         return back()->with('agence_success','agence enregistré avec succès');
+    }
+
+    public function affichage_vue(){
+        $entreprise = Session::get('entreprise_active');
+
+        $nom_entreprise = $entreprise->nom_entreprise;
+
+        $user = Auth::user();
+
+        if ($user->role === 'etranger') {
+            $agences = Agence::where('nom_gestionnaire',$user->name)->where('nom_entreprise',$nom_entreprise)->get();
+            return view('agences.agence', compact('agences'));
+        }
+        elseif ($user->role === 'admin') {
+            $agences = Agence::where('nom_entreprise',$nom_entreprise)->get();
+
+            return view('agences.agence', compact('agences'));
+        }
     }
 }

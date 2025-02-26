@@ -74,5 +74,14 @@ class EntrepriseController extends Controller
         return redirect('/accueil');
     }
 
+    public function affichage_vue(){
+        $entreprise = Session::get('entreprise_active');
+
+        $nom_entreprise = $entreprise->nom_entreprise;
+
+        $infos = Entreprise::where('nom_entreprise',$nom_entreprise)->get();
+
+        return view('entreprise_management', compact('infos'));
+    }
 
 }

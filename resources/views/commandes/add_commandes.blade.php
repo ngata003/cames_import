@@ -26,7 +26,7 @@
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
               <li class="nav-item">
-                  <a class="nav-link" href="entreprise">
+                  <a class="nav-link" href="entreprise_management">
                     <i class="menu-icon mdi mdi-home"></i>
                     <span class="menu-title"> Entreprise   </span>
                   </a>
