@@ -36,3 +36,5 @@ Route::post('/add_entreprise',[EntrepriseController::class,'add_entreprise']);
 Route::get('/entreprise', function (){return view('entreprise');});
 Route::get('/entreprise_management',[EntrepriseController::class,'affichage_vue']);
 Route::post('/add_agences', [AgenceController::class,'add_agencies']);
+Route::put('/agences_edit/{id}', [AgenceController::class, 'update_agence']);
+Route::delete('/agences_delete/{id}',[AgenceController::class,'delete_agences']);

@@ -75,4 +75,28 @@ class AgenceController extends Controller
             return view('agences.agence', compact('agences'));
         }
     }
+
+
+    public function update_agence(Request $request, $id){
+        $agency = Agence::find($id);
+
+        $agency->nom_agence = $request->input('nom_agence');
+        $agency->contact_agence = $request->input('contact_agence');
+        $agency->site_web = $request->input('site_web');
+        $agency->localisation = $request->input('localisation');
+        $agency->email_agence = $request->input('email_agence');
+
+        $agency->save();
+
+        return back()->with('update_success','informations d\'agence modifiées avec succès');
+
+    }
+
+    public function delete_agences($id){
+        $agences = Agence::find($id);
+
+        $agences->delete();
+
+        return back()->with('delete_status','agence supprimée avec succès');
+    }
 }

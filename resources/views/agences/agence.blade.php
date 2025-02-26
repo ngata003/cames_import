@@ -141,7 +141,7 @@
                                             </td>
                                             <td>
                                               <button class="btn btn-success text-white" data-id="{{$agen->id}}" data-nom="{{$agen->nom_agence}}" data-email="{{$agen->email_agence}}" data-contact="{{$agen->contact_agence}}" data-site_web="{{$agen->site_web}}" data-localisation="{{$agen->localisation}}" onclick="openEditModal(this)" > modifier </button>
-                                              <button class="btn btn-danger text-white "> supprimer </button>
+                                              <button class="btn btn-danger text-white " data-id="{{$agen->id}}" onclick="openDeleteModal(this)"> supprimer </button>
                                             </td>
                                           </tr>
                                         @endforeach
@@ -213,6 +213,7 @@
                 <div class="modal-body">
                     <form method="POST"  action="" id="editForm" >
                         @csrf
+                        @method('PUT')
                        <div class="mb-3">
                             <label for="centreName" class="form-label">Nom Agence </label>
                             <input type="text" name="nom_agence" class="form-control" id="nom_agence" placeholder="entrer un nom d'agence valide ">
@@ -240,6 +241,27 @@
                     </form>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalLabel">Supprimer une agence </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Êtes-vous sûr de vouloir supprimer cette agence  ?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Non</button>
+              <form method="POST" id="deleteForm">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-primary">Oui</button>
+              </form>
+            </div>
+          </div>
         </div>
     </div>
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
@@ -275,6 +297,16 @@
         }
     </script>
 
-    
+    <script>
+        function openDeleteModal(button) {
+        var id = button.getAttribute('data-id');
+        document.getElementById('deleteForm').action = '/agences_delete/' + id;
+
+        var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        deleteModal.show();
+        }
+    </script>
+
+
   </body>
 </html>
