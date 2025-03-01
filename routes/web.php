@@ -23,7 +23,8 @@ Route::get('/', function () { return view('authentification.inscription');});
 Route::get('/reset_password',function(){return view('authentification.reset_password');});
 Route::get('/forget_password',function(){return view('authentification.forget_password');});
 Route::get('/ajout_commandes', function(){return view('commandes.add_commandes');});
-Route::get('/gestionnaires',function(){return view('gestionnaires.gestionnaires');});
+
+Route::get('/gestionnaires', [UserController::class,'affichage_vue']);
 
 Route::get('/agences',[AgenceController::class,'affichage_vue']);
 
@@ -38,3 +39,7 @@ Route::get('/entreprise_management',[EntrepriseController::class,'affichage_vue'
 Route::post('/add_agences', [AgenceController::class,'add_agencies']);
 Route::put('/agences_edit/{id}', [AgenceController::class, 'update_agence']);
 Route::delete('/agences_delete/{id}',[AgenceController::class,'delete_agences']);
+Route::put('/gestionnaires_edit/{id}', [UserController::class,'update_gestionnaires']);
+Route::delete('/gestionnaires_delete/{id}',[UserController::class,'delete_gestionnaires']);
+Route::post('/add_gestionnaires',[UserController::class,'add_gestionnaires']);
+Route::put('/entreprise_edit/{id}',[EntrepriseController::class,'update_entreprise']);

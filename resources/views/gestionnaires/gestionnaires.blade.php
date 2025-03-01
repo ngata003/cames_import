@@ -110,41 +110,47 @@
                                           <th> Nom </th>
                                           <th> Email </th>
                                           <th> Contact </th>
-                                          <th> localisation </th>
+                                          <th> Residence </th>
                                           <th> connecté(e) ?</th>
                                           <th> actions </th>
                                         </tr>
                                       </thead>
                                       <tbody>
+                                        @foreach ($gestionnaires as $gestion )
                                         <tr>
-                                          <td>
-                                            <div class="d-flex ">
-                                              <img src="assets/images/faces/face1.jpg" alt="">
-                                              <div>
-                                                <h6>Brandon Washington</h6>
-                                                <p>Head admin</p>
+                                            <td>
+                                              <div class="d-flex ">
+                                                <img src="assets/images/{{$gestion->profil}}" alt="">
+                                                <div>
+                                                  <span>{{$gestion->name}}</span>
+                                                  <p>{{$gestion->role}}</p>
+                                                </div>
                                               </div>
-                                            </div>
-                                          </td>
-                                          <td>
-                                            <h6>Company name 1</h6>
-                                          </td>
-                                          <td>
-                                            <div>
-                                                <h6> 65788997766</h6>
-                                            </div>
-                                          </td>
-                                          <td>
-                                            <h6> Douala pk15 </h6>
-                                          </td>
-                                          <td>
-                                            <div class="badge badge-opacity-warning">In progress</div>
-                                          </td>
-                                          <td>
-                                            <button class="btn btn-secondary text-white"  > modifier </button>
-                                            <button class="btn btn-danger text-white " > supprimer </button>
-                                          </td>
-                                        </tr>
+                                            </td>
+                                            <td>
+                                              <span> {{$gestion->email}}</span>
+                                            </td>
+                                            <td>
+                                              <div>
+                                                  <span> {{$gestion->contact}}</span>
+                                              </div>
+                                            </td>
+                                            <td>
+                                                <span> {{$gestion->residence}}</span>
+                                            </td>
+                                            <td>
+                                                @if ($gestion->is_connected)
+                                                <div class="badge badge-opacity-success"> connecté(e) </div>
+                                                @else
+                                                <div class="badge badge-opacity-danger"> Deconnecté(e) </div>
+                                                @endif
+                                            </td>
+                                            <td>
+                                              <button class="btn btn-secondary text-white" data-id="{{$gestion->id}}" data-nom="{{$gestion->name}}" data-email= "{{$gestion->email}}" data-contact="{{$gestion->contact}}" data-residence="{{$gestion->residence}}" data-image="{{$gestion->profil}}" data-role="{{$gestion->role}}" onclick="openEditModal(this)"   > modifier </button>
+                                              <button class="btn btn-danger text-white" data-id="{{$gestion->id}}" onclick="openDeleteModal(this)" > supprimer </button>
+                                            </td>
+                                          </tr>
+                                        @endforeach
                                       </tbody>
                                     </table>
                                   </div>
@@ -197,14 +203,12 @@
                         </div>
                         <div class="mb-3">
                             <label for="centreName" class="form-label"> residence </label>
-                            <input type="text" name="residence" class="form-control" id="centreName" placeholder="entrer une localisation">
+                            <input type="text" name="residence" class="form-control"  placeholder="entrer une localisation">
                         </div>
                         <div class="mb-3">
                             <label for="centreName" class="form-label"> profil </label>
                             <input type="file" name="profil" class="form-control" id="">
                         </div>
-                        <input type="hidden" name="nom_createur" class="form-control" value="" id="" placeholder="">
-                        <input type="hidden" name="nom_entreprise" value="" class="form-control" id="" placeholder="">
                         <div class="button-container">
                           <input type="submit" class="button btn btn-success" name="save" value="Enregistrer">
                           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
@@ -214,6 +218,119 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Ajouter une agence   </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST"  action="" id="editForm" >
+                        @csrf
+                        @method('PUT')
+
+                        <div class="mb-3">
+                            <label for="centreName" class="form-label">Nom </label>
+                            <input type="text" name="name" class="form-control" id="name" placeholder="entrer un nom valide ">
+                        </div>
+                        <div class="mb-3">
+                            <label for="centreName" class="form-label"> Email </label>
+                            <input type="email" name="email" class="form-control" id="email" placeholder="entrer un email valide ">
+                        </div>
+                        <div class="mb-3">
+                            <label for="centreName" class="form-label"> Contact </label>
+                            <input type="tel" name="contact" class="form-control" id="contact" placeholder="entrer un contact valide">
+                        </div>
+                        <div class="mb-3">
+                            <label for="centreName" class="form-label"> role du gestionnaire </label>
+                            <select name="role" class="form-control" id="role">
+                                <option> selectionnez un role </option>
+                                <option value="importateur"> importateur </option>
+                                <option value="secretaire"> secretaire </option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="centreName" class="form-label"> residence </label>
+                            <input type="text" name="residence" id="residence" class="form-control"  placeholder="entrer une localisation">
+                        </div>
+                        <div class="mb-3">
+                            <label for="centreName" class="form-label"> profil </label>
+                            <input type="file" name="profil" class="form-control" id="">
+                        </div>
+                        <img src="" alt="" height="45px" width="45px" id="newImage">
+                        <div class="button-container">
+                          <input type="submit" class="button btn btn-success" name="save" value="Enregistrer">
+                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel"> gestionnaire ajouté avec succès </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <i class="mdi mdi-check-circle-outline mdi-36px text-success"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalLabel">Supprimer le gestionnaire </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Êtes-vous sûr de vouloir supprimer ce gestionnaire ?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Non</button>
+              <form method="POST" id="deleteForm">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-primary">Oui</button>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="modal fade" id="deleterModal" tabindex="-1" aria-labelledby="deleterModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleterModalLabel"> gestionnaire supprimé avec succès. </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <i class="mdi mdi-check-circle-outline mdi-36px text-success"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editeModal" tabindex="-1" aria-labelledby="editeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editeModalLabel"> gestionnaire modifié avec succès </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <i class="mdi mdi-check-circle-outline mdi-36px text-success"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <script src="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
     <script src="assets/vendors/chart.js/chart.umd.js"></script>
@@ -227,5 +344,73 @@
     <script src="assets/js/dashboard.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function openEditModal(button) {
+            var id = button.getAttribute('data-id');
+            var nom = button.getAttribute('data-nom');
+            var residence = button.getAttribute('data-residence');
+            var contact = button.getAttribute('data-contact');
+            var email = button.getAttribute('data-email');
+            var role = button.getAttribute('data-role');
+            var image = button.getAttribute('data-image');
+
+            document.getElementById('editModalLabel').textContent = 'Editer une agence ';
+            document.getElementById('editForm').action = '/gestionnaires_edit/' + id;
+            document.getElementById('name').value = nom;
+            document.getElementById('email').value = email;
+            document.getElementById('residence').value = residence;
+            document.getElementById('role').value = role;
+            document.getElementById('contact').value = contact;
+            document.getElementById('newImage').src = "assets/images/" + image;
+
+            var editModal = new bootstrap.Modal(document.getElementById('editModal'));
+            editModal.show();
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+        @if(session('gestionnaires_updated'))
+            var updateModal = new bootstrap.Modal(document.getElementById('updateModal'));
+            updateModal.show();
+        @endif
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+        @if(session(''))
+            var deleterModal = new bootstrap.Modal(document.getElementById('deleterModal'));
+            deleterModal.show();
+        @endif
+        });
+    </script>
+    <script>
+        function openDeleteModal(button) {
+        var id = button.getAttribute('data-id');
+        document.getElementById('deleteForm').action = '/gestionnaires_delete/' + id;
+
+        var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        deleteModal.show();
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+        @if(session('gestionnaires_deleted'))
+            var deleterModal = new bootstrap.Modal(document.getElementById('deleterModal'));
+            deleterModal.show();
+        @endif
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+        @if(session('gestionnaires_updated'))
+            var editeModal = new bootstrap.Modal(document.getElementById('editeModal'));
+            editeModal.show();
+        @endif
+        });
+    </script>
   </body>
 </html>

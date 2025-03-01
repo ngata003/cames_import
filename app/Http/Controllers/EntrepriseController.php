@@ -84,4 +84,18 @@ class EntrepriseController extends Controller
         return view('entreprise_management', compact('infos'));
     }
 
+    public function update_entreprise(Request $request,$id){
+        $entreprise = Entreprise::find($id);
+
+        $entreprise->nom_entreprise = $request->input('nom_entreprise');
+        $entreprise->email_entreprise = $request->input('email_entreprise');
+        $entreprise->fax_entreprise = $request->input('fax_entreprise');
+        $entreprise->site_web = $request->input('site_web');
+        $entreprise->localisation = $request->input('localisation');
+
+        $entreprise->save();
+
+        return back()->with('updated_status','entreprise modifié avec succès');
+    }
+
 }

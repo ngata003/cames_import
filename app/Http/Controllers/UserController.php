@@ -121,12 +121,20 @@ class UserController extends Controller
             $utilisateur->is_connected = true;
             $utilisateur->save();
 
-            if ($utilisateur -> entreprise_created) {
-                return redirect('/accueil')->with('status','connexion reussie');
+            if($utilisateur->type == 'admin' && $utilisateur->role == 'admin'){
+
+                if ($utilisateur -> entreprise_created) {
+
+                    Session::put('');
+                    return redirect('/accueil')->with('status','connexion reussie');
+                }
+                else{
+                    return redirect('/entreprise')->with('connexion_succeed','votre connexion a reussi');
+                }
+
             }
-            else{
-                return redirect('/entreprise')->with('connexion_succeed','votre connexion a reussi');
-            }
+
+
         }
 
         else{
@@ -135,6 +143,8 @@ class UserController extends Controller
     }
 
     public function add_gestionnaires (Request $request){
+
+        //dd($request->all());
 
         $messages = [
             'name.required' => 'veuillez remplir le champ Nom',
@@ -156,8 +166,8 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email|regex:/^[a-zA-Z]+[a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/',
             'contact' => 'required|unique:users,contact|regex:/^\+?[1-9]\d{6,14}$/',
             'type' => 'required',
+            'residence' =>'required',
             'role' => 'required',
-            'password' => 'required|max:12',
             'profil' => 'nullable|image|mimes:jpeg,jpg,png,svg,gif|max:2048',
         ], $messages);
 
@@ -182,6 +192,7 @@ class UserController extends Controller
         $gestionnaires->name = $request->input('name');
         $gestionnaires->email = $request->input('email');
         $gestionnaires->contact = $request->input('contact');
+        $gestionnaires->residence = $request->input('residence');
         $gestionnaires->type = $request->input('type');
         $gestionnaires->role = $request->input('role');
         $gestionnaires->profil = $profilName;
@@ -191,7 +202,40 @@ class UserController extends Controller
 
         $gestionnaires->save();
 
-        return back()->with('save_success','gestionnaire ajouté avec succès');
+        return back()->with('successful','gestionnaire ajouté avec succès');
+    }
+
+
+    public function update_gestionnaires(Request $request , $id){
+        $user = User::find($id);
+
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->contact = $request->input('contact');
+        $user->role = $request->input('role');
+        $user->residence = $request->input('residence');
+
+        $user->save();
+
+        return back()->with('gestionnaire_updated','gestionnaire modifié avec succès');
+    }
+
+    public function delete_gestionnaires($id){
+        $gestionnaires = User::find($id);
+
+        $gestionnaires->delete();
+
+        return back()->with('gestionnaires_deleted','gestionnaire supprimé avec succès');
+    }
+
+    public function affichage_vue(){
+        $user = Auth::user();
+
+        $entreprise_active = Session::get('entreprise_active');
+
+        $gestionnaires = User::where('nom_createur', $user->name)->where('nom_entreprise',$entreprise_active->nom_entreprise)->get();
+
+        return view('gestionnaires.gestionnaires', compact('gestionnaires') );
     }
 
 }
