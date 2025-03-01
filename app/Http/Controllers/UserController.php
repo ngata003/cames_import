@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Entreprise;
 use App\Models\User;
 use Auth;
 use Hash;
@@ -124,14 +125,23 @@ class UserController extends Controller
             if($utilisateur->type == 'admin' && $utilisateur->role == 'admin'){
 
                 if ($utilisateur -> entreprise_created) {
-
-                    Session::put('');
+                    $entreprise = Entreprise::where('nom_gestionnaire',$utilisateur->name)->first();
+                    Session::put('entreprise_active',$entreprise);
                     return redirect('/accueil')->with('status','connexion reussie');
                 }
                 else{
                     return redirect('/entreprise')->with('connexion_succeed','votre connexion a reussi');
                 }
 
+            }
+
+            elseif($utilisateur->type == 'gestionnaire'){
+
+                $entreprise = Entreprise::where('nom_entreprise',$utilisateur->nom_entreprise)->first();
+
+                Session::put('entreprise_active',$entreprise);
+
+                return redirect('/accueil');
             }
 
 
@@ -214,6 +224,21 @@ class UserController extends Controller
         $user->contact = $request->input('contact');
         $user->role = $request->input('role');
         $user->residence = $request->input('residence');
+
+        if ($request->hasFile('profil')) {
+            if ($user->profil) {
+                $oldImagePath = public_path('assets/images/' . $user->profil);
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+            $profil = $request->file('profil');
+            $userImage = time() . '.' . $profil->getClientOriginalExtension();
+            $profil->move(public_path('/assets/images'), $userImage);
+
+            $user->profil = $userImage;
+        }
+
 
         $user->save();
 

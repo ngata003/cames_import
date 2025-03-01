@@ -82,7 +82,7 @@
                       <div class="btn-wrapper">
                         <a href="#" class="btn btn-otline-dark align-items-center"><i class="icon-share"></i> importer des gestionnaires sur excel</a>
                         <a href="#" class="btn btn-otline-dark"><i class="icon-printer"></i> imprimer des gestionnaires </a>
-                        <a href="#" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Exporter des gestionnaires </a>
+                        <a href="/export_users" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Exporter des gestionnaires </a>
                       </div>
                     </div>
                   </div>
