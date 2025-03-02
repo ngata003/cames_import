@@ -5,7 +5,7 @@ use App\Http\Controllers\AgenceController;
 use App\Http\Controllers\EntrepriseController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use Maatwebsite\Excel\Excel;
+use Maatwebsite\Excel\Facades\Excel;
 
 /*
 |--------------------------------------------------------------------------

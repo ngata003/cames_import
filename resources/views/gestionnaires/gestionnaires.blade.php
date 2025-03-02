@@ -226,7 +226,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST"  action="" id="editForm" >
+                    <form method="POST" enctype="multipart/form-data"  action="" id="editForm" >
                         @csrf
                         @method('PUT')
 
@@ -370,9 +370,9 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
 
-        @if(session('gestionnaires_updated'))
-            var updateModal = new bootstrap.Modal(document.getElementById('updateModal'));
-            updateModal.show();
+        @if(session('gestionnaire_updated'))
+            var editeModal = new bootstrap.Modal(document.getElementById('editeModal'));
+            editeModal.show();
         @endif
         });
     </script>
@@ -406,9 +406,9 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
 
-        @if(session('gestionnaires_updated'))
-            var editeModal = new bootstrap.Modal(document.getElementById('editeModal'));
-            editeModal.show();
+        @if(session('gestionnaire_added'))
+            var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            successModal.show();
         @endif
         });
     </script>

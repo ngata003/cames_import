@@ -212,7 +212,7 @@ class UserController extends Controller
 
         $gestionnaires->save();
 
-        return back()->with('successful','gestionnaire ajouté avec succès');
+        return back()->with('gestionnaire_added','gestionnaire ajouté avec succès');
     }
 
 

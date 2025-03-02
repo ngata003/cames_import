@@ -3,8 +3,8 @@
 namespace App\Exports;
 
 use App\Models\User;
-use App\Models\users;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class UsersExport implements FromCollection
 {
@@ -13,7 +13,7 @@ class UsersExport implements FromCollection
     */
     public function collection()
     {
-        return User::select('nom','email','contact','residence','role')->where('type','gestionnaire')->get();
+        return User::select('name','email','contact','residence','role')->where('type','gestionnaire')->get();
     }
 
     public function headings():array{
