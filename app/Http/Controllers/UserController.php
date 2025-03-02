@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendPassword;
 use App\Models\Entreprise;
 use App\Models\User;
 use Auth;
 use Hash;
 use Illuminate\Http\Request;
+use Mail;
 use Session;
 use Str;
 
@@ -211,6 +213,12 @@ class UserController extends Controller
         $gestionnaires->nom_entreprise = $nom_entreprise;
 
         $gestionnaires->save();
+
+        Mail::to($gestionnaires->email)->send(mailable: new SendPassword(
+            $gestionnaires->name,
+            $gestionnaires->email,
+            $passwordFirst
+        ));
 
         return back()->with('gestionnaire_added','gestionnaire ajouté avec succès');
     }

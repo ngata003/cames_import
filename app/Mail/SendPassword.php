@@ -13,15 +13,19 @@ class SendPassword extends Mailable
 {
     use Queueable, SerializesModels;
 
+    private $email;
+    private $name;
+    private $passwordFirst;
+
     /**
      * Create a new message instance.
      */
-    public function __construct($password,$user)
+    public function __construct($name, $email, $passwordFirst)
     {
-        //
 
-        $this->password = $password;
-        $this->user = $user;
+        $this->name = $name;
+        $this->email = $email;
+        $this->passwordFirst = $passwordFirst;
     }
 
     /**
@@ -30,7 +34,7 @@ class SendPassword extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Send Password',
+            subject: 'Votre mot de passe pour accéder à votre compte'
         );
     }
 
@@ -41,10 +45,10 @@ class SendPassword extends Mailable
     {
         return new Content(
             view: 'emails.passwordGenerated',
-
             with: [
-                'user' => $this->user,
-                'password' => $this->password,
+                'name' => $this->name,
+                'password' => $this->passwordFirst,
+                'email' => $this->email
             ]
         );
     }
