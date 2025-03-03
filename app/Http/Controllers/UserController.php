@@ -261,6 +261,7 @@ class UserController extends Controller
         return back()->with('gestionnaires_deleted','gestionnaire supprimé avec succès');
     }
 
+
     public function affichage_vue(){
         $user = Auth::user();
 
@@ -269,6 +270,19 @@ class UserController extends Controller
         $gestionnaires = User::where('nom_createur', $user->name)->where('nom_entreprise',$entreprise_active->nom_entreprise)->get();
 
         return view('gestionnaires.gestionnaires', compact('gestionnaires') );
+    }
+
+    public function research_gestionnaires(){
+
+        $entreprise = Session::get('entreprise_active');
+
+        $nom_entreprise = $entreprise->nom_entreprise;
+
+        $research = $_GET['nom_gestionnaire'];
+
+        $gestionnaires = User::where('name','LIKE','%'.$research.'%')->orWhere('email', 'LIKE','%'.$research.'%')->where('nom_entreprise',$nom_entreprise)->get();
+
+        return view('gestionnaires.result_research',compact('gestionnaires'));
     }
 
 }

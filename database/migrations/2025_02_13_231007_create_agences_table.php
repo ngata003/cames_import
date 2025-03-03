@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('nom_entreprise');
 
 
-            $table->foreign('nom_gestionnaire')->references('name')->on('users')->onDelete('cascade');
+            $table->foreign('nom_gestionnaire')->references('name')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('nom_entreprise')->references('nom_entreprise')->on('entreprises')->onDelete('cascade');
             $table->timestamps();
         });

@@ -48,3 +48,4 @@ Route::post('/add_gestionnaires',[UserController::class,'add_gestionnaires']);
 Route::put('/entreprise_edit/{id}',[EntrepriseController::class,'update_entreprise']);
 Route::get('/export_users', function()  {return Excel::download(new UsersExport, 'users.xlsx');});
 Route::get('/gestionnaires_pdf',[pdfController::class,'generateGestionnairesPdf']);
+Route::get('/research_gestionnaires',[UserController::class,'research_gestionnaires']);
