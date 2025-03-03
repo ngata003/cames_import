@@ -3,6 +3,7 @@
 use App\Exports\UsersExport;
 use App\Http\Controllers\AgenceController;
 use App\Http\Controllers\EntrepriseController;
+use App\Http\Controllers\pdfController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
@@ -45,6 +46,5 @@ Route::put('/gestionnaires_edit/{id}', [UserController::class,'update_gestionnai
 Route::delete('/gestionnaires_delete/{id}',[UserController::class,'delete_gestionnaires']);
 Route::post('/add_gestionnaires',[UserController::class,'add_gestionnaires']);
 Route::put('/entreprise_edit/{id}',[EntrepriseController::class,'update_entreprise']);
-Route::get('/export_users', function()  {
-    return Excel::download(new UsersExport, 'users.xlsx');
-});
+Route::get('/export_users', function()  {return Excel::download(new UsersExport, 'users.xlsx');});
+Route::get('/gestionnaires_pdf',[pdfController::class,'generateGestionnairesPdf']);

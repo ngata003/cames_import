@@ -183,6 +183,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -215,6 +216,8 @@ return [
 
     'Socialite' => Laravel\Socialite\Facades\Socialite::class,
     'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+
+
     ])->toArray(),
 
 ];

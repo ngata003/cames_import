@@ -80,8 +80,7 @@
                   <div class="d-sm-flex align-items-center justify-content-between border-bottom">
                     <div>
                       <div class="btn-wrapper">
-                        <a href="#" class="btn btn-otline-dark align-items-center"><i class="icon-share"></i> importer des gestionnaires sur excel</a>
-                        <a href="#" class="btn btn-otline-dark"><i class="icon-printer"></i> imprimer des gestionnaires </a>
+                        <a href="/gestionnaires_pdf" class="btn btn-otline-dark"><i class="icon-printer"></i> imprimer des gestionnaires </a>
                         <a href="/export_users" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Exporter des gestionnaires </a>
                       </div>
                     </div>
@@ -331,6 +330,27 @@
         </div>
     </div>
 
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="errorModalLabel">Erreur d'insertion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul id="errorList">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <script src="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
     <script src="assets/vendors/chart.js/chart.umd.js"></script>
@@ -410,6 +430,13 @@
             var successModal = new bootstrap.Modal(document.getElementById('successModal'));
             successModal.show();
         @endif
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            @if ($errors->any())
+                $("#errorModal").modal("show");
+            @endif
         });
     </script>
   </body>
