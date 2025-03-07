@@ -24,7 +24,7 @@ class Entreprise extends Model
         return $this->belongsTo(User::class,'nom_gestionnaire','name');
     }
 
-    public function employes(){
+    public function gestionnaires(){
         return $this->hasMany(User::class,'nom_entreprise','nom_entreprise');
     }
 }

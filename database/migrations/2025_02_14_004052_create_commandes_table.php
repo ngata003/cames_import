@@ -16,12 +16,13 @@ return new class extends Migration
             $table->string('nom_produit');
             $table->string('qte_commandee');
             $table->string('total');
+            $table->string('prix_unitaire');
             $table->string('nom_gestionnaire');
             $table->string('nom_entreprise');
 
-            $table->foreign('nom_gestionnaire')->references('name')->on('users')->onDelete('cascade');
-            $table->foreign('nom_entreprise')->references('nom_entreprise')->on('entreprises')->onDelete('cascade');
-            $table->foreignId('id_facture')->references('id')->on('factures')->onDelete('cascade');
+            $table->foreign('nom_gestionnaire')->references('name')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('nom_entreprise')->references('nom_entreprise')->on('entreprises')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('id_facture')->references('id')->on('factures')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

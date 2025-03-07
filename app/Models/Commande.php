@@ -12,13 +12,14 @@ class Commande extends Model
         'nom_produit',
         'qte_commandee',
         'total',
+        'prix_unitaire',
         'nom_gestionnaire',
         'nom_entreprise',
         'id_facture',
     ];
 
     public function user(){
-        return $this->belongsTo('nom_gestionnaire','name');
+        return $this->belongsTo(User::class, 'nom_gestionnaire','name');
     }
 
     public function entreprise (){

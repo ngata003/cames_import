@@ -20,13 +20,17 @@ class Facture extends Model
         'nom_entreprise',
     ];
 
-    public function user()
+    public function gestionnaire()
     {
         return $this->belongsTo(User::class,'nom_gestionnaire','name');
     }
 
     public function entreprise(){
         return $this->belongsTo('nom_entreprise','nom_entreprise');
+    }
+
+    public function depot(){
+        return $this->hasOne(Depot::class,'nom_client','nom_client');
     }
 
 }

@@ -157,11 +157,11 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Ajouter une agence   </h5>
+                    <h5 class="modal-title" id="editModalLabel"> Modifier votre entreprise    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST"  action="" id="editForm" >
+                    <form method="POST"  action="" enctype="multipart/form-data" id="editForm" >
                         @csrf
                         @method('PUT')
                        <div class="mb-3">
@@ -198,6 +198,29 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="errorModalLabel">Erreur d'inscription</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul id="errorList">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }} </li>
+                        @endforeach
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <script src="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
     <script src="assets/vendors/chart.js/chart.umd.js"></script>
@@ -231,6 +254,13 @@
             var editModal = new bootstrap.Modal(document.getElementById('editModal'));
             editModal.show();
         }
+    </script>
+    <script>
+        $(document).ready(function () {
+            @if ($errors->any())
+                $("#errorModal").modal("show");
+            @endif
+        });
     </script>
   </body>
 </html>

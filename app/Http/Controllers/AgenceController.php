@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agence;
+use App\Models\Commande;
 use Auth;
 use Illuminate\Http\Request;
 use Session;
@@ -98,5 +99,37 @@ class AgenceController extends Controller
         $agences->delete();
 
         return back()->with('delete_status','agence supprimée avec succès');
+    }
+
+    public function deposer_colis(){
+
+        $entreprise = Session::get('entreprise_active');
+
+        $nom_entreprise = $entreprise->nom_entreprise;
+
+        $clients =  Commande::where('nom_entreprise',$nom_entreprise)->get();
+        $agences = Agence::where('nom_entreprise',$nom_entreprise)->get();
+
+        return view('agences.depot_colis', compact('clients','agences'));
+    }
+
+    public function save_depot(Request $request){
+        $messages = [
+
+        ];
+
+        $request->validate([
+            'nom_client' =>'',
+            'nom_agence' => '',
+            'date_depart' => '',
+            'couleur_colis' => '',
+            'moyen_transport' => '',
+            'status' => 'required',
+            'duree_trajet' => '',
+            'image_colis' => '',
+        ], $messages);
+
+
+        
     }
 }

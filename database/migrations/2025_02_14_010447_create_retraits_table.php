@@ -20,9 +20,9 @@ return new class extends Migration
             $table->string('nom_gestionnaire');
 
 
-            $table->foreign('nom_agence')->references('nom_agence')->on('agences')->onDelete('cascade');
-            $table->foreign('nom_entreprise')->references('nom_entreprise')->on('entreprises')->onDelete('cascade');
-            $table->foreign('nom_gestionnaire')->references('name')->on('users')->onDelete('cascade');
+            $table->foreign('nom_agence')->references('nom_agence')->on('agences')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('nom_entreprise')->references('nom_entreprise')->on('entreprises')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('nom_gestionnaire')->references('name')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

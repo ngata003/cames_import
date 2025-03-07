@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('retraits', function (Blueprint $table) {
             //
-            $table->string('status');
+            $table->string('status')->default(false);
         });
     }
 

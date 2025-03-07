@@ -12,16 +12,17 @@ class Retrait extends Model
         'nom_client',
         'date_retrait',
         'nom_agence',
+        'status',
         'nom_gestionnaire',
         'nom_entreprise',
     ];
 
     public function user()
     {
-        return $this->belongsTo('nom_gestionnaire','name');
+        return $this->belongsTo(User::class, 'nom_gestionnaire','name');
     }
 
     public function entreprise(){
-        return $this->belongsTo('nom_entreprise','nom_entreprise');
+        return $this->belongsTo(Entreprise::class , 'nom_entreprise','nom_entreprise');
     }
 }

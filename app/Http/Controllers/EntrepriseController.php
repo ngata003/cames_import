@@ -86,15 +86,16 @@ class EntrepriseController extends Controller
 
     public function update_entreprise(Request $request,$id){
 
-        /*$messages= [
-
-
-        ];
-
-
         $request->validate([
 
-        ]);*/
+            'nom_entreprise' => 'required|regex:/^[a-zA-ZÀ-ÿ\s-]+$/',
+            'email_entreprise' => 'required|email|regex:/^[a-zA-Z]+[a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/',
+            'fax_entreprise' => 'required|regex:/^\+?[1-9]\d{6,14}$/',
+            'localisation' => 'nullable|string|max:255|regex:/^[a-zA-ZÀ-ÿ\s-]+$/',
+            'site_web' => 'nullable|regex:/^(https?:\/\/)?(www\.)?[\w\-]+\.[a-zA-Z]{2,6}(\/\S*)?$/',
+            'logo_entreprise' => 'nullable|image|mimes:jpeg,jpg,png,svg,gif|max:2048',
+
+        ]);
 
 
         $entreprise = Entreprise::find($id);
@@ -105,19 +106,18 @@ class EntrepriseController extends Controller
         $entreprise->site_web = $request->input('site_web');
         $entreprise->localisation = $request->input('localisation');
 
-
         if ($request->hasFile('logo_entreprise')) {
             if ($entreprise->logo_entreprise) {
-                $oldImagePath = public_path('images/' . $entreprise->logo_entreprise);
+                $oldImagePath = public_path('assets/images/' . $entreprise->logo_entreprise);
                 if (file_exists($oldImagePath)) {
                     unlink($oldImagePath);
                 }
             }
             $logo = $request->file('logo_entreprise');
-            $logoName = time() . '.' . $logo->getClientOriginalExtension();
-            $logo->move(public_path('/assets/images'), $logoName);
+            $logo_entreprise = time() . '.' . $logo->getClientOriginalExtension();
+            $logo->move(public_path('/assets/images'), $logo_entreprise);
 
-            $entreprise->logo_entreprise = $logoName;
+            $entreprise->logo_entreprise = $logo_entreprise;
         }
 
         $entreprise->save();

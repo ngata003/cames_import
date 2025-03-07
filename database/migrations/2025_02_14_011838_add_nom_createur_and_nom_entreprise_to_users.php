@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('nom_createur')->nullable();
             $table->string('nom_entreprise')->nullable();
 
-            $table->foreign('nom_createur')->references('name')->on('users')->onDelete('cascade');
-            $table->foreign('nom_entreprise')->references('nom_entreprise')->on('entreprises')->onDelete('cascade');
+            $table->foreign('nom_createur')->references('name')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('nom_entreprise')->references('nom_entreprise')->on('entreprises')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

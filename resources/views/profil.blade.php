@@ -71,92 +71,35 @@
               </li>
             </ul>
         </nav>
-        
+
         <div class="main-panel">
-          <div class="content-wrapper">
-            <div class="row">
-              <div class="col-12 grid-margin">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title"> Espace Commandes </h4>
-                    <form class="form-sample">
-                      <p class="card-description"> Rentrer une commande  </p>
-                      <div class="row">
-                        <div class="col-md-4">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label"> Nom Client </label>
-                            <div class="col-sm-8">
-                              <input type="text" name="nom_client" class="form-control" />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-4">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label"> Email client </label>
-                            <div class="col-sm-8">
-                              <input type="email" name="email_client" class="form-control" />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-4">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label"> Contact client </label>
-                            <div class="col-sm-8">
-                              <input type="tel" name="contact_client" class="form-control" />
-                            </div>
+            <div class="content-wrapper">
+                <div class="row">
+                  <div class="col-md-8 grid-margin stretch-card">
+                    <div class="card">
+                      <div class="card-body">
+                        <h4 class="card-title">Profil Utilisateur</h4>
+                        <div class="d-flex align-items-center">
+                            @if (Auth::check())
+                            <?php $user =Auth::user(); ?>
+                            <div class="me-4">
+                                <img src="assets/images/{{$user->profil}}" alt="Photo de profil" id="user_image"
+                                  class="rounded-circle" style="width: 200px; height: 200px; border: 3px solid #ddd;">
+                              </div>
+                              <div class="flex-grow-1">
+                                <h5 class="mb-2" id="user_name"> {{$user->name}}</h5>
+                                <p><strong>Email :</strong> <span id="user_email">{{$user->email}}</span></p>
+                                <p><strong>Contact :</strong> <span id="user_contact">{{$user->contact}}</span></p>
+                                <p><strong>Adresse :</strong> <span id="user_address"> {{$user->residence}} </span></p>
+                            @endif
+                            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editProfileModal">Modifier</button>
                           </div>
                         </div>
                       </div>
-
-                      <div id="commandesContainer">
-                        <div class="row align-items-center g-3 mb-3">
-                            <div class="col-md-3">
-                                <input type="text" name="nom_produit0" class="form-control" placeholder="entrer un nom de produit" />
-                            </div>
-                            <div class="col-md-3">
-                                <input type="number" name="quantite0" class="form-control" placeholder="entrer une quantite" />
-                            </div>
-                            <div class="col-md-3">
-                                <input type="number" name="prix_produit0" class="form-control" placeholder="entrer un prix de produit " />
-                            </div>
-                            <div class="col-md-3">
-                                <input type="number" name="total0" class="form-control" placeholder="ici est le total" />
-                            </div>
-
-                        </div>
-                      </div>
-
-                      <div class="row align-items-center g-3 mb-3">
-                        <div class="col-md-3">
-                            <select class="form-select form-select-sm" name="moyen_paiement" id="exampleFormControlSelect3">
-                                <option selected> moyen paiement </option>
-                                <option value="orange_money"> orange money</option>
-                                <option value="mobilemoney_"> mobile money </option>
-                                <option value="cash"> cash </option>
-                                <option value="paiement_bancaire"> paiement bancaire</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <input type="number" name="total_commande" class="form-control" placeholder=" total commande" />
-                        </div>
-                        <div class="col-md-3">
-                            <input type="number" name="montant_paye" class="form-control" placeholder="montant verse " />
-                        </div>
-                        <div class="col-md-3">
-                            <input type="number" name="reste" class="form-control" placeholder="reste" />
-                        </div>
-
-                      </div>
-
-                      <button type="submit" class="btn btn-success me-2"> Enregistrer </button>
-                      <button class="btn btn-danger me-2"> annuler </button>
-                      <button type="button" id="ajouterCommande" class="btn btn-primary me-2"> Ajouter une nouvelle commande </button>
-                    </form>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
           @include('footer')
         </div>
       </div>

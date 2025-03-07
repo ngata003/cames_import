@@ -82,4 +82,8 @@ class User extends Authenticatable
     public function entreprise_employes(){
         return $this->belongsTo(Entreprise::class,'nom_entreprise','nom_entreprise');
     }
+
+    public function Depot(){
+        return $this->hasMany(Depot::class,'nom_gestionaire','name');
+    }
 }

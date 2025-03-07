@@ -32,7 +32,9 @@ Route::get('/gestionnaires', [UserController::class,'affichage_vue']);
 Route::get('/agences',[AgenceController::class,'affichage_vue']);
 
 Route::get('/retraits',function(){return view('retraits');});
-Route::get('/depot_colis',function(){return view('agences.depot_colis');});
+//Route::get('/depot_colis',function(){return view('agences.depot_colis');});
+
+Route::get('/depot_colis', [AgenceController::class,'deposer_colis']);
 Route::get('/command_enregistrees',function(){return view('commandes.rap_commandes');});
 Route::post('/add_inscriptions',[UserController::class,'inscription_code']);
 Route::post('/add_connexion',[UserController::class,'add_connexion']);
@@ -49,3 +51,7 @@ Route::put('/entreprise_edit/{id}',[EntrepriseController::class,'update_entrepri
 Route::get('/export_users', function()  {return Excel::download(new UsersExport, 'users.xlsx');});
 Route::get('/gestionnaires_pdf',[pdfController::class,'generateGestionnairesPdf']);
 Route::get('/research_gestionnaires',[UserController::class,'research_gestionnaires']);
+Route::post('/save_depot_colis',[AgenceController::class,'save_depot']);
+Route::get('/profil',function(){
+    return view('profil');
+});

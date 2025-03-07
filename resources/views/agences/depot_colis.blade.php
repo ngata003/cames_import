@@ -105,9 +105,12 @@
                                     <table class="table select-table">
                                       <thead>
                                         <tr>
-                                          <th> Nom du depositaire </th>
-                                          <th>  nom agence </th>
-                                          <th> date de depart </th>
+                                          <th>  Nom client </th>
+                                          <th>  Nom agence </th>
+                                          <th>  Couleur colis </th>
+                                          <th>  Image colis </th>
+                                          <th>  Moyen transport</th>
+                                          <th>  Date_depart </th>
                                           <th> progression </th>
                                           <th> status </th>
                                           <th> actions </th>
@@ -117,17 +120,32 @@
                                         <tr>
                                           <td>
                                             <div>
-                                            <h6> cames </h6>
+                                            <span> name </span>
                                             </div>
                                           </td>
                                           <td>
                                             <div>
-                                            <h6> camesmall62@gmail.com</h6>
+                                            <h6> jfi </h6>
                                             </div>
                                           </td>
                                           <td>
                                             <div>
-                                                <h6> 65788997766</h6>
+                                                <span> jaune </span>
+                                            </div>
+                                          </td>
+                                          <td>
+                                            <div>
+                                                <img src="" height="45px" width="45px" alt="">
+                                            </div>
+                                          </td>
+                                          <td>
+                                            <div>
+                                                <span> transport par bateau</span>
+                                            </div>
+                                          </td>
+                                          <td>
+                                            <div>
+                                                <span> 11-06-2002 </span>
                                             </div>
                                           </td>
                                           <td>
@@ -138,10 +156,12 @@
                                             </div>
                                           </td>
                                           <td>
-                                            <div class="badge badge-opacity-warning">En Route</div>
+                                            <div>
+                                                <span> en route </span>
+                                            </div>
                                           </td>
                                           <td>
-                                            <button class="btn btn-success"> recu </button>
+                                            <button class="btn btn-success"> modifier </button>
                                             <button class="btn btn-danger"> supprimer </button>
                                           </td>
                                         </tr>
@@ -175,31 +195,48 @@
                     <form method="POST" action="/add_agences" enctype="multipart/form-data">
                         @csrf
                        <div class="mb-3">
-                            <label for="centreName" class="form-label"> Nom recepteur  </label>
-                            <input type="text" name="nom_recepteur" class="form-control" id="" placeholder="entrer un nom d'agence valide ">
+                            <label for="centreName" class="form-label"> Nom Client  </label>
+                            <select name="nom_client" class="form-control" id="">
+                                <option> selectionnez un client  </option>
+                                @foreach ($clients  as $clt )
+                                <option value="{{$clt->nom_client}}"> {{$clt->nom_client}} </option>
+                                @endforeach
+                            </select>
                         </div>
                         <div>
                             <label for="centreName" class="form-label"> Nom de l'agence </label>
                             <select name="role" class="form-control" id="">
                                 <option> selectionnez une agence  </option>
-                                <option value="importateur"> importateur </option>
+                                @foreach ($agences as $agence )
+                                <option value="{{$agence->nom_agence}}"> {{$agence->nom_agence}} </option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="centreName" class="form-label"> date depart  </label>
-                            <input type="date" name="date_depart" class="form-control" id="" placeholder="entrer un site web valide ">
+                            <label for="date_depart" class="form-label"> date depart  </label>
+                            <input type="date" name="date_depart" class="form-control" id="" placeholder="entrer une date valide ">
                         </div>
-                        <input type="hidden" name="mois_trajet" value="2mois">
                         <div class="mb-3">
-                            <label for="centreName" class="form-label"> Status </label>
-                            <input type="tel" name="status" value="en-route" class="form-control" id="" placeholder="">
+                            <label for="couleur_colis" class="form-label"> couleur du colis (facultatif si image)  </label>
+                            <input type="text" name="couleur_colis" class="form-control" id="" placeholder="entrez la couleur du paquet du colis">
                         </div>
-                        <input type="hidden" name="nom_gestionnaire" value="" class="form-control" id="" placeholder="">
-                        <input type="hidden" name="nom_entreprise" value="" class="form-control" id="" placeholder="">
                         <div class="mb-3">
-                            <label for="centreName" class="form-label"> localisation </label>
-                            <input type="text" name="localisation" class="form-control" id="" placeholder="entrer une residence">
+                            <label for="imageColis" class="form-label">image du colis </label>
+                            <input type="file" name="image_colis" class="form-control" id="">
                         </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">moyen de transport </label>
+                            <select name="moyen_transport" class="form-control" id="">
+                                <option> selectionnez un moyen de transport  </option>
+                                <option value="transport_aerien"> transport aerien </option>
+                                <option value="transport_marin"> transport marin </option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="centreName" class="form-label"> durée du trajet </label>
+                            <input type="number" name="duree_trajet" class="form-control" id="" placeholder="Ex: 30 j ">
+                        </div>
+                        <input type="hidden" name="status" value="deposé">
                         <div class="button-container">
                           <input type="submit" class="button btn btn-success" name="save" value="Enregistrer">
                           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
