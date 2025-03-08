@@ -36,22 +36,24 @@ Route::get('/retraits',function(){return view('retraits');});
 
 Route::get('/depot_colis', [AgenceController::class,'deposer_colis']);
 Route::get('/command_enregistrees',function(){return view('commandes.rap_commandes');});
-Route::post('/add_inscriptions',[UserController::class,'inscription_code']);
-Route::post('/add_connexion',[UserController::class,'add_connexion']);
 Route::post('/add_entreprise',[EntrepriseController::class,'add_entreprise']);
 Route::get('/entreprise', function (){return view('entreprise');});
 Route::get('/entreprise_management',[EntrepriseController::class,'affichage_vue']);
-Route::post('/add_agences', [AgenceController::class,'add_agencies']);
-Route::put('/agences_edit/{id}', [AgenceController::class, 'update_agence']);
-Route::delete('/agences_delete/{id}',[AgenceController::class,'delete_agences']);
-Route::put('/gestionnaires_edit/{id}', [UserController::class,'update_gestionnaires']);
-Route::delete('/gestionnaires_delete/{id}',[UserController::class,'delete_gestionnaires']);
-Route::post('/add_gestionnaires',[UserController::class,'add_gestionnaires']);
+
 Route::put('/entreprise_edit/{id}',[EntrepriseController::class,'update_entreprise']);
 Route::get('/export_users', function()  {return Excel::download(new UsersExport, 'users.xlsx');});
 Route::get('/gestionnaires_pdf',[pdfController::class,'generateGestionnairesPdf']);
 Route::get('/research_gestionnaires',[UserController::class,'research_gestionnaires']);
 Route::post('/save_depot_colis',[AgenceController::class,'save_depot']);
-Route::get('/profil',function(){
-    return view('profil');
-});
+// routes pour les utilisateurs
+Route::get('/profil',function(){return view('profil');});
+Route::put('profil_update',[UserController::class,'update_profil']);
+Route::put('/gestionnaires_edit/{id}', [UserController::class,'update_gestionnaires']);
+Route::delete('/gestionnaires_delete/{id}',[UserController::class,'delete_gestionnaires']);
+Route::post('/add_gestionnaires',[UserController::class,'add_gestionnaires']);
+Route::post('/add_inscriptions',[UserController::class,'inscription_code']);
+Route::post('/add_connexion',[UserController::class,'add_connexion']);
+// routes pour les agences
+Route::post('/add_agences', [AgenceController::class,'add_agencies']);
+Route::put('/agences_edit/{id}', [AgenceController::class, 'update_agence']);
+Route::delete('/agences_delete/{id}',[AgenceController::class,'delete_agences']);

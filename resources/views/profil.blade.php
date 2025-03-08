@@ -90,9 +90,10 @@
                                 <h5 class="mb-2" id="user_name"> {{$user->name}}</h5>
                                 <p><strong>Email :</strong> <span id="user_email">{{$user->email}}</span></p>
                                 <p><strong>Contact :</strong> <span id="user_contact">{{$user->contact}}</span></p>
-                                <p><strong>Adresse :</strong> <span id="user_address"> {{$user->residence}} </span></p>
+                                <p><strong>residence :</strong> <span id="user_address"> {{$user->residence}} </span></p>
+                                <p><strong>role :</strong> <span id=""> {{$user->role}} </span></p>
                             @endif
-                            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editProfileModal">Modifier</button>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">Modifier mes informations </button>
                           </div>
                         </div>
                       </div>
@@ -104,9 +105,75 @@
         </div>
       </div>
     </div>
+    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modifier vos informations en toute securité </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="/profil_update" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                       <div class="mb-3">
+                            <label for="" class="form-label">Nom </label>
+                            <input type="text" name="name" class="form-control" id="" value="{{$user->name}}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label"> Contact </label>
+                            <input type="tel" name="contact" class="form-control" id="" value="{{$user->contact}}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label"> Residence </label>
+                            <input type="text" name="residence" class="form-control" id="" value="{{$user->residence}}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label"> mot de passe </label>
+                            <input type="password" name="password" class="form-control" id="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label"> confirmer mot de passe  </label>
+                            <input type="password" name="password_confirmation" class="form-control" id="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label"> image </label>
+                            <input type="file" name="image_changee" class="form-control" >
+                            <img src="assets/images/{{$user->profil}}" height="45px" width="45px" alt="">
+                        </div>
+                        <input type="hidden" name="email" value="{{$user->email}}">
+                        <div class="button-container">
+                          <input type="submit" class="button btn btn-success" name="save" value="Enregistrer">
+                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="errorModalLabel">Erreur d'insertion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul id="errorList">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
     <script src="../../assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-
     <script src="../../assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
     <script src="../../assets/vendors/select2/select2.min.js"></script>
     <script src="../../assets/js/off-canvas.js"></script>
@@ -118,72 +185,11 @@
     <script src="../../assets/js/typeahead.js"></script>
     <script src="../../assets/js/select2.js"></script>
     <script>
-        let index = 0; // Index initial
-
-        function calculerTotal(row) {
-            const rowIndex = row.dataset.index;
-            const quantiteInput = document.querySelector(`[name="quantite${rowIndex}"]`);
-            const prixInput = document.querySelector(`[name="prix_produit${rowIndex}"]`);
-            const totalInput = document.querySelector(`[name="total${rowIndex}"]`);
-
-            if (quantiteInput && prixInput && totalInput) {
-                let quantite = parseFloat(quantiteInput.value) || 0;
-                let prix = parseFloat(prixInput.value) || 0;
-                totalInput.value = (quantite * prix).toFixed(2); // Calcul du total
-            }
-        }
-
-        function ajouterCommande() {
-            index++; // Incrémenter l'index pour la nouvelle ligne
-            const commandesContainer = document.getElementById('commandesContainer');
-
-            const newRow = document.createElement('div');
-            newRow.setAttribute('class', 'row align-items-center g-3 mb-3');
-            newRow.setAttribute('data-index', index);
-
-            newRow.innerHTML = `
-                <div class="col-md-3">
-                    <input type="text" name="nom_produit${index}" class="form-control" placeholder="Nom du produit">
-                </div>
-                <div class="col-md-3">
-                    <input type="number" name="quantite${index}" class="form-control" placeholder="Quantité" min="1">
-                </div>
-                <div class="col-md-3">
-                    <input type="number" name="prix_produit${index}" class="form-control" placeholder="Prix unitaire" step="0.01">
-                </div>
-                <div class="col-md-2">
-                    <input type="number" name="total${index}" class="form-control" placeholder="Total" readonly>
-                </div>
-                <div class="col-md-1 d-flex justify-content-end">
-                    <button type="button" class="btn btn-danger btn-sm remove-row">supprimer </button>
-                </div>
-            `;
-
-            commandesContainer.appendChild(newRow);
-
-            // Ajouter les événements pour recalculer le total lors de l'ajout d'une nouvelle ligne
-            document.querySelector(`[name="quantite${index}"]`).addEventListener('input', () => calculerTotal(newRow));
-            document.querySelector(`[name="prix_produit${index}"]`).addEventListener('input', () => calculerTotal(newRow));
-        }
-
-        document.getElementById('ajouterCommande').addEventListener('click', ajouterCommande);
-
-        document.getElementById('commandesContainer').addEventListener('click', function(event) {
-            if (event.target.classList.contains('remove-row') || event.target.closest('.remove-row')) {
-                event.target.closest('.row').remove();
-            }
-        });
-
-        // Initialisation des événements sur la première ligne au chargement
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('[name^="quantite"], [name^="prix_produit"]').forEach(input => {
-                input.addEventListener('input', function () {
-                    calculerTotal(this.closest('.row'));
-                });
-            });
+        $(document).ready(function () {
+            @if ($errors->any())
+                $("#errorModal").modal("show");
+            @endif
         });
     </script>
-
-
   </body>
 </html>

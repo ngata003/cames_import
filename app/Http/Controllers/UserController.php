@@ -285,4 +285,54 @@ class UserController extends Controller
         return view('gestionnaires.result_research',compact('gestionnaires'));
     }
 
+
+    public function update_profil(Request $request){
+
+        $messages = [
+            'name.required' => 'veuillez entrer un nom dans le champ nom ',
+            'name.regex' => 'veuillez renseigner uniquement une chaine de caracteres constituée de lettres uniquement',
+            'contact.required' => 'veuillez entrer un contact dans le champ contact',
+            'contact.regex' => 'veuillez entrer un contact valide et normal',
+            'residence.required' => 'veuillez entrer une residence dans le champ residence',
+        ];
+
+        $request->validate([
+            'name' => 'required|string|max:255|regex:/^[a-zA-ZÀ-ÿ\s-]+$/',
+            'contact' => 'required|regex:/^\+?[1-9]\d{6,14}$/',
+            'residence' => 'required',
+            'image_changee' => 'nullable|image|mimes:jpeg,jpg,png,svg,gif|max:2048',
+            'password' => 'nullable|String|max:12|confirmed',
+        ], $messages);
+
+
+
+        $infos = User::where('email', $request->email)->first();
+
+        $infos->name = $request->input('name');
+        $infos->contact = $request->input('contact');
+        $infos->residence = $request->input('residence');
+        $infos-> password = bcrypt($request->input('password'));
+
+        if ($request->hasFile('image_changee')) {
+            if ($infos->profil) {
+                $oldImagePath = public_path('assets/images/' . $infos->profil);
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+
+            $uploadedFile = $request->file('image_changee'); // NE PAS ÉCRASER $infos
+            $userImage = time() . '.' . $uploadedFile->getClientOriginalExtension();
+            $uploadedFile->move(public_path('/assets/images'), $userImage);
+
+            $infos->profil = $userImage; // Met à jour le champ "profil" correctement
+        }
+
+
+        $infos->save();
+
+        return back()->with('status','modifications enregistrées avec succès');
+
+    }
+
 }

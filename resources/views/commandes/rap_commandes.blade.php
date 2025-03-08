@@ -107,9 +107,9 @@
                                         <tr>
                                           <th> id </th>
                                           <th> Nom client </th>
-                                          <th>   montant paye </th>
-                                          <th> total commande  </th>
-                                          <th>  moyen paiement </th>
+                                          <th> Total commande  </th>
+                                          <th> Montant paye </th>
+                                          <th> Moyen paiement </th>
                                           <th> reste </th>
                                           <th> actions </th>
                                         </tr>
@@ -123,18 +123,25 @@
                                           </td>
                                           <td>
                                             <div class="d-flex ">
-                                                <h6>Brandon </h6>
+                                                <span> Brandon </span>
                                             </div>
                                           </td>
                                           <td>
-                                            <h6> 345677777</h6>
+                                            <h6> 1234566777 </h6>
                                           </td>
                                           <td>
-                                            <div class="badge badge-opacity-success">Completed</div>
+                                            <h6> 1234556777 </h6>
                                           </td>
                                           <td>
-                                            <button class="btn btn-success"> activer le retrait </button>
-                                            <button class="btn btn-danger"> supprimer le retrait </button>
+                                            <h6> 12345588 </h6>
+                                          </td>
+                                          <td>
+                                            <h6> 12345588 </h6>
+                                          </td>
+                                          <td>
+                                            <button class="btn btn-success"> modifier </button>
+                                            <button class="btn btn-danger"> supprimer </button>
+                                            <button class="btn btn-wrapper"> imprimer </button>
                                           </td>
                                         </tr>
                                       </tbody>
