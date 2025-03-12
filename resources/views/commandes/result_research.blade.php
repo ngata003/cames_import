@@ -46,12 +46,6 @@
                 <input type="text" class="form-control">
               </div>
             </li>
-            <li class="nav-item">
-              <form class="search-form" method="GET" action="/research_factures">
-                <i class="icon-search"></i>
-                <input type="search" class="form-control" id="nom_client" name="nom_client" placeholder="Search Here" title="Search here">
-              </form>
-            </li>
             <li class="nav-item dropdown">
               <a class="nav-link count-indicator" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
                 <i class="icon-bell"></i>
@@ -184,14 +178,6 @@
             <div class="row">
               <div class="col-sm-12">
                 <div class="home-tab">
-                  <div class="d-sm-flex align-items-center justify-content-between border-bottom">
-                    <div>
-                      <div class="btn-wrapper">
-                        <a href="/factures_pdf" class="btn btn-otline-dark"><i class="icon-printer"></i> pdf des commandes  </a>
-                        <a href="/export_factures" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Exporter des commandes sur excel  </a>
-                      </div>
-                    </div>
-                  </div>
                   <div class="tab-content tab-content-basic">
                     <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
                       <div class="row">
@@ -202,8 +188,8 @@
                                 <div class="card-body">
                                   <div class="d-sm-flex justify-content-between align-items-start">
                                     <div>
-                                      <h4 class="card-title card-title-dash"> Espace commandes </h4>
-                                      <p class="card-subtitle card-subtitle-dash"> management des retraits colis </p>
+                                      <h4 class="card-title card-title-dash"> Espace rapports Factures </h4>
+                                      <p class="card-subtitle card-subtitle-dash"> recapitulatif des achats effectués. </p>
                                     </div>
                                     <div>
 

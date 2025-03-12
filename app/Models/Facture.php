@@ -12,7 +12,7 @@ class Facture extends Model
         'nom_client',
         'email_client',
         'numero_client',
-        'moyen_paiement_',
+        'moyen_paiement',
         'toal_achat',
         'montant_paye',
         'reste',

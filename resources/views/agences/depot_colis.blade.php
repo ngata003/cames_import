@@ -67,6 +67,18 @@
                     <span class="menu-title"> retraits  </span>
                   </a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="produits">
+                    <i class="menu-icon mdi mdi-package-variant"></i>
+                    <span class="menu-title"> produits  </span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="notifications">
+                    <i class="menu-icon mdi mdi-mail"></i>
+                    <span class="menu-title"> notifications  </span>
+                </a>
+              </li>
             </ul>
         </nav>
 

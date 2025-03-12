@@ -62,10 +62,22 @@
                 </div>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="retraits">
+                  <a class="nav-link" href="produits">
                     <i class="menu-icon mdi mdi-cart-check"></i>
                     <span class="menu-title"> retraits  </span>
                   </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="retraits">
+                    <i class="menu-icon mdi mdi-package-variant"></i>
+                    <span class="menu-title"> produits  </span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="notifications">
+                    <i class="menu-icon mdi mdi-mail"></i>
+                    <span class="menu-title"> notifications  </span>
+                </a>
               </li>
             </ul>
         </nav>

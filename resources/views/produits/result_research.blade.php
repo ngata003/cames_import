@@ -48,6 +48,14 @@
                     <input type="text" class="form-control">
                   </div>
                 </li>
+
+                <li class="nav-item">
+                  <form class="search-form" method="GET" action="/research_products">
+                    <i class="icon-search"></i>
+                    <input type="search" id="nom_produit" name="nom_produit" class="form-control" placeholder=" nom ou un email" >
+                  </form>
+                </li>
+
                 <li class="nav-item dropdown">
                   <a class="nav-link count-indicator" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
                     <i class="icon-bell"></i>
@@ -55,35 +63,17 @@
                   </a>
                   <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="notificationDropdown">
                     <a class="dropdown-item py-3 border-bottom">
-                      <p class="mb-0 fw-medium float-start">You have 4 new notifications </p>
-                      <span class="badge badge-pill badge-primary float-end">View all</span>
+                      <p class="mb-0 fw-medium float-start"> Vous avez recu </p>
+                      <span class="badge badge-pill badge-primary float-end">Voir tout</span>
                     </a>
                     <a class="dropdown-item preview-item py-3">
-                      <div class="preview-thumbnail">
-                        <i class="mdi mdi-alert m-auto text-primary"></i>
-                      </div>
-                      <div class="preview-item-content">
-                        <h6 class="preview-subject fw-normal text-dark mb-1">Application Error</h6>
-                        <p class="fw-light small-text mb-0"> Just now </p>
-                      </div>
-                    </a>
-                    <a class="dropdown-item preview-item py-3">
-                      <div class="preview-thumbnail">
-                        <i class="mdi mdi-lock-outline m-auto text-primary"></i>
-                      </div>
-                      <div class="preview-item-content">
-                        <h6 class="preview-subject fw-normal text-dark mb-1">Settings</h6>
-                        <p class="fw-light small-text mb-0"> Private message </p>
-                      </div>
-                    </a>
-                    <a class="dropdown-item preview-item py-3">
-                      <div class="preview-thumbnail">
-                        <i class="mdi mdi-airballoon m-auto text-primary"></i>
-                      </div>
-                      <div class="preview-item-content">
-                        <h6 class="preview-subject fw-normal text-dark mb-1">New user registration</h6>
-                        <p class="fw-light small-text mb-0"> 2 days ago </p>
-                      </div>
+                        <div class="preview-thumbnail">
+                          <i class="mdi mdi-alert m-auto text-primary"></i>
+                        </div>
+                        <div class="preview-item-content">
+                          <h6 class="preview-subject fw-normal text-dark mb-1"></h6>
+                          <p class="fw-light small-text mb-0"></p>
+                        </div>
                     </a>
                   </div>
                 </li>
@@ -181,6 +171,14 @@
             <div class="row">
               <div class="col-sm-12">
                 <div class="home-tab">
+                  <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                    <div>
+                      <div class="btn-wrapper">
+                        <a href="/imprimer_pdf" class="btn btn-otline-dark"><i class="icon-printer"></i> sortir le rapport en pdf </a>
+                        <a href="/export_produits" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Exporter des produits sur excel </a>
+                      </div>
+                    </div>
+                  </div>
                   <div class="tab-content tab-content-basic">
                     <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
                       <div class="row">
@@ -191,58 +189,42 @@
                                 <div class="card-body">
                                   <div class="d-sm-flex justify-content-between align-items-start">
                                     <div>
-                                      <h4 class="card-title card-title-dash"> Espace Gestionnaires </h4>
-                                      <p class="card-subtitle card-subtitle-dash"> management des employes </p>
+                                      <h4 class="card-title card-title-dash"> Espace produits </h4>
+                                      <p class="card-subtitle card-subtitle-dash"> management des produits </p>
                                     </div>
                                     <div>
-                                      <button class="btn btn-primary btn-lg text-white mb-0 me-0" data-bs-toggle="modal" data-bs-target="#importModal" type="button" ><i class="mdi mdi-account-plus"></i>Ajouter un nouveau gestionnaire </button>
+                                      <button class="btn btn-primary btn-lg text-white mb-0 me-0" data-bs-toggle="modal" data-bs-target="#importModal" type="button" ><i class="mdi mdi-account-plus"></i>Ajouter un nouveau produit </button>
                                     </div>
                                   </div>
                                   <div class="table-responsive  mt-1">
                                     <table class="table select-table">
                                       <thead>
                                         <tr>
-                                          <th> Nom </th>
-                                          <th> Email </th>
-                                          <th> Contact </th>
-                                          <th> Residence </th>
-                                          <th> connecté(e) ?</th>
+                                          <th> Image Produit  </th>
+                                          <th> Nom Produit </th>
+                                          <th> prix Unitaire </th>
                                           <th> actions </th>
                                         </tr>
                                       </thead>
                                       <tbody>
-                                        @foreach ($gestionnaires as $gestion )
+                                        @foreach ($produits as $prod )
                                         <tr>
                                             <td>
                                               <div class="d-flex ">
-                                                <img src="assets/images/{{$gestion->profil}}" alt="">
-                                                <div>
-                                                  <span>{{$gestion->name}}</span>
-                                                  <p>{{$gestion->role}}</p>
-                                                </div>
+                                                <img src="assets/images/{{$prod->image_produit}}" alt="">
                                               </div>
                                             </td>
                                             <td>
-                                              <span> {{$gestion->email}}</span>
+                                              <span> {{$prod->nom_produit}}</span>
                                             </td>
                                             <td>
                                               <div>
-                                                  <span> {{$gestion->contact}}</span>
+                                                  <span> {{$prod->prix_unitaire}}</span>
                                               </div>
                                             </td>
                                             <td>
-                                                <span> {{$gestion->residence}}</span>
-                                            </td>
-                                            <td>
-                                                @if ($gestion->is_connected)
-                                                <div class="badge badge-opacity-success"> connecté(e) </div>
-                                                @else
-                                                <div class="badge badge-opacity-danger"> Deconnecté(e) </div>
-                                                @endif
-                                            </td>
-                                            <td>
-                                              <button class="btn btn-secondary text-white" data-id="{{$gestion->id}}" data-nom="{{$gestion->name}}" data-email= "{{$gestion->email}}" data-contact="{{$gestion->contact}}" data-residence="{{$gestion->residence}}" data-image="{{$gestion->profil}}" data-role="{{$gestion->role}}" onclick="openEditModal(this)"   > modifier </button>
-                                              <button class="btn btn-danger text-white" data-id="{{$gestion->id}}" onclick="openDeleteModal(this)" > supprimer </button>
+                                              <button class="btn btn-secondary text-white" data-id="{{$prod->id}}" data-nom="{{$prod->nom_produit}}" data-prix= "{{$prod->prix_unitaire}}" data-image="{{$prod->image_produit}}" onclick="openEditModal(this)"   > modifier </button>
+                                              <button class="btn btn-danger text-white" data-id="{{$prod->id}}" onclick="openDeleteModal(this)" > supprimer </button>
                                             </td>
                                           </tr>
                                         @endforeach
@@ -265,11 +247,42 @@
         </div>
       </div>
     </div>
+    <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ajouter un produit </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="/add_produits" enctype="multipart/form-data">
+                        @csrf
+                       <div class="mb-3">
+                            <label for="centreName" class="form-label">Nom Produit</label>
+                            <input type="text" name="nom_produit" class="form-control" id="" placeholder="entrer un nom valide ">
+                        </div>
+                        <div class="mb-3">
+                            <label for="centreName" class="form-label"> Prix Produit </label>
+                            <input type="number" name="prix_unitaire" class="form-control" id="centreName" placeholder="entrer un email valide ">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Image Produit</label>
+                            <input type="file" name="image_produit" class="form-control">
+                        </div>
+                        <div class="button-container">
+                          <input type="submit" class="button btn btn-success" name="save" value="Enregistrer">
+                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Ajouter une agence   </h5>
+                    <h5 class="modal-title" id="editModalLabel"> modifier les informations du produit  </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -278,32 +291,16 @@
                         @method('PUT')
 
                         <div class="mb-3">
-                            <label for="centreName" class="form-label">Nom </label>
-                            <input type="text" name="name" class="form-control" id="name" placeholder="entrer un nom valide ">
+                            <label for="centreName" class="form-label"> Nom produit </label>
+                            <input type="text" name="nom_produit" id="nom_produit" class="form-control">
                         </div>
                         <div class="mb-3">
-                            <label for="centreName" class="form-label"> Email </label>
-                            <input type="email" name="email" class="form-control" id="email" placeholder="entrer un email valide ">
+                            <label for="centreName" class="form-label"> prix unitaire  </label>
+                            <input type="number" name="prix_unitaire" id="prix_unitaire" class="form-control" >
                         </div>
                         <div class="mb-3">
-                            <label for="centreName" class="form-label"> Contact </label>
-                            <input type="tel" name="contact" class="form-control" id="contact" placeholder="entrer un contact valide">
-                        </div>
-                        <div class="mb-3">
-                            <label for="centreName" class="form-label"> role du gestionnaire </label>
-                            <select name="role" class="form-control" id="role">
-                                <option> selectionnez un role </option>
-                                <option value="importateur"> importateur </option>
-                                <option value="secretaire"> secretaire </option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="centreName" class="form-label"> residence </label>
-                            <input type="text" name="residence" id="residence" class="form-control"  placeholder="entrer une localisation">
-                        </div>
-                        <div class="mb-3">
-                            <label for="centreName" class="form-label"> profil </label>
-                            <input type="file" name="profil" class="form-control" id="">
+                            <label for="centreName" class="form-label"> image produit </label>
+                            <input type="file" name="image_produit" class="form-control">
                         </div>
                         <img src="" alt="" height="45px" width="45px" id="newImage">
                         <div class="button-container">
@@ -315,16 +312,29 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel"> produit ajouté avec succès </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <i class="mdi mdi-check-circle-outline mdi-36px text-success"></i>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="deleteModalLabel">Supprimer le gestionnaire </h5>
+              <h5 class="modal-title" id="deleteModalLabel">Supprimer le produit </h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              Êtes-vous sûr de vouloir supprimer ce gestionnaire ?
+              Êtes-vous sûr de vouloir supprimer ce produit ?
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Non</button>
@@ -337,11 +347,12 @@
           </div>
         </div>
     </div>
+
     <div class="modal fade" id="deleterModal" tabindex="-1" aria-labelledby="deleterModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleterModalLabel"> gestionnaire supprimé avec succès. </h5>
+                    <h5 class="modal-title" id="deleterModalLabel"> produit supprimé avec succès. </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center">
@@ -355,11 +366,32 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editeModalLabel"> gestionnaire modifié avec succès </h5>
+                    <h5 class="modal-title" id="editeModalLabel"> produit modifié avec succès </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center">
                     <i class="mdi mdi-check-circle-outline mdi-36px text-success"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="errorModalLabel">Erreur d'insertion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul id="errorList">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
                 </div>
             </div>
         </div>
@@ -382,19 +414,13 @@
         function openEditModal(button) {
             var id = button.getAttribute('data-id');
             var nom = button.getAttribute('data-nom');
-            var residence = button.getAttribute('data-residence');
-            var contact = button.getAttribute('data-contact');
-            var email = button.getAttribute('data-email');
-            var role = button.getAttribute('data-role');
+            var prix_unitaire  = button.getAttribute('data-prix');
             var image = button.getAttribute('data-image');
 
-            document.getElementById('editModalLabel').textContent = 'Editer une agence ';
-            document.getElementById('editForm').action = '/gestionnaires_edit/' + id;
-            document.getElementById('name').value = nom;
-            document.getElementById('email').value = email;
-            document.getElementById('residence').value = residence;
-            document.getElementById('role').value = role;
-            document.getElementById('contact').value = contact;
+            document.getElementById('editModalLabel').textContent = 'Editer un produit  ';
+            document.getElementById('editForm').action = '/edit_produits/' + id;
+            document.getElementById('nom_produit').value = nom;
+            document.getElementById('prix_unitaire').value =prix_unitaire;
             document.getElementById('newImage').src = "assets/images/" + image;
 
             var editModal = new bootstrap.Modal(document.getElementById('editModal'));
@@ -422,7 +448,7 @@
     <script>
         function openDeleteModal(button) {
         var id = button.getAttribute('data-id');
-        document.getElementById('deleteForm').action = '/gestionnaires_delete/' + id;
+        document.getElementById('deleteForm').action = '/delete_produits/' + id;
 
         var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
         deleteModal.show();
@@ -444,6 +470,13 @@
             var successModal = new bootstrap.Modal(document.getElementById('successModal'));
             successModal.show();
         @endif
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            @if ($errors->any())
+                $("#errorModal").modal("show");
+            @endif
         });
     </script>
   </body>

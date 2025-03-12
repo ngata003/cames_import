@@ -74,6 +74,18 @@
                     <span class="menu-title"> retraits  </span>
                   </a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="produits">
+                    <i class="menu-icon mdi mdi-package-variant"></i>
+                    <span class="menu-title"> produits  </span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="notifications">
+                    <i class="menu-icon mdi mdi-mail"></i>
+                    <span class="menu-title"> notifications  </span>
+                </a>
+              </li>
             </ul>
         </nav>
 
@@ -84,7 +96,8 @@
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title"> Espace Commandes </h4>
-                    <form class="form-sample" id="formulaireCommande" method="POST" action="">
+                    <form class="form-sample" id="formulaireCommande" method="POST" action="/add_commandes">
+                        @csrf
                       <p class="card-description"> Rentrer une commande  </p>
                       <div class="row">
                         <div class="col-md-4">
@@ -107,7 +120,7 @@
                           <div class="form-group row">
                             <label class="col-sm-4 col-form-label"> Contact client </label>
                             <div class="col-sm-8">
-                              <input type="tel" name="contact_client" class="form-control" />
+                              <input type="tel" name="numero_client" class="form-control" />
                             </div>
                           </div>
                         </div>
@@ -119,7 +132,7 @@
                                 <input type="text" id="nom_produit0" name="nom_produit0" class="form-control" placeholder="entrer un nom de produit" />
                             </div>
                             <div class="col-md-3">
-                                <input type="number" id="quantite0" name="quantite0" class="form-control" placeholder="entrer une quantite" oninput="calculTotal(0)" />
+                                <input type="number" id="quantite0" name="qte_commandee0" class="form-control" placeholder="entrer une quantite" oninput="calculTotal(0)" />
                             </div>
                             <div class="col-md-3">
                                 <input type="number" id="prix_unitaire0" name="prix_unitaire0" class="form-control" placeholder="entrer un prix de produit" oninput="calculTotal(0)" />
@@ -135,13 +148,13 @@
                             <select class="form-select form-select-sm" name="moyen_paiement" id="exampleFormControlSelect3">
                                 <option selected> moyen paiement </option>
                                 <option value="orange_money"> orange money</option>
-                                <option value="mobilemoney_"> mobile money </option>
+                                <option value="mobile_money"> mobile money </option>
                                 <option value="cash"> cash </option>
                                 <option value="paiement_bancaire"> paiement bancaire</option>
                             </select>
                         </div>
                         <div class="col-md-3">
-                            <input type="number" id="total_commandee"  name="total_commande" class="form-control" placeholder=" total commande" oninput="calculerReste()"  />
+                            <input type="number" id="total_commandee"  name="total_achat" class="form-control" placeholder=" total commande" oninput="calculerReste()"  />
                         </div>
                         <div class="col-md-3">
                             <input type="number" id="montant_paye" name="montant_paye" class="form-control" placeholder="montant verse" oninput="calculerReste()" />
@@ -155,6 +168,7 @@
                       <button type="submit" class="btn btn-success me-2"> Enregistrer </button>
                       <button class="btn btn-danger me-2" id="btnAnnuler" > recommencer la commande </button>
                       <button type="button" id="ajouterCommande" class="btn btn-primary me-2"> Ajouter une nouvelle commande </button>
+
                     </form>
                   </div>
                 </div>
@@ -178,7 +192,6 @@
     <script src="../../assets/js/typeahead.js"></script>
     <script src="../../assets/js/select2.js"></script>
     <script>
-
         let index = 1;
         let numRows = document.getElementById('numRows');
         let bouton_ajouter = document.getElementById('ajouterCommande');
@@ -194,7 +207,7 @@
                 <input type="text" id="nom_produit${index}" name="nom_produit${index}" class="form-control" placeholder="entrer un nom de produit" />
             </div>
             <div class="col-md-3">
-                <input type="number" id="quantite${index}" name="quantite${index}" class="form-control" placeholder="entrer une quantite" oninput="calculTotal(${index})" />
+                <input type="number" id="quantite${index}" name="qte_commandee${index}" class="form-control" placeholder="entrer une quantite" oninput="calculTotal(${index})" />
             </div>
             <div class="col-md-3">
                 <input type="number" id="prix_unitaire${index}" name="prix_unitaire${index}" class="form-control" placeholder="entrer un prix de produit" oninput="calculTotal(${index})" />
@@ -203,7 +216,7 @@
                 <input type="number" id="total${index}" name="total${index}" class="form-control" placeholder="ici est le total" readonly />
             </div>
             <div class="col-md-1">
-                <button type="button" style="border-radius:25px; background-color:red; color:white" onclick="retirerCommande(${index})">Retirer</button>
+                <button type="button" class="btn btn-danger px-3 py-1 rounded-pill shadow-sm" onclick="retirerCommande(${index}, this)"><i class="fas fa-trash-alt"></i> Retirer</button>
             </div>
            `;
 
@@ -226,7 +239,9 @@
 
             calculerTotalGeneral();
         }
-// fonction pour calculer le grand total
+
+
+        // fonction pour calculer le grand total
         function calculerTotalGeneral(){
             let totalGeneral = 0;
 
@@ -242,7 +257,8 @@
 
             calculerReste();
         }
-// fonction pour calculer le reste
+
+        // fonction pour calculer le reste
         function calculerReste(){
 
             let montantInput = document.getElementById('montant_paye');
@@ -263,7 +279,7 @@
             }
         }
 
-// fonction pour réinitialiser le formulaire
+        // fonction pour réinitialiser le formulaire
         function resetForm(){
             bouton = document.getElementById('btnAnnuler');
             bouton.addEventListener('click', function(event){
@@ -296,24 +312,32 @@
 
         resetForm();
 
-//fonction pour retirer les commandes.
-        function retirerCommande(index, event){
+        //fonction pour retirer les commandes.
+
+        function retirerCommande(index, bouton){
             event.preventDefault();
-
             let commande = document.getElementById(`nouvelle_commande${index}`);
-            if (commande) {
-                console.log('la div existe bien')
-                let totalCommande = parseFloat(document.getElementById(`total${index}`).value);
+            let totalInput = document.getElementById(`total${index}`);
+            let totalComInput = document.getElementById('total_commandee');
 
-                commande.remove();
+            if (commande && totalInput) {
 
-                totalCommandeInput = document.getElementById('total_commandee');
-                let totalGeneral = parseFloat(totalCommandeInput.value);
+                let totalCommande = parseFloat(totalInput.value);
+
+
+                let totalGeneral = parseFloat(totalComInput.value);
                 totalGeneral -= totalCommande;
 
-                totalCommandeInput.value = parseFloat(totalGeneral).toFixed(2);
+                totalComInput.value = totalGeneral.toFixed(2);
+
+                commande.remove();
+            }
+
+            else{
+                console.log("Erreur : element non trouve");
             }
         }
+
     </script>
   </body>
 </html>

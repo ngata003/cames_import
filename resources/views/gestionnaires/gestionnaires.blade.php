@@ -48,7 +48,7 @@
                     <input type="text" class="form-control">
                   </div>
                 </li>
-                
+
                 <li class="nav-item">
                   <form class="search-form" method="GET" action="/research_gestionnaires">
                     <i class="icon-search"></i>
@@ -168,6 +168,18 @@
                     <i class="menu-icon mdi mdi-cart-check"></i>
                     <span class="menu-title"> retraits  </span>
                   </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="produits">
+                    <i class="menu-icon mdi mdi-package-variant"></i>
+                    <span class="menu-title"> produits  </span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="notifications">
+                    <i class="menu-icon mdi mdi-mail"></i>
+                    <span class="menu-title"> notifications  </span>
+                </a>
               </li>
             </ul>
         </nav>
@@ -402,6 +414,7 @@
           </div>
         </div>
     </div>
+
     <div class="modal fade" id="deleterModal" tabindex="-1" aria-labelledby="deleterModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

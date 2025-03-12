@@ -67,6 +67,18 @@
                     <span class="menu-title"> retraits  </span>
                   </a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="produits">
+                    <i class="menu-icon mdi mdi-package-variant"></i>
+                    <span class="menu-title"> produits  </span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="notifications">
+                    <i class="menu-icon mdi mdi-mail"></i>
+                    <span class="menu-title"> notifications  </span>
+                </a>
+              </li>
             </ul>
         </nav>
 
@@ -220,7 +232,7 @@
         </div>
     </div>
 
-    
+
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <script src="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
     <script src="assets/vendors/chart.js/chart.umd.js"></script>

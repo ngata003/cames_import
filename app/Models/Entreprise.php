@@ -27,4 +27,12 @@ class Entreprise extends Model
     public function gestionnaires(){
         return $this->hasMany(User::class,'nom_entreprise','nom_entreprise');
     }
+
+    public function Notification(){
+        return $this->hasMany(notification::class,'nom_entreprise','nom_entreprise');
+    }
+
+    public function Produits(){
+        return $this->hasMany(Produit::class,'nom_entreprise','nom_entreprise');
+    }
 }
