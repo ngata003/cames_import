@@ -96,7 +96,7 @@
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title"> Espace Commandes </h4>
-                    <form class="form-sample" id="formulaireCommande" method="POST" action="/add_commandes">
+                    <form class="form-sample" id="formulaireCommande" method="POST" action="/save_commandes">
                         @csrf
                       <p class="card-description"> Rentrer une commande  </p>
                       <div class="row">

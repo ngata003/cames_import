@@ -121,6 +121,7 @@ class EntrepriseController extends Controller
         }
 
         $entreprise->save();
+        Session::put('entreprise_active', $entreprise);
 
         return back()->with('updated_status','entreprise modifié avec succès');
     }

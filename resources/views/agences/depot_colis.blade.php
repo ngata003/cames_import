@@ -90,9 +90,8 @@
                   <div class="d-sm-flex align-items-center justify-content-between border-bottom">
                     <div>
                       <div class="btn-wrapper">
-                        <a href="#" class="btn btn-otline-dark align-items-center"><i class="icon-share"></i> importer des depots  sur excel</a>
-                        <a href="#" class="btn btn-otline-dark"><i class="icon-printer"></i> imprimer des depots sous PDF </a>
-                        <a href="#" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Exporter des depots sur Excel </a>
+                        <a href="" class="btn btn-otline-dark"><i class="icon-printer"></i> imprimer des depots sous PDF </a>
+                        <a href="/export_depots" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Exporter des depots sur Excel </a>
                       </div>
                     </div>
                   </div>
@@ -217,7 +216,7 @@
                         </div>
                         <div>
                             <label for="centreName" class="form-label"> Nom de l'agence </label>
-                            <select name="role" class="form-control" id="">
+                            <select name="nom_agence" class="form-control" id="">
                                 <option> selectionnez une agence  </option>
                                 @foreach ($agences as $agence )
                                 <option value="{{$agence->nom_agence}}"> {{$agence->nom_agence}} </option>

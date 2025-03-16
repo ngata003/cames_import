@@ -167,53 +167,48 @@
                 </a>
               </li>
             </ul>
-        </nav>
+        </nav> 
 
         <div class="main-panel">
-          <div class="content-wrapper">
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="home-tab">
-                  <div class="d-sm-flex align-items-center justify-content-between border-bottom">
-                    <div>
-                      <div class="btn-wrapper">
-                        <a href="/imprimer_pdf" class="btn btn-otline-dark"><i class="icon-printer"></i> sortir le rapport en pdf </a>
-                        <a href="/export_produits" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Exporter des produits sur excel </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tab-content tab-content-basic">
-                    <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
-                      <div class="row">
-                        <div class="col-lg-8 d-flex flex-column">
-                          <div class="row flex-grow">
-                            <div class="col-12 grid-margin stretch-card">
-                              <div class="card card-rounded">
-                                <div class="card-body">
-                                  <div class="d-sm-flex justify-content-between align-items-start">
-                                    <div>
-                                      <h4 class="card-title card-title-dash"> Espace produits </h4>
-                                      <p class="card-subtitle card-subtitle-dash"> management des produits </p>
+            <div class="content-wrapper">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="home-tab">
+
+                    <div class="tab-content tab-content-basic">
+                      <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
+                        <div class="row">
+                          <div class="col-lg-12 d-flex flex-column">
+                            <div class="row flex-grow">
+                              <div class="col-12 grid-margin stretch-card">
+                                <div class="card card-rounded">
+                                  <div class="card-body">
+                                    <div class="d-sm-flex justify-content-between align-items-start">
+                                      <div>
+                                        <h4 class="card-title card-title-dash"> Espace produits </h4>
+                                        <p class="card-subtitle card-subtitle-dash"> Management des produits </p>
+                                      </div>
+                                      <div>
+                                        <button class="btn btn-primary btn-lg text-white mb-0 me-0" data-bs-toggle="modal" data-bs-target="#importModal" type="button">
+                                          <i class="mdi mdi-account-plus"></i> Ajouter un nouveau produit
+                                        </button>
+                                      </div>
                                     </div>
-                                    <div>
-                                      <button class="btn btn-primary btn-lg text-white mb-0 me-0" data-bs-toggle="modal" data-bs-target="#importModal" type="button" ><i class="mdi mdi-account-plus"></i>Ajouter un nouveau produit </button>
-                                    </div>
-                                  </div>
-                                  <div class="table-responsive  mt-1">
-                                    <table class="table select-table">
-                                      <thead>
-                                        <tr>
-                                          <th> Image Produit  </th>
-                                          <th> Nom Produit </th>
-                                          <th> prix Unitaire </th>
-                                          <th> actions </th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        @foreach ($produits as $prod )
-                                        <tr>
+                                    <div class="table-responsive mt-1">
+                                      <table class="table select-table">
+                                        <thead>
+                                          <tr>
+                                            <th> Image Produit </th>
+                                            <th> Nom Produit </th>
+                                            <th> Prix Unitaire </th>
+                                            <th> Actions </th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          @foreach ($produits as $prod)
+                                          <tr>
                                             <td>
-                                              <div class="d-flex ">
+                                              <div class="d-flex">
                                                 <img src="assets/images/{{$prod->image_produit}}" alt="">
                                               </div>
                                             </td>
@@ -222,17 +217,18 @@
                                             </td>
                                             <td>
                                               <div>
-                                                  <span> {{$prod->prix_unitaire}}</span>
+                                                <span> {{$prod->prix_unitaire}}</span>
                                               </div>
                                             </td>
                                             <td>
-                                              <button class="btn btn-secondary text-white" data-id="{{$prod->id}}" data-nom="{{$prod->nom_produit}}" data-prix= "{{$prod->prix_unitaire}}" data-image="{{$prod->image_produit}}" onclick="openEditModal(this)"   > modifier </button>
-                                              <button class="btn btn-danger text-white" data-id="{{$prod->id}}" onclick="openDeleteModal(this)" > supprimer </button>
+                                              <button class="btn btn-secondary text-white" data-id="{{$prod->id}}" data-nom="{{$prod->nom_produit}}" data-prix="{{$prod->prix_unitaire}}" data-image="{{$prod->image_produit}}" onclick="openEditModal(this)"> Modifier </button>
+                                              <button class="btn btn-danger text-white" data-id="{{$prod->id}}" onclick="openDeleteModal(this)"> Supprimer </button>
                                             </td>
                                           </tr>
-                                        @endforeach
-                                      </tbody>
-                                    </table>
+                                          @endforeach
+                                        </tbody>
+                                      </table>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
@@ -245,8 +241,7 @@
                 </div>
               </div>
             </div>
-          </div>
-          @include('footer')
+            @include('footer')
         </div>
       </div>
     </div>

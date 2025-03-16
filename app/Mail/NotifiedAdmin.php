@@ -17,16 +17,18 @@ class NotifiedAdmin extends Mailable
     private $nom_entreprise;
 
     private $total_achat;
+    private $nom_admin;
     /**
      * Create a new message instance.
      */
-    public function __construct($nom_client, $total_achat, $nom_entreprise)
+    public function __construct($nom_client, $total_achat, $nom_entreprise,$nom_admin)
     {
         //
 
         $this->nom_entreprise = $nom_entreprise;
         $this->total_achat = $total_achat;
         $this->nom_client = $nom_client;
+        $this->nom_admin = $nom_admin;
     }
 
     /**
@@ -50,6 +52,7 @@ class NotifiedAdmin extends Mailable
                 'nom_entreprise' => $this->nom_entreprise,
                 'nom_client' => $this->nom_client,
                 'total_achat' => $this->total_achat,
+                'nom_admin' => $this->nom_admin,
             ]
         );
     }

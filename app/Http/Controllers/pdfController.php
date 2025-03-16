@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Commande;
+use App\Models\Depot;
 use App\Models\Facture;
 use App\Models\Produit;
 use App\Models\User;
@@ -14,25 +15,13 @@ class pdfController extends Controller
 {
     //
 
-    public function generateGestionnairesPdf(){
-        $entreprise = Session::get('entreprise_active');
-        $nom_entreprise = $entreprise->nom_entreprise;
-
-        $gestionnaires = User::where('nom_entreprise',$nom_entreprise)->get();
-
-        $pdf = pdf ::loadView('gestionnaires.gestionnaires_rapport', compact('gestionnaires','nom_entreprise')) ;
-
-        return $pdf->download('gestionnaires_' . $nom_entreprise . '.pdf');
-
-    }
-
     public function generateFacturesPdf(){
         $entreprise = Session::get('entreprise_active');
         $nom_entreprise = $entreprise->nom_entreprise;
         $logo_entreprise = $entreprise->logo_entreprise;
 
         $factures = Facture::where('nom_entreprise',$nom_entreprise)->get();
-        $pdf = Pdf::loadView('commandes.factures_pdf',compact('factures', 'nom_entreprise', 'logo_entreprise' ));
+        $pdf = Pdf::loadView('commandes.factures_pdf',compact('factures', 'entreprise' ));
         return $pdf->download('factures_'.$nom_entreprise.'.pdf');
     }
 
@@ -58,5 +47,13 @@ class pdfController extends Controller
         $produits = Produit::where('nom_entreprise',$nom_entreprise)->get();
         $pdf = Pdf::loadView('produits.rap_pdf',compact('logo_entreprise','nom_entreprise','produits'));
         return $pdf->stream('produits_'.$nom_entreprise.'.pdf');
+    }
+
+    public function imprimer_depot_pdf(){
+        $entreprise = Session::get('entreprise_active');
+        $depot = Depot::where('nom_entreprise',$entreprise->nom_entreprise)->get();
+        $pdf = Pdf::loadView('depot.depot_pdf', compact('depot', 'entreprise'));
+        return $pdf->stream('depot_'.$entreprise->nom_entreprise.'.pdf');
+
     }
 }

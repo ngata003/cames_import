@@ -4,31 +4,32 @@ namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class AlertClientMail extends Mailable
+class AlertImportateur extends Mailable
 {
     use Queueable, SerializesModels;
-
-    private $nom_client;
-    private $nom_entreprise;
-
-    private $pdf_path;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($nom_client, $pdf_path, $nom_entreprise)
+
+    private $nom_client;
+    private $total_achat;
+    private $nom_entreprise;
+
+    private $nom_gestionnaire;
+    public function __construct($nom_client, $nom_entreprise, $total_achat,$nom_gestionnaire)
     {
-        //*
+        //
 
         $this->nom_client = $nom_client;
-        $this->nom_entreprise = $nom_entreprise;
-        $this->pdf_path = $pdf_path;
+        $this->nom_entreprise= $nom_entreprise;
+        $this->total_achat = $total_achat;
+        $this->nom_gestionnaire = $nom_gestionnaire;
     }
 
     /**
@@ -37,7 +38,7 @@ class AlertClientMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Alert Client Mail',
+            subject: 'Alert Importateur',
         );
     }
 
@@ -47,10 +48,12 @@ class AlertClientMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.alert_client',
-            with:[
+            view: 'emails.alert_importateur',
+            with: [
                 'nom_client' => $this->nom_client,
                 'nom_entreprise' => $this->nom_entreprise,
+                'total_achat'=>$this->total_achat,
+                'nom_gestionnaire' => $this->nom_gestionnaire,
             ],
         );
     }
@@ -62,10 +65,6 @@ class AlertClientMail extends Mailable
      */
     public function attachments(): array
     {
-        return [
-            Attachment::fromPath($this->pdf_path)
-            ->as('facture.pdf')
-            ->withMime('application/pdf'),
-    ];
+        return [];
     }
 }

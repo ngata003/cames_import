@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Agence;
 use App\Models\Commande;
+use App\Models\Depot;
 use Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Session;
 
@@ -115,21 +117,86 @@ class AgenceController extends Controller
 
     public function save_depot(Request $request){
         $messages = [
+            'nom_client.required' => 'veuillez insrerer le nom du client',
+            'nom_agence.required' => 'veuillez renseigner le nom de l\'agence' ,
 
         ];
 
         $request->validate([
-            'nom_client' =>'',
-            'nom_agence' => '',
-            'date_depart' => '',
-            'couleur_colis' => '',
-            'moyen_transport' => '',
+            'nom_client' =>'required',
+            'nom_agence' => 'required',
+            'date_depart' => 'required',
+            'couleur_colis' => 'required|string|max:255|regex:',
+            'moyen_transport' => 'required',
             'status' => 'required',
-            'duree_trajet' => '',
+            'duree_trajet' => 'required',
             'image_colis' => '',
         ], $messages);
 
+        if ($request->hasFile('image_colis')) {
+            $produitFile = $request->file('image_colis');
+            $imageColis = time().'.'. $produitFile->getClientOriginalExtension();
+            $produitFile->move(public_path('assets/images'),$imageColis);
+        }
 
-        
+        $depot = new Depot();
+
+        $depot->nom_client = $request->input('nom_client');
+        $depot->nom_agence = $request->input('nom_agence');
+        $depot->date_depart = $request->input('date_depart');
+        $depot->couleur_colis = $request->input('couleur_colis');
+        $depot->moyen_transport = $request->input('moyen_transport');
+        $depot->status = $request->input('status');
+        $depot->duree_trajet = $request->input('duree_trajet');
+        $depot->image_colis = $imageColis;
+
+        $depot->save();
+
+        return back()->with('status','agence enregistrée avec succès');
+
     }
+
+    public function update_depot(Request $request , $id){
+
+        $details = Depot::find($id);
+
+        $details->nom_client = $request->input('nom_client');
+        $details->nom_agence = $request->input('nom_agence');
+        $details->date_depart = $request->input('date_depart');
+        $details->couleur_colis = $request->input('couleur_colis');
+        $details->status  = $request->input('status');
+        $details->moyen_transport = $request->input('moyen_transport');
+        $details->duree_trajet = $request->input('duree_trajet');
+        if ($request->hasFile('image_produit')) {
+            if ($details->image_colis) {
+                $oldImagePath = public_path('assets/images/' . $details->image_colis);
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+            $image_colis = $request->file('image_colis');
+            $prodPicture = time() . '.' . $image_colis->getClientOriginalExtension();
+            $image_colis->move(public_path('/assets/images'), $prodPicture);
+
+            $details->image_produit = $prodPicture;
+        }
+        $details->save();
+
+        return back()->with('updated_success','');
+    }
+
+    public function delete_depot($id){
+        $depot = Depot::find($id);
+
+        if ($depot) {
+            $depot->delete();
+            return back()->with('status_delete','depot supprimé avec succès');
+        }
+    }
+
+   
+
+
+
+
 }

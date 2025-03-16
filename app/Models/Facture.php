@@ -13,9 +13,10 @@ class Facture extends Model
         'email_client',
         'numero_client',
         'moyen_paiement',
-        'toal_achat',
+        'total_achat',
         'montant_paye',
         'reste',
+        'status',
         'nom_gestionnaire',
         'nom_entreprise',
     ];

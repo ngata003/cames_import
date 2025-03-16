@@ -2,169 +2,103 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Facture</title>
+    <title>Relevé {{$facture->id}}</title>
     <style>
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
-
-.container {
-    width: 800px;
-    margin: 0 auto;
-    background: white;
-    padding: 20px;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between; /* Espacement entre les éléments à gauche et à droite */
-    align-items: center;
-    border-bottom: 2px solid #000;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-}
-
-.header img {
-    width: 100px;
-    height: auto;
-    margin-right: 20px; /* Espacement à droite du logo */
-}
-
-.header h1 {
-    font-size: 24px;
-    margin: 0;
-    text-align: left; /* Aligner le texte à gauche */
-}
-
-.header .header-info {
-    text-align: right; /* Aligner les informations à droite */
-}
-
-.header .header-info p {
-    margin: 5px 0; /* Espacement des informations */
-}
-
-.details {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px; /* Espacement entre les sections */
-}
-
-.details div {
-    width: 45%;
-}
-
-.details div h3 {
-    margin: 0;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-.table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.table th, .table td {
-    padding: 10px;
-    text-align: center;
-    border: 1px solid #ddd;
-}
-
-.table th {
-    background-color: #f2f2f2;
-}
-
-.total-row td {
-    font-weight: bold;
-}
-
-.footer {
-    margin-top: 30px;
-    border-top: 2px solid #000;
-    padding-top: 10px;
-    text-align: center;
-}
-
-.footer p {
-    margin: 5px 0;
-}
-
-.footer .address {
-    font-size: 14px;
-}
-
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            font-size: 14px;
+        }
+        .bg-blue {
+            background-color: #0073e6;
+            color: #fff;
+        }
+        .text-end {
+            text-align: right;
+        }
+        .total {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <img src="assets/images/{{$entreprise->logo_entreprise}}" alt="Logo">
-        <h1>{{$entreprise->nom_entreprise}}</h1>
-        <div>
-            <p><strong>Facture ID:{{$entreprise->id}}</strong> </p>
-            <p><strong>Client:</strong> {{$facture->nom_client}}</p>
-        </div>
-    </div>
-
-    <div class="details">
-        <div>
-            <h3>Détails de la facture</h3>
-            <p><strong>Date:</strong> {{$facture->created_at->formatt('d/m/y')}}</p>
-            <p><strong>moyen paiement:</strong> {{$facture->moyen_paiement}}</p>
-        </div>
-        <div>
-            <h3>Informations client</h3>
-            <p>Nom client: {{$facture->nom_client}}</p>
-            <p>email: {{$facture->email_client}}</p>
-            <p>Téléphone: {{$facture->contact_client}} </p>
-        </div>
-    </div>
-
-    <table class="table">
-        <thead>
+    <table>
         <tr>
-            <th>Nom Produit</th>
-            <th>Prix Unitaire</th>
-            <th>Quantité</th>
-            <th>Total</th>
+            <td colspan="2">
+                <img src="assets/images/{{$entreprise->logo_entreprise}}" height="60" alt="Logo">
+            </td>
+            <td colspan="2" class="text-end">
+                <strong>Facture #{{$facture->id}}</strong><br>
+                <span>Date: {{$facture->created_at->format('d/m/Y')}}</span>
+            </td>
         </tr>
-        </thead>
-        <tbody>
-        @foreach ($commandes as $commande )
-         <tr>
-            <td>{{$commande->nom_produit}}</td>
-            <td>{{$commande->prix_unitaire}}</td>
-            <td>{{$commande->quantite_commandee}}</td>
-            <td>{{$commande->total}}</td>
-          </tr>
-        @endforeach
-        <tr class="total-row">
-            <td colspan="3">Total</td>
-            <td> {{$facture->total_commande}} FCFA </td>
+        <tr class="bg-blue">
+            <th colspan="2">Entreprise</th>
+            <th colspan="2">Client</th>
         </tr>
-        <tr class="total-row">
-            <td colspan="3">Montant Paye </td>
-            <td>{{$facture->montant_paye}} FCFA </td>
+        <tr>
+            <td>Nom :</td><td>{{$entreprise->nom_entreprise}}</td>
+            <td>Nom :</td><td>{{$facture->nom_client}}</td>
         </tr>
-        <tr class="total-row">
-            <td colspan="3">Reste </td>
-            <td>{{$facture->reste}}</td>
+        <tr>
+            <td>Email :</td><td>{{$entreprise->email_entreprise}}</td>
+            <td>Email :</td><td>{{$facture->email_client}}</td>
         </tr>
-        </tbody>
+        <tr>
+            <td>Fax :</td><td>{{$entreprise->fax_entreprise}}</td>
+            <td>Contact :</td><td>{{$facture->numero_client}}</td>
+        </tr>
     </table>
 
-    <div class="footer">
-        <p><strong>Numéro d'entreprise:</strong> {{$entreprise->nom_entreprise}}</p>
-        <p class="address">locakisation: {{$entreprise->localisation}} </p>
-    </div>
-</div>
+    <table>
+        <tr>
+            <th class="no-border text-start heading" colspan="5">
+                produits
+            </th>
+        </tr>
+        <tr class="bg-blue">
+            <th>Produit</th>
+            <th>Quantité</th>
+            <th>Prix Unitaire</th>
+            <th>Total</th>
+        </tr>
+        @foreach ($commandes as $commande)
+        <tr>
+            <td>{{$commande->nom_produit}}</td>
+            <td>{{$commande->qte_commandee}}</td>
+            <td>{{$commande->prix_unitaire}}</td>
+            <td>{{$commande->total}}</td>
+        </tr>
+        @endforeach
+        <tr>
+            <td colspan="3" class="total">Total Commande :</td>
+            <td class="total">{{$facture->total_achat}}</td>
+        </tr>
+        <tr>
+            <td colspan="3" class="total">Montant Payé :</td>
+            <td class="total">{{$facture->montant_paye}}</td>
+        </tr>
+        <tr>
+            <td colspan="3" class="total">Reste :</td>
+            <td class="total">{{$facture->reste}}</td>
+        </tr>
+    </table>
+
+    <p class="text-center">
+        {{$entreprise->localisation}} | {{$entreprise->fax_entreprise}} | {{$entreprise->site_web}} | {{$entreprise->email_entreprise}}
+    </p>
 
 </body>
 </html>

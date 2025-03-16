@@ -1,5 +1,6 @@
 <?php
 
+use App\Exports\DepotExport;
 use App\Exports\FacturesExport;
 use App\Exports\produitExport;
 use App\Exports\UsersExport;
@@ -58,16 +59,16 @@ Route::post('/add_gestionnaires',[UserController::class,'add_gestionnaires']);
 Route::post('/add_inscriptions',[UserController::class,'inscription_code']);
 Route::post('/add_connexion',[UserController::class,'add_connexion']);
 Route::get('/research_gestionnaires',[UserController::class,'research_gestionnaires']);
-Route::get('/export_users', function()  {return Excel::download(new UsersExport, 'users.xlsx');});
 Route::get('/gestionnaires_pdf',[pdfController::class,'generateGestionnairesPdf']);
 // routes pour les agences
 Route::post('/add_agences', [AgenceController::class,'add_agencies']);
 Route::put('/agences_edit/{id}', [AgenceController::class, 'update_agence']);
 Route::delete('/agences_delete/{id}',[AgenceController::class,'delete_agences']);
 // Routes pour les commandes
-Route::post('/add_commandes',[CommandeController::class,'add_commandes']);
+Route::post('/save_commandes',[CommandeController::class,'save_commandes']);
 Route::get('/command_enregistrees', [CommandeController::class,'affichage_view']);
 Route::delete('/delete_commandes/{id}', [FactureController::class,'deleteCommandes']);
+Route::get('/voir_commandes/{id}',[CommandeController::class,'voir_commandes']);
 //Routes pour les factures
 Route::get('/export_factures', function(){
     return Excel::download(new FacturesExport,'factures.xlsx');
@@ -85,3 +86,8 @@ Route::delete('/delete_produits/{id}',[produitController::class,'deleteProduits'
 Route::get('/export_produits', function()  {return Excel::download(new produitExport, 'produits.xlsx');});
 Route::get('/imprimer_pdf',[pdfController::class,'imprimer_rap_pdf']);
 Route::get('/research_produits',[ProduitController::class,'research_products']);
+// routes pour les depots
+
+Route::get('/export_depots', function()  {return Excel::download(new DepotExport, 'depots.xlsx');});
+Route::get('imprimer_rap-depots',[pdfController::class,'imprimer_depot_pdf']);
+
