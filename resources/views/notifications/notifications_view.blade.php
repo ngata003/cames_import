@@ -200,56 +200,34 @@
                                   <div class="card-body">
                                     <div class="d-sm-flex justify-content-between align-items-start">
                                         <div>
-                                          <h4 class="card-title card-title-dash"> Espace Notifications </h4>
-                                          <p class="card-subtitle card-subtitle-dash"> management des notifications </p>
+                                            <h4 class="card-title card-title-dash"> Espace Retraits </h4>
+                                            <p class="card-subtitle card-subtitle-dash"> management des retraits colis </p>
+                                        </div>
+                                        <div>
                                         </div>
                                     </div>
                                     <div class="table-responsive mt-1">
                                       <table class="table select-table">
                                         <thead>
                                             <tr>
-                                              <th> nom_gestionnaire </th>
-                                              <th> message  </th>
-                                              <th> date_message </th>
+                                              <th> description </th>
+                                              <th> date d'envoi </th>
                                               <th> actions </th>
                                             </tr>
                                           </thead>
                                           <tbody>
-                                            @foreach ($notifications as $notif )
                                             <tr>
-                                                <td>
-                                                  <div class="d-flex ">
-                                                    <img src="assets/images/{{$gestion->profil}}" alt="">
-                                                    <div>
-                                                      <span>{{$gestion->name}}</span>
-                                                      <p>{{$gestion->role}}</p>
-                                                    </div>
-                                                  </div>
-                                                </td>
-                                                <td>
-                                                  <span> {{$gestion->email}}</span>
-                                                </td>
-                                                <td>
-                                                  <div>
-                                                      <span> {{$gestion->contact}}</span>
-                                                  </div>
-                                                </td>
-                                                <td>
-                                                    <span> {{$gestion->residence}}</span>
-                                                </td>
-                                                <td>
-                                                    @if ($gestion->is_connected)
-                                                    <div class="badge badge-opacity-success"> connecté(e) </div>
-                                                    @else
-                                                    <div class="badge badge-opacity-danger"> Deconnecté(e) </div>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                  <button class="btn btn-secondary text-white" data-id="{{$gestion->id}}" data-nom="{{$gestion->name}}" data-email= "{{$gestion->email}}" data-contact="{{$gestion->contact}}" data-residence="{{$gestion->residence}}" data-image="{{$gestion->profil}}" data-role="{{$gestion->role}}" onclick="openEditModal(this)"   > <i class="fas fa-edit"></i> </button>
-                                                  <button class="btn btn-danger text-white" data-id="{{$gestion->id}}" onclick="openDeleteModal(this)" > <i class="fas fa-trash"></i> </button>
-                                                </td>
-                                              </tr>
-                                            @endforeach
+                                              <td>
+                                                <h6> CAMES IMPORT </h6>
+                                              </td>
+                                              <td>
+                                                <h6> 11-06-2026</h6>
+                                              </td>
+                                              <td>
+                                                <button class="btn btn-success"><i class="fas fa-eye text-white"></i> </button>
+                                                <button class="btn btn-danger"><i class="fas fa-trash text-white"></i></button>
+                                              </td>
+                                            </tr>
                                           </tbody>
                                       </table>
                                     </div>

@@ -83,66 +83,57 @@
         </nav>
 
         <div class="main-panel">
-          <div class="content-wrapper">
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="home-tab">
-                  <div class="d-sm-flex align-items-center justify-content-between border-bottom">
-                    <div>
-                      <div class="btn-wrapper">
-                        <a href="#" class="btn btn-otline-dark align-items-center"><i class="icon-share"></i> importer des retraits sur excel</a>
-                        <a href="#" class="btn btn-otline-dark"><i class="icon-printer"></i> pdf des retraits  </a>
-                        <a href="#" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Exporter des retraits sur excel  </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tab-content tab-content-basic">
-                    <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
-                      <div class="row">
-                        <div class="col-lg-8 d-flex flex-column">
-                          <div class="row flex-grow">
-                            <div class="col-12 grid-margin stretch-card">
-                              <div class="card card-rounded">
-                                <div class="card-body">
-                                  <div class="d-sm-flex justify-content-between align-items-start">
-                                    <div>
-                                      <h4 class="card-title card-title-dash"> Espace Retraits </h4>
-                                      <p class="card-subtitle card-subtitle-dash"> management des retraits colis </p>
+            <div class="content-wrapper">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="home-tab">
+                    <div class="tab-content tab-content-basic">
+                      <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
+                        <div class="row">
+                          <div class="col-lg-12 d-flex flex-column">
+                            <div class="row flex-grow">
+                              <div class="col-12 grid-margin stretch-card">
+                                <div class="card card-rounded">
+                                  <div class="card-body">
+                                    <div class="d-sm-flex justify-content-between align-items-start">
+                                        <div>
+                                            <h4 class="card-title card-title-dash"> Espace Retraits </h4>
+                                            <p class="card-subtitle card-subtitle-dash"> management des retraits colis </p>
+                                        </div>
+                                        <div>
+                                        </div>
                                     </div>
-                                    <div>
-
+                                    <div class="table-responsive mt-1">
+                                      <table class="table select-table">
+                                        <thead>
+                                            <tr>
+                                              <th> Nom client </th>
+                                              <th> Nom agence  </th>
+                                              <th> status </th>
+                                              <th> actions </th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            <tr>
+                                              <td>
+                                                <div class="d-flex ">
+                                                    <h6>Brandon washington</h6>
+                                                </div>
+                                              </td>
+                                              <td>
+                                                <h6> CAMES IMPORT </h6>
+                                              </td>
+                                              <td>
+                                                <div class="badge badge-opacity-success">Completed</div>
+                                              </td>
+                                              <td>
+                                                <button class="btn btn-success"> activer le retrait </button>
+                                                <button class="btn btn-danger"> supprimer le retrait </button>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                      </table>
                                     </div>
-                                  </div>
-                                  <div class="table-responsive  mt-1">
-                                    <table class="table select-table">
-                                      <thead>
-                                        <tr>
-                                          <th> Nom client </th>
-                                          <th> Nom agence  </th>
-                                          <th> status </th>
-                                          <th> actions </th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        <tr>
-                                          <td>
-                                            <div class="d-flex ">
-                                                <h6>Brandon washington</h6>
-                                            </div>
-                                          </td>
-                                          <td>
-                                            <h6> CAMES IMPORT </h6>
-                                          </td>
-                                          <td>
-                                            <div class="badge badge-opacity-success">Completed</div>
-                                          </td>
-                                          <td>
-                                            <button class="btn btn-success"> activer le retrait </button>
-                                            <button class="btn btn-danger"> supprimer le retrait </button>
-                                          </td>
-                                        </tr>
-                                      </tbody>
-                                    </table>
                                   </div>
                                 </div>
                               </div>
@@ -155,8 +146,7 @@
                 </div>
               </div>
             </div>
-          </div>
-          @include('footer')
+            @include('footer')
         </div>
       </div>
     </div>

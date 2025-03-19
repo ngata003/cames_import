@@ -252,7 +252,7 @@
                                                 </td>
                                                 <td> <h6> {{$commande->status}} </h6> </td>
                                                 <td>
-                                                  <button class="btn btn-success text-white" data-id="{{$commande->id}}" data-nom="{{$commande->nom_client}}" data-total_achat="{{$commande->total_achat}}" data-montant_paye="{{$commande->montant_paye}}" data-moyen_paiement="{{$commande->moyen_paiement}}" data-reste="{{$commande->reste}}" onclick="open"> <i class="fas fa-edit"></i> </button>
+                                                  <a href="/commandes_edit/{{$commande->id}}" class="btn btn-success text-white"> <i class="fas fa-edit"></i> </a>
                                                   <button class="btn btn-danger text-white" data-id="{{$commande->id}}" onclick="openDeleteModal(this)" > <i class="fas fa-trash"></i> </button>
                                                   <a href="/imprimer_pdf/{{$commande->id}}" class="btn btn-primary text-white"> <i class="icon-printer"></i> </a>
                                                   <a href="/voir_commandes/{{$commande->id}}" class="btn btn-secondary text-white">  <i class="fas fa-eye"></i>  </a>
@@ -304,6 +304,34 @@
         </div>
     </div>
 
+    <div class="modal fade" id="deletedModal" tabindex="-1" aria-labelledby="deleterModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleterModalLabel"> commande supprimée avec succès. </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <i class="mdi mdi-check-circle-outline mdi-36px text-success"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="succesModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="succesModalLabel"> commande ajoutée avec succès </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <i class="mdi mdi-check-circle-outline mdi-36px text-success"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <script src="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
     <script src="assets/vendors/chart.js/chart.umd.js"></script>
@@ -323,6 +351,26 @@
         var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
         deleteModal.show();
         }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+        @if(session('status_deleted'))
+            var deletedModal = new bootstrap.Modal(document.getElementById('deletedModal'));
+            deletedModal.show();
+        @endif
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+        @if(session('save_succeed'))
+            var deletedModal = new bootstrap.Modal(document.getElementById('successModal'));
+            deletedModal.show();
+        @endif
+        });
     </script>
   </body>
 </html>

@@ -18,8 +18,18 @@ class FactureController extends Controller
         $commandes = Commande::where('id_facture',$id);
         $commandes->delete();
 
-        return back()->with('status','commandes supprimées avec succès');
+        return back()->with('status_deleted','commandes supprimées avec succès');
     }
+
+    public function updateCommandes($id){
+        $entreprise = Session::get('entreprise_active');
+
+        $factures = Facture::find($id);
+        $commandes = Commande::where('nom_entreprise',$entreprise->nom_entreprise)->where('id_facture',$id)->get();
+
+        return view('commandes.commandes_edit', compact('factures','commandes'));
+    }
+
 
     public function research_factures(){
         $entreprise =  Session::get('entreprise_active');

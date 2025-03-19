@@ -119,4 +119,18 @@ class ProduitController extends Controller
         return view('produits.result_research', compact('produits'));
     }
 
+    public function autoCompletion_produits(Request $request){
+
+        $entreprise = Session::get('entreprise_active');
+        $query = $request->get('query');
+
+        if(!$query){
+            return response()->json([]);
+        }
+
+        $produits = Produit::where('nom_produit','LIKE',"%{$query}%")->where('nom_entreprise',$entreprise->nom_entreprise)->get(['nom_produit','prix_unitaire']);
+
+        return response()->json($produits);
+    }
+
 }

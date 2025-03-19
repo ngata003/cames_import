@@ -83,70 +83,71 @@
         </nav>
 
         <div class="main-panel">
-          <div class="content-wrapper">
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="home-tab">
-                  <div class="tab-content tab-content-basic">
-                    <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
-                      <div class="row">
-                        <div class="col-lg-8 d-flex flex-column">
-                          <div class="row flex-grow">
-                            <div class="col-12 grid-margin stretch-card">
-                              <div class="card card-rounded">
-                                <div class="card-body">
-                                  <div class="d-sm-flex justify-content-between align-items-start">
-                                    <div>
-                                      <h4 class="card-title card-title-dash"> Espace Entreprise </h4>
-                                      <p class="card-subtitle card-subtitle-dash"> modifier les informations de votre entreprise en toute sécurité. </p>
-                                    </div>
-                                    <div>
+            <div class="content-wrapper">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="home-tab">
+                    <div class="tab-content tab-content-basic">
+                      <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
+                        <div class="row">
+                          <div class="col-lg-12 d-flex flex-column">
+                            <div class="row flex-grow">
+                              <div class="col-12 grid-margin stretch-card">
+                                <div class="card card-rounded">
+                                  <div class="card-body">
+                                    <div class="d-sm-flex justify-content-between align-items-start">
+                                        <div>
+                                            <h4 class="card-title card-title-dash"> Espace Entreprise </h4>
+                                            <p class="card-subtitle card-subtitle-dash"> modifier les informations de votre entreprise en toute sécurité. </p>
+                                          </div>
+                                          <div>
 
+                                          </div>
                                     </div>
-                                  </div>
-                                  <div class="table-responsive  mt-1">
-                                    <table class="table select-table">
-                                      <thead>
-                                        <tr>
-                                            <th> Nom Entreprise  </th>
-                                            <th> Email Entreprise  </th>
-                                            <th> Fax Entreprise  </th>
-                                            <th> Site Web   </th>
-                                            <th> Logo  </th>
-                                            <th> Localisation  </th>
-                                            <th> actions </th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        @foreach ($infos as $inf  )
-                                        <tr>
-                                            <td>
-                                              <div class="d-flex ">
-                                                  <h6>{{$inf->nom_entreprise}}</h6>
-                                              </div>
-                                            </td>
-                                            <td>
-                                              <h6>{{$inf->email_entreprise}}</h6>
-                                            </td>
-                                            <td>
-                                              <h6>{{$inf->fax_entreprise}}</h6>
-                                            </td>
-                                            <td>
-                                              <h6>{{$inf->site_web}}</h6>
-                                            </td>
-                                            <td>
-                                              <img src="assets/images/{{$inf->logo_entreprise}}" alt="">
-                                            </td>
-                                            <td>
-                                              <h6>{{$inf->localisation}}</h6>
-                                            </td>
-                                            <td>
-                                              <button class="btn btn-success" data-id="{{$inf->id}}" data-nom="{{$inf->nom_entreprise}}" data-email="{{$inf->email_entreprise}}" data-fax="{{$inf->fax_entreprise}}" data-site="{{$inf->site_web}}" data-localisation="{{$inf->localisation}}" data-image="{{$inf->logo_entreprise}}" onclick="openEditModal(this)"> modifier infos  </button>
-                                            </td>
-                                          </tr>
-                                        @endforeach
-                                      </tbody>
-                                    </table>
+                                    <div class="table-responsive mt-1">
+                                      <table class="table select-table">
+                                        <thead>
+                                            <tr>
+                                                <th> Nom Entreprise  </th>
+                                                <th> Email Entreprise  </th>
+                                                <th> Fax Entreprise  </th>
+                                                <th> Site Web   </th>
+                                                <th> Logo  </th>
+                                                <th> Localisation  </th>
+                                                <th> actions </th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            @foreach ($infos as $inf  )
+                                            <tr>
+                                                <td>
+                                                  <div class="d-flex ">
+                                                      <h6>{{$inf->nom_entreprise}}</h6>
+                                                  </div>
+                                                </td>
+                                                <td>
+                                                  <h6>{{$inf->email_entreprise}}</h6>
+                                                </td>
+                                                <td>
+                                                  <h6>{{$inf->fax_entreprise}}</h6>
+                                                </td>
+                                                <td>
+                                                  <h6>{{$inf->site_web}}</h6>
+                                                </td>
+                                                <td>
+                                                  <img src="assets/images/{{$inf->logo_entreprise}}" alt="">
+                                                </td>
+                                                <td>
+                                                  <h6>{{$inf->localisation}}</h6>
+                                                </td>
+                                                <td>
+                                                  <button class="btn btn-success" data-id="{{$inf->id}}" data-nom="{{$inf->nom_entreprise}}" data-email="{{$inf->email_entreprise}}" data-fax="{{$inf->fax_entreprise}}" data-site="{{$inf->site_web}}" data-localisation="{{$inf->localisation}}" data-image="{{$inf->logo_entreprise}}" onclick="openEditModal(this)"> modifier infos  </button>
+                                                </td>
+                                              </tr>
+                                            @endforeach
+                                          </tbody>
+                                      </table>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
@@ -159,8 +160,7 @@
                 </div>
               </div>
             </div>
-          </div>
-          @include('footer')
+            @include('footer')
         </div>
       </div>
     </div>

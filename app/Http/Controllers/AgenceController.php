@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Agence;
 use App\Models\Commande;
 use App\Models\Depot;
+use App\Models\Facture;
 use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Session;
 
@@ -109,29 +111,32 @@ class AgenceController extends Controller
 
         $nom_entreprise = $entreprise->nom_entreprise;
 
-        $clients =  Commande::where('nom_entreprise',$nom_entreprise)->get();
+        $lundiDernier = Carbon::now()->startOfWeek()->subWeek();
+        $dimancheDernier = Carbon::now()->endOfWeek()->subWeek();
+
+        $depot = Depot::where('nom_entreprise',$nom_entreprise)->paginate(4);
+
+        $clients =  Facture::whereBetween('created_at',[$lundiDernier, $dimancheDernier])->select('nom_client')->distinct()->orderBy('nom_client','asc')->where('nom_entreprise',$nom_entreprise)->get();
         $agences = Agence::where('nom_entreprise',$nom_entreprise)->get();
 
-        return view('agences.depot_colis', compact('clients','agences'));
+        return view('agences.depot_colis', compact('clients','agences', 'depot'));
     }
 
     public function save_depot(Request $request){
-        $messages = [
-            'nom_client.required' => 'veuillez insrerer le nom du client',
-            'nom_agence.required' => 'veuillez renseigner le nom de l\'agence' ,
-
-        ];
 
         $request->validate([
             'nom_client' =>'required',
             'nom_agence' => 'required',
             'date_depart' => 'required',
-            'couleur_colis' => 'required|string|max:255|regex:',
+            'couleur_colis' => 'required|string|max:255',
             'moyen_transport' => 'required',
             'status' => 'required',
             'duree_trajet' => 'required',
             'image_colis' => '',
-        ], $messages);
+        ]);
+
+        $entreprise = Session::get('entreprise_active');
+        $user = Auth::user();
 
         if ($request->hasFile('image_colis')) {
             $produitFile = $request->file('image_colis');
@@ -149,11 +154,11 @@ class AgenceController extends Controller
         $depot->status = $request->input('status');
         $depot->duree_trajet = $request->input('duree_trajet');
         $depot->image_colis = $imageColis;
+        $depot->nom_gestionnaire = $user->name;
+        $depot->nom_entreprise = $entreprise->nom_entreprise;
 
         $depot->save();
-
-        return back()->with('status','agence enregistrée avec succès');
-
+        return back()->with('status_save','agence enregistrée avec succès');
     }
 
     public function update_depot(Request $request , $id){
@@ -193,10 +198,5 @@ class AgenceController extends Controller
             return back()->with('status_delete','depot supprimé avec succès');
         }
     }
-
-   
-
-
-
 
 }
