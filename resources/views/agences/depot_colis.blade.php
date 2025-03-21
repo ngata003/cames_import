@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
     <link rel="stylesheet" type="text/css" href="assets/js/select.dataTables.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="shortcut icon" href="assets/images/favicon.png" />
   </head>
   <body class="with-welcome-text">
@@ -153,11 +154,15 @@
                                                   </div>
                                                 </td>
                                                 <td>
-                                                  <div>
-                                                    <div class="progress progress-md">
-                                                      <div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div>
+                                                        <div class="progress progress-md">
+                                                            <div class="progress-bar bg-success" role="progressbar"
+                                                                style="width: {{ $dpt->progression > 0 ? min(100, $dpt->progression) : 0 }}%;"
+                                                                aria-valuenow="{{ $dpt->progression }}" aria-valuemin="0" aria-valuemax="100">
+                                                                {{ round($dpt->progression, 2) }}%
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                  </div>
                                                 </td>
                                                 <td>
                                                   <div>
@@ -165,8 +170,8 @@
                                                   </div>
                                                 </td>
                                                 <td>
-                                                  <button class="btn btn-success" data-id="{{$dpt->id}}" data-nom={{$dpt->nom_client}} data-agence={{$dpt->nom_agence}} data-trajet="{{$dpt->duree_trajet}}" data-couleur="{{$dpt->couleur_colis}}" data-image="{{$dpt->image_colis}}" data-transport="{{$dpt->moyen_transport}}" data-depart="{{$dpt->date_depart}}" data-status="{{$dpt->status}}" onclick="openEditModal(this)"> modifier </button>
-                                                  <button class="btn btn-danger" data-id="{{$dpt->id}}" onclick="openDeleteModal(this)"> supprimer </button>
+                                                 <button class="btn btn-secondary text-white" data-id="{{$dpt->id}}" data-nom="{{$dpt->nom_client}}" data-nom_agence="{{$dpt->nom_agence}}" data-duree_trajet="{{$dpt->duree_trajet}}" data-moyen_transport="{{$dpt->moyen_transport}}" data-couleur_colis="{{$dpt->couleur_colis}}" data-image_colis="{{$dpt->image_colis}}" data-date_depart="{{$dpt->date_depart}}" onclick="openEditModal(this)"> <i class="fas fa-edit"></i> </button>                                                
+                                                  <button class="btn btn-danger" data-id="{{$dpt->id}}" onclick="openDeleteModal(this)"> <i class="fas fa-trash text-white"></i> </button>
                                                 </td>
                                               </tr>
                                             @endforeach
@@ -252,84 +257,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Ajouter une agence   </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form method="POST" enctype="multipart/form-data"  action="" id="editForm" >
-                        @csrf
-                        @method('PUT')
-
-                        <div class="mb-3">
-                            <label for="centreName" class="form-label"> Nom Client  </label>
-                            <select name="nom_client" class="form-control" id="nom_agence">
-                                <option> selectionnez un client  </option>
-                                @foreach ($clients  as $clt )
-                                <option value="{{$clt->nom_client}}"> {{$clt->nom_client}} </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div>
-                            <label for="centreName" class="form-label"> Nom de l'agence </label>
-                            <select name="nom_agence" class="form-control" id="nom_agence">
-                                <option> selectionnez une agence  </option>
-                                @foreach ($agences as $agence )
-                                <option value="{{$agence->nom_agence}}"> {{$agence->nom_agence}} </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="date_depart" class="form-label"> date depart  </label>
-                            <input type="date" name="date_depart" class="form-control" id="date_depart" placeholder="entrer une date valide ">
-                        </div>
-                        <div class="mb-3">
-                            <label for="couleur_colis" class="form-label"> couleur du colis (facultatif si image)  </label>
-                            <input type="text"  name="couleur_colis" class="form-control" id="couleur_colis" placeholder="entrez la couleur du paquet du colis">
-                        </div>
-                        <div class="mb-3">
-                            <label for="imageColis" class="form-label">image du colis </label>
-                            <input type="file" name="image_colis" class="form-control" id="">
-                            <img src="" id="newImage" alt="">
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">moyen de transport </label>
-                            <select name="moyen_transport" class="form-control" id="moyen_transport">
-                                <option> selectionnez un moyen de transport  </option>
-                                <option value="transport_aerien"> transport aerien </option>
-                                <option value="transport_marin"> transport marin </option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="centreName" class="form-label"> durée du trajet </label>
-                            <input type="number" name="duree_trajet" class="form-control" id="duree_trajet" placeholder="Ex: 30 j ">
-                        </div>
-                        <div class="button-container">
-                          <input type="submit" class="button btn btn-success" name="save" value="modifier">
-                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="succesModal" tabindex="-1" aria-labelledby="succesModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editeModalLabel"> colis déposé avec succès </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center">
-                    <i class="mdi mdi-check-circle-outline mdi-36px text-success"></i>
-                </div>
-            </div>
-        </div>
-    </div>
+  
 
     <div class="modal fade" id="deleterModal" tabindex="-1" aria-labelledby="deleterModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -349,14 +277,14 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="deleteModalLabel">Supprimer le gestionnaire </h5>
+              <h5 class="modal-title" id="deleteModalLabel">Supprimer le depot </h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               Êtes-vous sûr de vouloir supprimer ce depot ?
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Non</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Non</button>
               <form method="POST" id="deleteForm">
                 @csrf
                 @method('DELETE')
@@ -366,6 +294,72 @@
           </div>
         </div>
     </div>
+
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel"> modifier les informations du produit  </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" enctype="multipart/form-data"  action="" id="editForm" >
+                        @csrf
+                        @method('PUT')
+
+                        <div class="mb-3">
+                            <label for="centreName" class="form-label"> Nom Client  </label>
+                            <select name="nom_client" class="form-control" id="client">
+                                <option> selectionnez un client  </option>
+                                @foreach ($clients  as $clt )
+                                <option value="{{$clt->nom_client}}"> {{$clt->nom_client}} </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label for="centreName" class="form-label"> Nom de l'agence </label>
+                            <select name="nom_agence" class="form-control" id="agence">
+                                <option> selectionnez une agence  </option>
+                                @foreach ($agences as $agence )
+                                <option value="{{$agence->nom_agence}}"> {{$agence->nom_agence}} </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="date_depart" class="form-label"> date depart  </label>
+                            <input type="date" name="date_depart" class="form-control" id="depart" placeholder="entrer une date valide ">
+                        </div>
+                        <div class="mb-3">
+                            <label for="couleur_colis" class="form-label"> couleur du colis (facultatif si image)  </label>
+                            <input type="text"  name="couleur_colis" class="form-control" id="couleur" placeholder="entrez la couleur du paquet du colis">
+                        </div>
+                        <div class="mb-3">
+                            <label for="imageColis" class="form-label">image du colis </label>
+                            <input type="file" name="image_colis" class="form-control" id="">
+                            <img src="" id="newImage" height="45px" width="45px" alt="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">moyen de transport </label>
+                            <select name="moyen_transport" class="form-control" id="Mtransport">
+                                <option> selectionnez un moyen de transport  </option>
+                                <option value="transport_aerien"> transport aerien </option>
+                                <option value="transport_marin"> transport marin </option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="centreName" class="form-label"> durée du trajet </label>
+                            <input type="number" name="duree_trajet" class="form-control" id="duree" placeholder="Ex: 30 j ">
+                        </div>
+                        <div class="button-container">
+                          <input type="submit" class="button btn btn-success" name="save" value="modifier">
+                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <script src="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
     <script src="assets/vendors/chart.js/chart.umd.js"></script>
@@ -385,6 +379,14 @@
         @endif
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        @if(session('updated_status'))
+            var editerModal = new bootstrap.Modal(document.getElementById('editerModal'));
+            editerModal.show();
+        @endif
+        });
+    </script>
 
     <script>
         function openDeleteModal(button) {
@@ -396,31 +398,44 @@
         }
     </script>
 
+    <div class="modal fade" id="editerModal" tabindex="-1" aria-labelledby="editerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="dediterModalLabel"> depot modifié avec succès. </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <i class="mdi mdi-check-circle-outline mdi-36px text-success"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         function openEditModal(button) {
             var id = button.getAttribute('data-id');
-            var nom = button.getAttribute('data-nom');
-            var nom_agence = button.getAttribute('data-agence');
-            var couleur = button.getAttribute('data-couleur');
-            var depart = button.getAttribute('data-depart');
-            var moyen_transport = button.getAttribute('data-transport');
-            var duree = button.getAttribute('data-trajet');
-            var image = button.getAttribute('data-image');
+            var nom_client = button.getAttribute('data-nom');
+            var nom_agence = button.getAttribute('data-nom_agence');
+            var duree_trajet = button.getAttribute('data-duree_trajet');
+            var couleur_colis = button.getAttribute('data-couleur_colis');
+            var moyen_transport = button.getAttribute('data-moyen_transport');
+            var date_depart  = button.getAttribute('data-date_depart');
+            var image_colis = button.getAttribute('data-image_colis');
 
-            document.getElementById('editModalLabel').textContent = 'Editer une agence ';
-            document.getElementById('editForm').action = '/colis_edit/' + id;
-            document.getElementById('nom_client').value = nom_client;
-            document.getElementById('nom_agence').value = nom_agence;
-            document.getElementById('couleur_colis').value = couleur;
-            document.getElementById('date_depart').value = depart;
-            document.getElementById('moyen_transport').value = moyen_transport;
-            document.getElementById('duree_trajet').value = duree;
-            document.getElementById('newImage').src = "assets/images/" + image;
+            document.getElementById('editModalLabel').textContent = 'Editer un depot  ';
+            document.getElementById('editForm').action = '/edit_depots/' + id;
+            document.getElementById('client').value = nom_client;
+            document.getElementById('agence').value = nom_agence;
+            document.getElementById('depart').value = date_depart;
+            document.getElementById('couleur').value = couleur_colis;
+            document.getElementById('Mtransport').value = moyen_transport;
+            document.getElementById('duree').value = duree_trajet;
+            document.getElementById('newImage').src = "assets/images/" + image_colis;
 
             var editModal = new bootstrap.Modal(document.getElementById('editModal'));
             editModal.show();
         }
     </script>
-
   </body>
 </html>

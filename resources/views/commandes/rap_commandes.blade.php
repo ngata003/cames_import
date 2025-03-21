@@ -332,6 +332,20 @@
         </div>
     </div>
 
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel"> commandes modifiées avec succès </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <i class="mdi mdi-check-circle-outline mdi-36px text-success"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <script src="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
     <script src="assets/vendors/chart.js/chart.umd.js"></script>
@@ -369,6 +383,16 @@
         @if(session('save_succeed'))
             var deletedModal = new bootstrap.Modal(document.getElementById('successModal'));
             deletedModal.show();
+        @endif
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+        @if(session('success_edit'))
+            var editModal = new bootstrap.Modal(document.getElementById('editModal'));
+            editModal.show();
         @endif
         });
     </script>

@@ -6,6 +6,7 @@ use App\Exports\produitExport;
 use App\Exports\UsersExport;
 use App\Http\Controllers\AgenceController;
 use App\Http\Controllers\CommandeController;
+use App\Http\Controllers\DepotController;
 use App\Http\Controllers\EntrepriseController;
 use App\Http\Controllers\FactureController;
 use App\Http\Controllers\NotificationController;
@@ -52,6 +53,7 @@ Route::post('/add_connexion',[UserController::class,'add_connexion']);
 Route::get('/gestionnaires', [UserController::class,'affichage_vue']);
 Route::get('/research_gestionnaires',[UserController::class,'research_gestionnaires']);
 Route::get('/gestionnaires_pdf',[pdfController::class,'generateGestionnairesPdf']);
+Route::get('/deconnexion',[UserController::class,'deconnexion']);
 
 // routes pour les agences
 Route::post('/add_agences', [AgenceController::class,'add_agencies']);
@@ -88,9 +90,11 @@ Route::get('/autocompletion_produits',[ProduitController::class,'autocompletion_
 
 Route::get('/export_depots', function()  {return Excel::download(new DepotExport, 'depots.xlsx');});
 Route::get('imprimer_rap-depots',[pdfController::class,'imprimer_depot_pdf']);
-Route::post('/save_depot_colis',[AgenceController::class,'save_depot']);
-Route::delete('/delete_colis/{id}',[AgenceController::class,'delete_depot']);
-Route::get('/depot_colis', [AgenceController::class,'deposer_colis']);
+Route::post('/save_depot_colis',[DepotController::class,'save_depot']);
+Route::delete('/delete_colis/{id}',[DepotController::class,'delete_depot']);
+Route::get('/depot_colis', [DepotController::class,'deposer_colis']);
+Route::put('/edit_depots/{id}',[DepotController::class,'modifier_depots']);
+
 
 //routes pour les notifications
 Route::get('/notifications',[NotificationController::class, 'view_controller']);

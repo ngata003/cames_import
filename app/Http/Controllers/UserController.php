@@ -335,4 +335,14 @@ class UserController extends Controller
 
     }
 
+    public function deconnexion(){
+        $user = Auth::user();
+        $user->is_connected= 0;
+        $user->save();
+
+        Auth::logout();
+
+        return redirect('/connexion');
+    }
+
 }
