@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Commande;
 use App\Models\Facture;
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Session;
 
@@ -83,5 +84,54 @@ class FactureController extends Controller
 
     return redirect('command_enregistrees')->with('success_edit','modifications de commandes reussies');
     }
+
+    public function statistic_view() {
+
+        $entreprise = Session::get('entreprise_active');
+        $moisActuel = Carbon::now()->month;
+        $AnneActuelle = Carbon::now()->year;
+
+        $nbre_commandes_mois = Facture::whereMonth('created_at', $moisActuel)->whereYear('created_at', $AnneActuelle)->count();
+        $nbre_commandes_annee = Facture::whereYear('created_at', $AnneActuelle)->count();
+
+        $totalMois = Facture::whereMonth('created_at', $moisActuel) ->whereYear('created_at', $AnneActuelle)->where('nom_entreprise', $entreprise->nom_entreprise)->sum('total_achat');
+        $totalAnnee = Facture::whereYear('created_at', $AnneActuelle)
+                             ->where('nom_entreprise', $entreprise->nom_entreprise)
+                             ->sum('total_achat');
+
+        $totauxMois = [];
+        $nomsMois = [];
+
+        for ($mois = 1; $mois <= 12; $mois++) {
+            $totalAchatMois = Facture::whereMonth('created_at', $mois)->whereYear('created_at', $AnneActuelle)->where('nom_entreprise', $entreprise->nom_entreprise)->sum('total_achat');
+
+            $totauxMois[] = $totalAchatMois;
+            $nomsMois[] = Carbon::create(null, $mois)->locale('fr')->monthName;
+        }
+
+        $clientsTop = Facture::whereYear('created_at', $AnneActuelle)
+        ->where('nom_entreprise',$entreprise->nom_entreprise)
+        ->select('nom_client')
+        ->selectRaw('SUM(total_achat) as total_achats')
+        ->groupBy('nom_client')
+        ->orderByDesc('total_achats')
+        ->limit(6)
+        ->get();
+
+        $maxTotal = $clientsTop->max('total_achats');
+
+        $TopProduits = Commande::whereYear('created_at',$AnneActuelle)
+        ->where('nom_entreprise',$entreprise->nom_entreprise)
+        ->select('nom_produit')
+        ->selectRaw('SUM(total) as totaux')
+        ->groupBy('nom_produit')
+        ->orderByDesc('totaux')
+        ->limit(6)
+        ->get();
+
+        $maxProduit = $TopProduits->max('totaux');
+        return view('accueil', compact('nbre_commandes_mois', 'nbre_commandes_annee', 'totalMois', 'totalAnnee', 'totauxMois', 'AnneActuelle', 'nomsMois','clientsTop', 'maxTotal','TopProduits','maxProduit'));
+    }
+
 
 }

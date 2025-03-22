@@ -133,6 +133,10 @@
                             <input type="text" name="name" class="form-control" id="" value="{{$user->name}}">
                         </div>
                         <div class="mb-3">
+                            <label for="" class="form-label">Email </label>
+                            <input type="text" name="email" class="form-control" id="" value="{{$user->email}}">
+                        </div>
+                        <div class="mb-3">
                             <label for="" class="form-label"> Contact </label>
                             <input type="tel" name="contact" class="form-control" id="" value="{{$user->contact}}">
                         </div>
@@ -153,7 +157,7 @@
                             <input type="file" name="image_changee" class="form-control" >
                             <img src="assets/images/{{$user->profil}}" height="45px" width="45px" alt="">
                         </div>
-                        <input type="hidden" name="email" value="{{$user->email}}">
+                        <input type="hidden" name="identifiant" value="{{$user->id}}">
                         <div class="button-container">
                           <input type="submit" class="button btn btn-success" name="save" value="Enregistrer">
                           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fermer</button>

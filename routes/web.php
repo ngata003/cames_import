@@ -38,7 +38,6 @@ Route::put('/entreprise_edit/{id}',[EntrepriseController::class,'update_entrepri
 // routes pour les utilisateurs
 Route::get('/', function () {return view('authentification.inscription');});
 Route::get('/connexion', function () {return view('authentification.connexion');});
-Route::get('/accueil', function () {return view('accueil');});
 Route::get('/', function () { return view('authentification.inscription');});
 Route::get('/reset_password',function(){return view('authentification.reset_password');});
 Route::get('/forget_password',function(){return view('authentification.forget_password');});
@@ -73,6 +72,7 @@ Route::get('/export_factures', function(){return Excel::download(new FacturesExp
 Route::get('/factures_pdf',[pdfController::class,'generateFacturesPdf']);
 Route::get('/imprimer_pdf/{id}', [pdfController::class,'imprimer_facture']);
 Route::get('/research_factures',[FactureController::class,'research_factures']);
+Route::get('/accueil',[FactureController::class,'statistic_view']);
 
 
 // Routes pour les produits
@@ -98,4 +98,4 @@ Route::put('/edit_depots/{id}',[DepotController::class,'modifier_depots']);
 
 //routes pour les notifications
 Route::get('/notifications',[NotificationController::class, 'view_controller']);
-Route::get('/retraits',function(){return view('retraits');});
+Route::get('/retraits',function(){return view('retraits.retraits');});

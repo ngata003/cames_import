@@ -23,7 +23,7 @@ return new class extends Migration
             $table->boolean('is_connected')->default(false);
 
 
-            $table->foreign('nom_gestionnaire')->references('name')->on('users')->onDelete('cascade');
+            $table->foreign('nom_gestionnaire')->references('name')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

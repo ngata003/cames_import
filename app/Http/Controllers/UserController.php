@@ -285,9 +285,9 @@ class UserController extends Controller
         return view('gestionnaires.result_research',compact('gestionnaires'));
     }
 
-
-    public function update_profil(Request $request){
-
+    public function update_profil(Request $request)
+    {
+        $user = Auth::user();
         $messages = [
             'name.required' => 'veuillez entrer un nom dans le champ nom ',
             'name.regex' => 'veuillez renseigner uniquement une chaine de caracteres constituée de lettres uniquement',
@@ -298,42 +298,83 @@ class UserController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255|regex:/^[a-zA-ZÀ-ÿ\s-]+$/',
+            'email' => 'required|email|regex:/^[a-zA-Z]+[a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/',
             'contact' => 'required|regex:/^\+?[1-9]\d{6,14}$/',
             'residence' => 'required',
             'image_changee' => 'nullable|image|mimes:jpeg,jpg,png,svg,gif|max:2048',
             'password' => 'nullable|String|max:12|confirmed',
         ], $messages);
 
+        $identifiant = $request->input('identifiant');
+        $infos = User::find($identifiant);
 
+        if ($user->type == 'admin') {
+            $ancienNom = $infos->name;
+            $nouveauNom = $request->input('name');
 
-        $infos = User::where('email', $request->email)->first();
+            // Vérifiez si le nouveau nom existe déjà dans la table users
+            $utilisateurExist = User::where('name', $nouveauNom)->exists();
 
-        $infos->name = $request->input('name');
-        $infos->contact = $request->input('contact');
-        $infos->residence = $request->input('residence');
-        $infos-> password = bcrypt($request->input('password'));
+            if (!$utilisateurExist) {
+                // Si le nom n'existe pas, vous pouvez procéder à la mise à jour des entreprises
+                Entreprise::where('nom_gestionnaire', $ancienNom)->update(['nom_gestionnaire' => $nouveauNom]);
+                User::where('nom_createur', $ancienNom)->update(['nom_createur' => $nouveauNom]);
 
-        if ($request->hasFile('image_changee')) {
-            if ($infos->profil) {
-                $oldImagePath = public_path('assets/images/' . $infos->profil);
-                if (file_exists($oldImagePath)) {
-                    unlink($oldImagePath);
+                $infos->name = $nouveauNom;
+                $infos->contact = $request->input('contact');
+                $infos->email = $request->input('email');
+                $infos->residence = $request->input('residence');
+                $infos->password = bcrypt($request->input('password'));
+
+                if ($request->hasFile('image_changee')) {
+                    if ($infos->profil) {
+                        $oldImagePath = public_path('assets/images/' . $infos->profil);
+                        if (file_exists($oldImagePath)) {
+                            unlink($oldImagePath);
+                        }
+                    }
+
+                    $uploadedFile = $request->file('image_changee'); // NE PAS ÉCRASER $infos
+                    $userImage = time() . '.' . $uploadedFile->getClientOriginalExtension();
+                    $uploadedFile->move(public_path('/assets/images'), $userImage);
+
+                    $infos->profil = $userImage; // Met à jour le champ "profil" correctement
                 }
+
+                $infos->save();
+                return back()->with('status', 'modifications enregistrées avec succès');
+            } else {
+                // Le nom existe déjà dans la table users, afficher une erreur
+                return back()->withErrors(['name' => 'Ce nom existe déjà dans le système.']);
+            }
+        } else {
+            // Pour un utilisateur normal, on met à jour ses informations sans toucher aux entreprises
+            $infos->name = $request->input('name');
+            $infos->contact = $request->input('contact');
+            $infos->email = $request->input('email');
+            $infos->residence = $request->input('residence');
+            $infos->password = bcrypt($request->input('password'));
+
+            if ($request->hasFile('image_changee')) {
+                if ($infos->profil) {
+                    $oldImagePath = public_path('assets/images/' . $infos->profil);
+                    if (file_exists($oldImagePath)) {
+                        unlink($oldImagePath);
+                    }
+                }
+
+                $uploadedFile = $request->file('image_changee');
+                $userImage = time() . '.' . $uploadedFile->getClientOriginalExtension();
+                $uploadedFile->move(public_path('/assets/images'), $userImage);
+
+                $infos->profil = $userImage;
             }
 
-            $uploadedFile = $request->file('image_changee'); // NE PAS ÉCRASER $infos
-            $userImage = time() . '.' . $uploadedFile->getClientOriginalExtension();
-            $uploadedFile->move(public_path('/assets/images'), $userImage);
-
-            $infos->profil = $userImage; // Met à jour le champ "profil" correctement
+            $infos->save();
+            return back()->with('status', 'modifications enregistrées avec succès');
         }
-
-
-        $infos->save();
-
-        return back()->with('status','modifications enregistrées avec succès');
-
     }
+
 
     public function deconnexion(){
         $user = Auth::user();
