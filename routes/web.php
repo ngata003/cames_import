@@ -12,6 +12,7 @@ use App\Http\Controllers\FactureController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\pdfController;
 use App\Http\Controllers\ProduitController;
+use App\Http\Controllers\RetraitController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
@@ -31,53 +32,62 @@ use Maatwebsite\Excel\Facades\Excel;
 //Routes pour entreprises
 Route::post('/add_entreprise',[EntrepriseController::class,'add_entreprise']);
 Route::get('/entreprise', function (){return view('entreprise');});
-Route::get('/entreprise_management',[EntrepriseController::class,'affichage_vue']);
+Route::get('/entreprise_management',[EntrepriseController::class,'affichage_vue'])->middleware('role:admin');
 Route::put('/entreprise_edit/{id}',[EntrepriseController::class,'update_entreprise']);
 
 
-// routes pour les utilisateurs
+
+
+//liens pour l'authentification
 Route::get('/', function () {return view('authentification.inscription');});
 Route::get('/connexion', function () {return view('authentification.connexion');});
 Route::get('/', function () { return view('authentification.inscription');});
 Route::get('/reset_password',function(){return view('authentification.reset_password');});
 Route::get('/forget_password',function(){return view('authentification.forget_password');});
-Route::get('/ajout_commandes', function(){return view('commandes.add_commandes');});
-Route::get('/profil',function(){return view('profil');});
+Route::get('/deconnexion',[UserController::class,'deconnexion']);
+
+// routes pour les utilisateurs
+Route::get('/profil',function(){return view('profil');})->middleware('role:admin,importateur,secretaire');
 Route::put('profil_update',[UserController::class,'update_profil']);
 Route::put('/gestionnaires_edit/{id}', [UserController::class,'update_gestionnaires']);
 Route::delete('/gestionnaires_delete/{id}',[UserController::class,'delete_gestionnaires']);
 Route::post('/add_gestionnaires',[UserController::class,'add_gestionnaires']);
 Route::post('/add_inscriptions',[UserController::class,'inscription_code']);
 Route::post('/add_connexion',[UserController::class,'add_connexion']);
-Route::get('/gestionnaires', [UserController::class,'affichage_vue']);
+Route::get('/gestionnaires', [UserController::class,'affichage_vue'])->middleware('role:admin');
 Route::get('/research_gestionnaires',[UserController::class,'research_gestionnaires']);
 Route::get('/gestionnaires_pdf',[pdfController::class,'generateGestionnairesPdf']);
-Route::get('/deconnexion',[UserController::class,'deconnexion']);
+
 
 // routes pour les agences
 Route::post('/add_agences', [AgenceController::class,'add_agencies']);
-Route::get('/agences',[AgenceController::class,'affichage_vue']);
+Route::get('/agences',[AgenceController::class,'affichage_vue'])->middleware('role:admin,importateur');
 Route::put('/agences_edit/{id}', [AgenceController::class, 'update_agence']);
 Route::delete('/agences_delete/{id}',[AgenceController::class,'delete_agences']);
 
 // Routes pour les commandes
 Route::post('/save_commandes',[CommandeController::class,'save_commandes']);
-Route::get('/command_enregistrees', [CommandeController::class,'affichage_view']);
+Route::get('/command_enregistrees', [CommandeController::class,'affichage_view'])->middleware('role:admin,importateur,secretaire');
 Route::delete('/delete_commandes/{id}', [FactureController::class,'deleteCommandes']);
 Route::get('/commandes_edit/{id}', [FactureController::class,'updateCommandes']);
 Route::put('/modifier_commandes/{i}', [FactureController::class,'modifier_facCommandes']);
+Route::get('/ajout_commandes', function(){
+    return view('commandes.add_commandes');
+});
+
+Route::get('/voir_commandes/{id}', [CommandeController::class,'voir_commandes']);
 
 //Routes pour les factures
 Route::get('/export_factures', function(){return Excel::download(new FacturesExport,'factures.xlsx');});
 Route::get('/factures_pdf',[pdfController::class,'generateFacturesPdf']);
 Route::get('/imprimer_pdf/{id}', [pdfController::class,'imprimer_facture']);
 Route::get('/research_factures',[FactureController::class,'research_factures']);
-Route::get('/accueil',[FactureController::class,'statistic_view']);
+Route::get('/accueil',[FactureController::class,'statistic_view'])->middleware('role:admin');
 
 
 // Routes pour les produits
 
-Route::get('/produits',[ProduitController::class,'product_view']);
+Route::get('/produits',[ProduitController::class,'product_view'])->middleware('role:admin,importateur,secretaire');
 Route::post('/add_produits',[produitController::class,'add_products']);
 Route::put('/edit_produits/{id}',[produitController::class,'updateProduits']);
 Route::delete('/delete_produits/{id}',[produitController::class,'deleteProduits']);
@@ -92,10 +102,12 @@ Route::get('/export_depots', function()  {return Excel::download(new DepotExport
 Route::get('imprimer_rap-depots',[pdfController::class,'imprimer_depot_pdf']);
 Route::post('/save_depot_colis',[DepotController::class,'save_depot']);
 Route::delete('/delete_colis/{id}',[DepotController::class,'delete_depot']);
-Route::get('/depot_colis', [DepotController::class,'deposer_colis']);
+Route::get('/depot_colis', [DepotController::class,'deposer_colis'])->middleware('role:admin,importateur');
 Route::put('/edit_depots/{id}',[DepotController::class,'modifier_depots']);
 
 
 //routes pour les notifications
-Route::get('/notifications',[NotificationController::class, 'view_controller']);
-Route::get('/retraits',function(){return view('retraits.retraits');});
+Route::get('/notifications',[NotificationController::class, 'view_controller'])->middleware('role:admin,importateur,secretaire');
+Route::get('/retraits',[RetraitController::class,'affichage_retraits'])->middleware('role:admin,secretaire');
+Route::post('/lu_notif/{id}',[NotificationController::class,'lu_notif']);
+

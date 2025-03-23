@@ -40,7 +40,6 @@ class CommandeController extends Controller
         else{
             $commandes = Facture::where('nom_entreprise',$nom_entreprise)->where('nom_gestionnaire',$user->name)->paginate(3);
             return view('commandes.rap_commandes', compact('commandes'));
-
         }
     }
 

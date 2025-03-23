@@ -94,7 +94,7 @@
     <div class="container">
         <div class="header">
             <div class="logo">
-                <img src="assets/images/{{$entreprise->logo_entreprise}}" height="75px" width="35px" alt="Logo">
+                <img src="{{asset('assets/images/'.$entreprise->logo_entreprise)}}" height="75px" width="35px" alt="Logo">
             </div>
             <div class="facture-info">
                 <h2> Reservations </h2>

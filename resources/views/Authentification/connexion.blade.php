@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="../../assets/css/style.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="../../assets/images/favicon.png" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
   </head>
   <body>
     <div class="container-scroller">
@@ -38,8 +39,9 @@
                   <div class="form-group">
                     <input type="email" class="form-control form-control-lg" placeholder="saisissez votre email d'inscription" name="email">
                   </div>
-                  <div class="form-group">
+                  <div class="form-group position-relative">
                     <input type="password" name="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password">
+                    <i class="bi bi-eye-slash position-absolute top-50 end-0 translate-middle-y me-3" id="togglePassword" style="cursor: pointer;"></i>
                   </div>
                   <div class="mt-3 d-grid gap-2">
                     <input type="submit" value="connectez-vous" class="btn btn-block btn-primary btn-lg fw-medium auth-form-btn" name="save">
@@ -100,6 +102,20 @@
                 $("#errorModal").modal("show");
             @endif
         });
+    </script>
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function () {
+        let passwordInput = document.getElementById('exampleInputPassword1');
+        let icon = this;
+
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            icon.classList.replace("bi-eye-slash", "bi-eye"); // Change l'icône
+        } else {
+            passwordInput.type = "password";
+            icon.classList.replace("bi-eye", "bi-eye-slash");
+        }
+    });
     </script>
   </body>
 </html>

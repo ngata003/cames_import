@@ -14,7 +14,7 @@ use Session;
 
 class AgenceController extends Controller
 {
-    //
+    //fonction pour enregistrer les agences au sein de l'entreprise
     public function add_agencies(Request $request){
 
         $messages = [
@@ -27,8 +27,12 @@ class AgenceController extends Controller
             'contact_agence.regex' => 'veuillez rentrer un numero valide ',
 
             'localisation.regex' => 'veuillez une localisation sans chiffres',
-            'site_web.regex' => 'veuillez rentrer un lien de site du style www.exemple.com ou https://exemple.com',
+
             'email_agence.regex' => 'veuillez rentrer une adresse valide',
+            'email_agence.unique' => 'veuillez changer votre adresse car celle-ci est deja enregistrée',
+
+            'site_web.regex' => 'veuillez rentrer un lien de site du style www.exemple.com ou https://exemple.com',
+            'site_web.unique' => 'veuillez rentrer un autre lien de site celui existe deja',
 
         ];
 
@@ -36,8 +40,9 @@ class AgenceController extends Controller
             'nom_agence' => 'required|string|max:255|unique:agences,nom_agence|regex:/^[a-zA-ZÀ-ÿ\s-]+$/',
             'contact_agence' => 'required|unique:agences,contact_agence|regex:/^\+?[1-9]\d{6,14}$/',
             'localisation' => 'nullable|regex:/^[a-zA-ZÀ-ÿ\s-]+$/',
-            'email_agence' => 'nullable|email|regex:/^[a-zA-Z]+[a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/',
-            'site_web' => 'nullable|regex:/^(https?:\/\/)?([\w\-]+\.)+[\w]{2,}(\/\S*)?$/',
+            'email_agence' => 'nullable|email|unique:agences,email_agence|regex:/^[a-zA-Z]+[a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/',
+            'site_web' => 'nullable|unique:agences,site_web|regex:/^(https?:\/\/)?(www\.)?[\w\-]+(\.[\w\-]+)+([\/?].*)?$/i'
+
         ], $messages);
 
         $user = Auth::user();
@@ -63,6 +68,7 @@ class AgenceController extends Controller
         return back()->with('agence_success','agence enregistré avec succès');
     }
 
+    //fonction pour afficher les informations dans le tableau de la vue agences.
     public function affichage_vue(){
         $entreprise = Session::get('entreprise_active');
 
@@ -82,6 +88,7 @@ class AgenceController extends Controller
     }
 
 
+    //fonction pour modifier les informations des agences dans l'entreprise
     public function update_agence(Request $request, $id){
         $agency = Agence::find($id);
 
@@ -97,6 +104,8 @@ class AgenceController extends Controller
 
     }
 
+    //fonction pour supprimer les agences dans l'entreprise.
+
     public function delete_agences($id){
         $agences = Agence::find($id);
 
@@ -105,5 +114,5 @@ class AgenceController extends Controller
         return back()->with('delete_status','agence supprimée avec succès');
     }
 
-   
+
 }

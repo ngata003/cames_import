@@ -16,22 +16,15 @@ class ProduitController extends Controller
         $nom_entreprise = Session::get('entreprise_active')->nom_entreprise;
         $user = Auth::user();
 
-        if ($user->type == "gestionnaire") {
-            $produits = Produit::where('nom_entreprise',$nom_entreprise)->where('nom_gestionnaire',$user->name)->get();
-            return view ('produits.add_produits', compact('produits'));
-        }
-
-        else if($user->type == "admin"){
-            $notif_nVues = notification::where('nom_entreprise',$nom_entreprise)->where('status','non_lu')->count();
-            $notifications = notification::where('nom_entreprise',$nom_entreprise)->get();
-            $produits = Produit::where('nom_entreprise',$nom_entreprise)->get();
-            return view('produits.add_produits',compact('produits','notif_nVues','notifications'));
-        }
+        $produits = Produit::where('nom_entreprise',$nom_entreprise)->paginate(5);
+        return view ('produits.add_produits', compact('produits'));
     }
 
     public function add_products(Request $request){
+
+        $user = Auth::user();
         $nom_entreprise = Session::get('entreprise_active')->nom_entreprise;
-        $nom_gestionnaire = Auth::user()->name;
+        $nom_gestionnaire = $user->name;
         $messages = [
             'nom_produit.required'=>'entrez un nom de produit',
             'nom_produit.regex' => 'veuillez entrer un nom valide de produit du genre: aaaTTTT',
@@ -71,6 +64,17 @@ class ProduitController extends Controller
         $notification->description = $description;
         $notification->nom_entreprise = $nom_entreprise;
         $notification->status = "non_lu";
+
+        if ($user->role == "secretaire") {
+            $notification->destinataire = "admin-importateur";
+        }
+
+        else if($user->role == "admin"){
+            $notification->destinataire = "secretaire-importateur";
+        }
+        else if($user->role == "importateur"){
+            $notification->destinataire = "admin-secretaire";
+        }
 
         $notification->save();
 

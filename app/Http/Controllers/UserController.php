@@ -129,7 +129,7 @@ class UserController extends Controller
                 if ($utilisateur -> entreprise_created) {
                     $entreprise = Entreprise::where('nom_gestionnaire',$utilisateur->name)->first();
                     Session::put('entreprise_active',$entreprise);
-                    return redirect('/accueil')->with('status','connexion reussie');
+                    return redirect('/profil')->with('status','connexion reussie');
                 }
                 else{
                     return redirect('/entreprise')->with('connexion_succeed','votre connexion a reussi');
@@ -143,7 +143,7 @@ class UserController extends Controller
 
                 Session::put('entreprise_active',$entreprise);
 
-                return redirect('/accueil');
+                return redirect('/profil');
             }
 
 

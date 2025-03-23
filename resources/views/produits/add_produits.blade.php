@@ -56,30 +56,6 @@
                   </form>
                 </li>
 
-                <li class="nav-item dropdown">
-                  <a class="nav-link count-indicator" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
-                    <i class="icon-bell"></i>
-                    <span class="">{{$notif_nVues}}</span>
-                  </a>
-                  <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="notificationDropdown">
-                    <a class="dropdown-item py-3 border-bottom">
-                      <p class="mb-0 fw-medium float-start"> Vous avez recu {{$notif_nVues}}</p>
-                      <span class="badge badge-pill badge-primary float-end">Voir tout</span>
-                    </a>
-
-                    @foreach ($notifications as $notif )
-                    <a class="dropdown-item preview-item py-3">
-                        <div class="preview-thumbnail">
-                          <i class="mdi mdi-alert m-auto text-primary"></i>
-                        </div>
-                        <div class="preview-item-content">
-                          <h6 class="preview-subject fw-normal text-dark mb-1">le {{$notif->nom_gestionnaire}}</h6>
-                          <p class="fw-light small-text mb-0"> {{$notif->description}} </p>
-                        </div>
-                    </a>
-                    @endforeach
-                  </div>
-                </li>
                 <li class="nav-item dropdown d-none d-lg-block user-dropdown">
                     @if (Auth::check())
                     <?php $user = Auth::user(); ?>
@@ -109,63 +85,160 @@
       <div class="container-fluid page-body-wrapper">
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
-              <li class="nav-item">
-                  <a class="nav-link" href="entreprise_management">
-                    <i class="menu-icon mdi mdi-home"></i>
-                    <span class="menu-title"> Entreprise   </span>
-                  </a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="gestionnaires">
+                @if (Auth::user()->role == "admin")
+                <li class="nav-item">
+                    <a class="nav-link" href="entreprise_management">
+                      <i class="menu-icon mdi mdi-home"></i>
+                      <span class="menu-title"> Entreprise   </span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="gestionnaires">
                     <i class="menu-icon mdi mdi-account"></i>
                     <span class="menu-title"> Gestionnaires  </span>
-                  </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
-                  <i class="menu-icon mdi mdi-cart"></i>
-                  <span class="menu-title"> Commandes </span>
-                  <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="form-elements">
-                  <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="ajout_commandes"> ajouter une commande </a></li>
-                    <li class="nav-item"><a class="nav-link" href="command_enregistrees"> commandes enregistrées </a></li>
-                  </ul>
-                </div>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
-                  <i class="menu-icon mdi mdi-airplane"></i>
-                  <span class="menu-title"> Agence </span>
-                  <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="charts">
-                  <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="agences">Manager les agences </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="depot_colis"> Deposer colis </a></li>
-                  </ul>
-                </div>
-              </li>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+                      <i class="menu-icon mdi mdi-cart"></i>
+                      <span class="menu-title"> Commandes </span>
+                      <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="form-elements">
+                      <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" href="ajout_commandes"> ajouter une commande </a></li>
+                        <li class="nav-item"><a class="nav-link" href="command_enregistrees"> commandes enregistrées </a></li>
+                      </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+                      <i class="menu-icon mdi mdi-airplane"></i>
+                      <span class="menu-title"> agences </span>
+                      <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="form-elements">
+                      <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="agences"> Manager les agences </a></li>
+                        <li class="nav-item"> <a class="nav-link" href="depot_colis"> Deposer colis </a></li>
+                      </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="retraits">
+                      <i class="menu-icon mdi mdi-cart-check"></i>
+                      <span class="menu-title"> retraits  </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="produits">
+                        <i class="menu-icon mdi mdi-package-variant"></i>
+                        <span class="menu-title"> produits  </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="notifications">
+                        <i class="menu-icon mdi mdi-mail"></i>
+                        <span class="menu-title"> notifications  </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="profil">
+                        <i class="menu-icon mdi mdi-account-circle"></i>
+                        <span class="menu-title"> profil  </span>
+                    </a>
+                </li>
+                @endif
 
-              <li class="nav-item">
-                  <a class="nav-link" href="retraits">
-                    <i class="menu-icon mdi mdi-cart-check"></i>
-                    <span class="menu-title"> retraits  </span>
-                  </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="produits">
-                    <i class="menu-icon mdi mdi-package-variant"></i>
-                    <span class="menu-title"> produits  </span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="notifications">
-                    <i class="menu-icon mdi mdi-mail"></i>
-                    <span class="menu-title"> notifications  </span>
-                </a>
-              </li>
+                @if (Auth::user()->role == "importateur")
+
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+                      <i class="menu-icon mdi mdi-cart"></i>
+                      <span class="menu-title"> Commandes </span>
+                      <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="form-elements">
+                      <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" href="ajout_commandes"> ajouter une commande </a></li>
+                        <li class="nav-item"><a class="nav-link" href="command_enregistrees"> commandes enregistrées </a></li>
+                      </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+                      <i class="menu-icon mdi mdi-airplane"></i>
+                      <span class="menu-title"> agences </span>
+                      <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="form-elements">
+                      <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="agences"> Manager les agences </a></li>
+                        <li class="nav-item"> <a class="nav-link" href="depot_colis"> Deposer colis </a></li>
+                      </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="produits">
+                        <i class="menu-icon mdi mdi-package-variant"></i>
+                        <span class="menu-title"> produits  </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="notifications">
+                        <i class="menu-icon mdi mdi-mail"></i>
+                        <span class="menu-title"> notifications  </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="profil">
+                        <i class="menu-icon mdi mdi-account-circle"></i>
+                        <span class="menu-title"> profil  </span>
+                    </a>
+                </li>
+                @endif
+
+                @if (Auth::user()->role == "secretaire")
+
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+                      <i class="menu-icon mdi mdi-cart"></i>
+                      <span class="menu-title"> Commandes </span>
+                      <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="form-elements">
+                      <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" href="ajout_commandes"> ajouter une commande </a></li>
+                        <li class="nav-item"><a class="nav-link" href="command_enregistrees"> commandes enregistrées </a></li>
+                      </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="retraits">
+                      <i class="menu-icon mdi mdi-cart-check"></i>
+                      <span class="menu-title"> retraits  </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="produits">
+                        <i class="menu-icon mdi mdi-package-variant"></i>
+                        <span class="menu-title"> produits  </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="notifications">
+                        <i class="menu-icon mdi mdi-mail"></i>
+                        <span class="menu-title"> notifications  </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="profil">
+                        <i class="menu-icon mdi mdi-account-circle"></i>
+                        <span class="menu-title"> profil  </span>
+                    </a>
+                </li>
+                @endif
             </ul>
         </nav>
 
@@ -190,7 +263,7 @@
                                       </div>
                                       <div>
                                         <button class="btn btn-primary btn-lg text-white mb-0 me-0" data-bs-toggle="modal" data-bs-target="#importModal" type="button">
-                                          <i class="mdi mdi-account-plus"></i> Ajouter un nouveau produit
+                                          <i class="mdi mdi-package-variant"></i> Ajouter un nouveau produit
                                         </button>
                                       </div>
                                     </div>
@@ -228,6 +301,9 @@
                                           @endforeach
                                         </tbody>
                                       </table>
+                                      <div class="mt-4 d-flex justify-content-center">
+                                        {{ $produits->links('vendor.pagination.bootstrap-5') }}
+                                       </div>
                                     </div>
                                   </div>
                                 </div>
@@ -425,7 +501,7 @@
             editModal.show();
         }
     </script>
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
 
