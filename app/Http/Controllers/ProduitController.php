@@ -55,7 +55,7 @@ class ProduitController extends Controller
 
         $produit->save();
 
-        $description = "le gestionnaire:".$nom_gestionnaire."vient d'ajouter le produit".$produit->nom_produit." veuillez verifier";
+        $description = "le gestionnaire:" .$nom_gestionnaire. "vient d'ajouter le produit".  $produit->nom_produit . "  veuillez verifier";
 
 
         $notification = new notification();

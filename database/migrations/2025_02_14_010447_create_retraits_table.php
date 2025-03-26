@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('retraits', function (Blueprint $table) {
             $table->id();
             $table->string('nom_client');
-            $table->string('date_retrait');
+            $table->date('date_retrait');
             $table->string('nom_agence');
             $table->string('nom_entreprise');
             $table->string('nom_gestionnaire');

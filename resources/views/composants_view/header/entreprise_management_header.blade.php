@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
     <link rel="stylesheet" type="text/css" href="assets/js/select.dataTables.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="shortcut icon" href="assets/images/favicon.png" />
   </head>
   <body class="with-welcome-text">
@@ -221,6 +220,5 @@
                     </a>
                 </li>
                 @endif
-
             </ul>
         </nav>

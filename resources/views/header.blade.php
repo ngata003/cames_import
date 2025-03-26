@@ -7,7 +7,7 @@
       </div>
       <div>
         @if (Session()->has('entreprise_active'))
-            <a class="navbar-brand brand-logo" href="accueil">
+            <a class="navbar-brand brand-logo" href="#">
             <img src="../../assets/images/{{Session('entreprise_active')->logo_entreprise}}" alt="logo" />
             </a>
             <a class="navbar-brand brand-logo-mini" href="accueil">
@@ -32,7 +32,7 @@
             <input type="search" class="form-control" placeholder="Search Here" title="Search here">
           </form>
         </li>
-        
+
         <li class="nav-item dropdown d-none d-lg-block user-dropdown">
             @if (Auth::check())
             <?php $user = Auth::user(); ?>

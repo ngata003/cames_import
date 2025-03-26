@@ -62,7 +62,7 @@ class DepotController extends Controller
         Retrait::create([
             'nom_client' =>$request->nom_client,
             'nom_agence' => $request->nom_agence,
-            'date_retrait' =>$request->date_retrait,
+            'date_retrait' =>$request->date_retrait->format('Y-m-d'),
             'nom_entreprise' => $entreprise->nom_entreprise,
             'nom_gestionnaire' => $user->name,
             'status'=>'non_retire',
@@ -71,6 +71,7 @@ class DepotController extends Controller
 
         return back()->with('status_save','agence enregistrée avec succès');
     }
+
 
     public function deposer_colis(){
 
@@ -121,7 +122,7 @@ class DepotController extends Controller
         }
     }
 
-// fonction pour modifier les depots 
+// fonction pour modifier les depots
     public function modifier_depots(Request $request, $id){
         $depot = Depot::find($id);
 
@@ -140,11 +141,11 @@ class DepotController extends Controller
                 }
             }
 
-            $uploadedFile = $request->file('image_colis'); 
+            $uploadedFile = $request->file('image_colis');
             $colisImage = time() . '.' . $uploadedFile->getClientOriginalExtension();
             $uploadedFile->move(public_path('/assets/images'), $colisImage);
 
-            $depot->image_colis = $colisImage; 
+            $depot->image_colis = $colisImage;
         }
 
         $depot->save();

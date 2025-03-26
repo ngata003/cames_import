@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
     <link rel="stylesheet" type="text/css" href="assets/js/select.dataTables.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="shortcut icon" href="assets/images/favicon.png" />
   </head>
   <body class="with-welcome-text">
@@ -51,6 +50,7 @@
                       </ul>
                     </div>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                         <i class="menu-icon mdi mdi-airplane"></i>
@@ -63,6 +63,7 @@
                         <li class="nav-item"> <a class="nav-link" href="depot_colis">Deposer colis</a></li>
                     </div>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="retraits">
                       <i class="menu-icon mdi mdi-cart-check"></i>

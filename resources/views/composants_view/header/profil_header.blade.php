@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title> CAMES IMPORT  </title>
-    <link rel="stylesheet" href="assets/vendors/feather/feather.css">
-    <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="assets/vendors/ti-icons/css/themify-icons.css">
-    <link rel="stylesheet" href="assets/vendors/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/vendors/typicons/typicons.css">
-    <link rel="stylesheet" href="assets/vendors/simple-line-icons/css/simple-line-icons.css">
-    <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
-    <link rel="stylesheet" href="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
-    <link rel="stylesheet" href="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
-    <link rel="stylesheet" type="text/css" href="assets/js/select.dataTables.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <title> CAMES IMPORT </title>
+    <link rel="stylesheet" href="../../assets/vendors/feather/feather.css">
+    <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../../assets/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="../../assets/vendors/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../assets/vendors/typicons/typicons.css">
+    <link rel="stylesheet" href="../../assets/vendors/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="../../assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
+
+    <link rel="stylesheet" href="../../assets/vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="../../assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="shortcut icon" href="../../assets/images/favicon.png" />
   </head>
-  <body class="with-welcome-text">
+  <body>
     <div class="container-scroller">
-     @include('header')
+      @include('header')
       <div class="container-fluid page-body-wrapper">
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
@@ -39,19 +40,6 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
-                      <i class="menu-icon mdi mdi-cart"></i>
-                      <span class="menu-title"> Commandes </span>
-                      <i class="menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="form-elements">
-                      <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"><a class="nav-link" href="ajout_commandes"> ajouter une commande </a></li>
-                        <li class="nav-item"><a class="nav-link" href="command_enregistrees"> commandes enregistrées </a></li>
-                      </ul>
-                    </div>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                         <i class="menu-icon mdi mdi-airplane"></i>
                       <span class="menu-title">Agences</span>
@@ -61,6 +49,20 @@
                       <ul class="nav flex-column sub-menu">
                         <li class="nav-item"> <a class="nav-link" href="agences"> Manager les agences </a></li>
                         <li class="nav-item"> <a class="nav-link" href="depot_colis">Deposer colis</a></li>
+                    </div>
+                </li>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+                      <i class="menu-icon mdi mdi-airplane"></i>
+                      <span class="menu-title"> agences </span>
+                      <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="form-elements">
+                      <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="agences"> Manager les agences </a></li>
+                        <li class="nav-item"> <a class="nav-link" href="depot_colis"> Deposer colis </a></li>
+                      </ul>
                     </div>
                 </li>
                 <li class="nav-item">

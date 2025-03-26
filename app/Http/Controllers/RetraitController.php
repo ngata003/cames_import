@@ -12,9 +12,9 @@ class RetraitController extends Controller
     //
     public function affichage_retraits(){
         $entreprise = Session::get('entreprise_active');
-        $dateDuJour = Carbon::now()->format('d-m-Y'); // Format: 23-03-2025
+        $dateDuJour = Carbon::now()->toDateString(); // Format: 23-03-2025
 
-        $donnees = Retrait::whereRaw("STR_TO_DATE(date_retrait, '%d-%m-%Y') = STR_TO_DATE(?, '%d-%m-%Y')", [$dateDuJour])
+        $donnees = Retrait::whereDate('date_retrait',$dateDuJour)
             ->where('nom_entreprise', $entreprise->nom_entreprise)
             ->get();
 

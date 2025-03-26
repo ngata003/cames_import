@@ -109,5 +109,5 @@ Route::put('/edit_depots/{id}',[DepotController::class,'modifier_depots']);
 //routes pour les notifications
 Route::get('/notifications',[NotificationController::class, 'view_controller'])->middleware('role:admin,importateur,secretaire');
 Route::get('/retraits',[RetraitController::class,'affichage_retraits'])->middleware('role:admin,secretaire');
-Route::post('/lu_notif/{id}',[NotificationController::class,'lu_notif']);
-
+Route::put('/lu_notif/{id}',[NotificationController::class,'lu_notif']);
+Route::delete('/notifications_delete/{id}',[NotificationController::class,'nofications_delete']);

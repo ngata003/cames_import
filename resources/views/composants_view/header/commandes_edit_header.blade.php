@@ -165,11 +165,26 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/notifications')}}">
-                        <i class="menu-icon mdi mdi-mail"></i>
-                        <span class="menu-title"> notifications  </span>
+                    <a class="nav-link" href="{{url('/notifications')}}" style="position: relative;">
+                        <div style="position: relative; display: inline-block;">
+                            <i class="menu-icon mdi mdi-bell" style="font-size: 24px;"></i>
+                            @if(isset($nb_notifications_non_lues) && $nb_notifications_non_lues > 0)
+                                <span class="badge badge-danger"
+                                    style="
+                                        position: absolute;
+                                        top: -5px;  /* Monte le badge au-dessus */
+                                        right: -5px; /* Ajuste pour qu'il soit bien placé */
+                                        font-size: 12px;
+                                        padding: 4px 6px;
+                                        border-radius: 50%;
+                                    ">
+                                    {{ $nb_notifications_non_lues }}
+                                </span>
+                            @endif
+                        </div>
+                        <span class="menu-title"> Notifications </span>
                     </a>
-                  </li>
+                </li>
                   <li class="nav-item">
                     <a class="nav-link" href="{{url('/profil')}}">
                         <i class="menu-icon mdi mdi-account-circle"></i>
@@ -194,16 +209,16 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
-                      <i class="menu-icon mdi mdi-airplane"></i>
-                      <span class="menu-title"> Agences </span>
+                    <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                        <i class="menu-icon mdi mdi-airplane"></i>
+                      <span class="menu-title">Agences</span>
                       <i class="menu-arrow"></i>
                     </a>
-                    <div class="collapse" id="charts">
-                      <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"> <a class="nav-link" href="{{ url('/agences')}}">Manager les agences </a></li>
-                        <li class="nav-item"> <a class="nav-link" href="{{ url('/depot_colis')}}"> Deposer colis </a></li>
-                      </ul>
+                    <div class="collapse" id="ui-basic">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link" href="{{ url('/agences')}}">Manager les agences </a></li>
+                            <li class="nav-item"> <a class="nav-link" href="{{ url('/depot_colis')}}"> Deposer colis </a></li>
+                        </ul>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -213,9 +228,24 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/notifications')}}">
-                        <i class="menu-icon mdi mdi-mail"></i>
-                        <span class="menu-title"> notifications  </span>
+                    <a class="nav-link" href="{{url('/notifications')}}" style="position: relative;">
+                        <div style="position: relative; display: inline-block;">
+                            <i class="menu-icon mdi mdi-bell" style="font-size: 24px;"></i>
+                            @if(isset($nb_notifications_non_lues) && $nb_notifications_non_lues > 0)
+                                <span class="badge badge-danger"
+                                    style="
+                                        position: absolute;
+                                        top: -5px;  /* Monte le badge au-dessus */
+                                        right: -5px; /* Ajuste pour qu'il soit bien placé */
+                                        font-size: 12px;
+                                        padding: 4px 6px;
+                                        border-radius: 50%;
+                                    ">
+                                    {{ $nb_notifications_non_lues }}
+                                </span>
+                            @endif
+                        </div>
+                        <span class="menu-title"> Notifications </span>
                     </a>
                 </li>
                 <li>
@@ -255,9 +285,24 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/notifications')}}">
-                        <i class="menu-icon mdi mdi-mail"></i>
-                        <span class="menu-title"> notifications  </span>
+                    <a class="nav-link" href="{{url('/notifications')}}" style="position: relative;">
+                        <div style="position: relative; display: inline-block;">
+                            <i class="menu-icon mdi mdi-bell" style="font-size: 24px;"></i>
+                            @if(isset($nb_notifications_non_lues) && $nb_notifications_non_lues > 0)
+                                <span class="badge badge-danger"
+                                    style="
+                                        position: absolute;
+                                        top: -5px;  /* Monte le badge au-dessus */
+                                        right: -5px; /* Ajuste pour qu'il soit bien placé */
+                                        font-size: 12px;
+                                        padding: 4px 6px;
+                                        border-radius: 50%;
+                                    ">
+                                    {{ $nb_notifications_non_lues }}
+                                </span>
+                            @endif
+                        </div>
+                        <span class="menu-title"> Notifications </span>
                     </a>
                 </li>
                 <li>

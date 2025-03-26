@@ -267,7 +267,7 @@ class UserController extends Controller
 
         $entreprise_active = Session::get('entreprise_active');
 
-        $gestionnaires = User::where('nom_createur', $user->name)->where('nom_entreprise',$entreprise_active->nom_entreprise)->get();
+        $gestionnaires = User::where('nom_createur', $user->name)->where('nom_entreprise',$entreprise_active->nom_entreprise)->paginate(4);
 
         return view('gestionnaires.gestionnaires', compact('gestionnaires') );
     }

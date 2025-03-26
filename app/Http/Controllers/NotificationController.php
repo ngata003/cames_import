@@ -14,42 +14,54 @@ class NotificationController extends Controller
 
         $entreprise = Session::get('entreprise_active');
         $user = Auth::user();
-        $notifications = collect(); // Collection vide par défaut
 
-        if (in_array($user->role, ['admin', 'secretaire'])) {
-            $notifications = Notification::where('nom_entreprise', $entreprise->nom_entreprise)
-                ->where('destinataire', 'admin-secretaire')
-                ->where('status', 'non_lu')
-                ->orderBy('created_at', 'desc')
-                ->paginate(6);
-        }
+        $roles_destinataires = [
+            'admin' => ['admin-secretaire', 'admin-importateur'],
+            'secretaire' => ['admin-secretaire', 'secretaire-importateur'],
+            'importateur' => ['admin-importateur', 'secretaire-importateur'],
+        ];
 
-        if (in_array($user->role, ['admin', 'importateur'])) {
-            $notifications = Notification::where('nom_entreprise', $entreprise->nom_entreprise)
-                ->where('destinataire', 'admin-importateur')
-                ->where('status', 'non_lu')
-                ->orderBy('created_at', 'desc')
-                ->paginate(6);
+        $destinataires = [];
+        foreach ($roles_destinataires as $role => $dest) {
+            if (in_array($user->role, explode('-', $role))) {
+                $destinataires = array_merge($destinataires, $dest);
+            }
         }
+        $destinataires = array_unique($destinataires);
 
-        if (in_array($user->role, ['secretaire', 'importateur'])) {
-            $notifications = Notification::where('nom_entreprise', $entreprise->nom_entreprise)
-                ->where('destinataire', 'secretaire-importateur')
-                ->where('status', 'non_lu')
-                ->orderBy('created_at', 'desc')
-                ->paginate(6);
-        }
+        $notifications = notification::where('nom_entreprise', $entreprise->nom_entreprise)
+            ->whereIn('destinataire', $destinataires)
+            ->orderByRaw("
+                CASE
+                    WHEN status = 'non_lu' THEN 0
+                    ELSE 1
+                END,
+                created_at DESC
+            ")
+            ->paginate(6);
+
+           //dd($nb_notifications_non_lues);
 
         return view('notifications.notifications_view', compact('notifications'));
     }
 
-    public function lu_notif($id){
-        $notif = notification::find($id);
+    public function lu_notif($id) {
 
+        $notif = notification::find($id);
         $notif->status = "lu";
         $notif->save();
 
         return back()->with('status_notif','vous venez de lire ce message');
     }
+
+    public function nofications_delete($id){
+
+        $notifications = notification::find($id);
+        $notifications->delete();
+
+        return back()->with('delete_notifications','vous avez supprimé cette notification');
+    }
+
+
 
 }

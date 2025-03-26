@@ -74,17 +74,9 @@ class AgenceController extends Controller
 
         $nom_entreprise = $entreprise->nom_entreprise;
 
-        $user = Auth::user();
+        $agences = Agence::where('nom_entreprise',$entreprise->nom_entreprise)->paginate(4);
 
-        if ($user->role === 'etranger') {
-            $agences = Agence::where('nom_gestionnaire',$user->name)->where('nom_entreprise',$nom_entreprise)->get();
-            return view('agences.agence', compact('agences'));
-        }
-        elseif ($user->role === 'admin') {
-            $agences = Agence::where('nom_entreprise',$nom_entreprise)->get();
-
-            return view('agences.agence', compact('agences'));
-        }
+        return view('agences.agence',compact('agences'));
     }
 
 
